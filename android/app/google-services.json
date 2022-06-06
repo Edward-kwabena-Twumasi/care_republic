@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "620904020682",
+    "project_id": "thecut-19d12",
+    "storage_bucket": "thecut-19d12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620904020682:android:2f58e311adad0672731233",
+        "android_client_info": {
+          "package_name": "com.robed.thecut.thecut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620904020682-r646vqnkn41vvsmek5hdedikq8pcu25q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARcC4gHxo68kyUEGxsQCQywNT4n0mqgpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620904020682-r646vqnkn41vvsmek5hdedikq8pcu25q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620904020682:android:bd94b128a33b7de7731233",
+        "android_client_info": {
+          "package_name": "com.robertory.thecut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620904020682-r646vqnkn41vvsmek5hdedikq8pcu25q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARcC4gHxo68kyUEGxsQCQywNT4n0mqgpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620904020682-r646vqnkn41vvsmek5hdedikq8pcu25q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
