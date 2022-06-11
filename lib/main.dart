@@ -6,6 +6,7 @@ import 'package:thecut/providers/provider.dart';
 import 'package:thecut/screens/client/client_main_screen.dart';
 import 'package:thecut/screens/orientation/onboarding_screen.dart';
 import 'package:thecut/screens/orientation/user_status_selection_screen.dart';
+import 'package:thecut/testing/stepper_tester.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
 void main() {
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
               //     foregroundColor: colorScheme.secondary)
 
             ),*/
-            home: ClientMainScreen(),
+            home: StepperTester(),
           ),
 
         )

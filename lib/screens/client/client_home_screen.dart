@@ -356,6 +356,41 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               ],
             ),
           ),
+        ),
+        Padding(
+          padding:  EdgeInsets.all(size.cw(1)),
+          child: SizedBox(
+            height:size.ch(5),
+            child: ListView(
+                scrollDirection: Axis.horizontal,
+                /*shrinkWrap: true,*/
+                children: [
+              Padding(
+                padding:  EdgeInsets.all(size.cw(1)),
+                child: ElevatedButton(onPressed: (){}, child: const Text('All')),
+              ),
+              Padding(
+                padding: EdgeInsets.all(size.cw(1)),
+                child: ElevatedButton(onPressed: (){}, child: const Text('Haircut')),
+              ),
+              Padding(
+                padding: EdgeInsets.all(size.cw(1)),
+                child: ElevatedButton(onPressed: (){}, child: const Text('Makeup')),
+              ),
+              Padding(
+                padding: EdgeInsets.all(size.cw(1)),
+                child: ElevatedButton(onPressed: (){}, child: const Text('Manicure')),
+              ),
+              Padding(
+                padding: EdgeInsets.all(size.cw(1)),
+                child: ElevatedButton(onPressed: (){}, child: const Text('Pedicure')),
+              ),
+              Padding(
+                padding: EdgeInsets.all(size.cw(1)),
+                child: ElevatedButton(onPressed: (){}, child: const Text('Trim')),
+              ),
+            ]),
+          ),
         )
       ]),
     );
