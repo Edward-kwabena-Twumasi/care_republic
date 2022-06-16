@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class StepperTester extends StatelessWidget {
-  const StepperTester({Key? key}) : super(key: key);
-
-
-
+class WorkerRegistrationScreen  extends StatelessWidget {
+   const WorkerRegistrationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  Text("Shop registration")),
+      appBar: AppBar(title:  Text("Worker Registration")),
       body: const MyStatefulWidget(),
     );
   }
@@ -28,15 +25,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   String sexGroup = '1';
   DateTime? dob = null;
   // Initial Selected Value
-  String dropdownvalue = 'Barbering';
+  String dropdownvalue = 'Barber';
 
   // List of items in our dropdown menu
   var items = [
-    'Barbering',
-    'Hair dressing',
-    'Unisex',
-    'Makeup',
-    'Merchant',
+    'Barber',
+    'Hair dresser',
+    'Makeup artist'
   ];
 
   final GlobalKey<FormState> ownerForm = GlobalKey<FormState>();
@@ -46,6 +41,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
+      controlsBuilder: (BuildContext context, ControlsDetails controls) {
+        return Row(
+          children: <Widget>[
+            TextButton(
+              onPressed: controls.onStepContinue,
+              child:  Text(_index==1?'PROCEED':'NEXT'),
+            ),
+            TextButton(
+              onPressed: _index==0?null:controls.onStepCancel,
+              child:  Text('BACK'),
+            ),
+          ],
+        );
+      },
       type: StepperType.horizontal,
       currentStep: _index,
       onStepCancel: () {
@@ -62,12 +71,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               _index += 1;
             });
           }
-        }else if(_index==1){
-          if(shopDetailForm.currentState!.validate()){
-            setState(() {
-              _index += 1;
-            });
-          }
+        }else{
+          
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+            return Container(color: Colors.blue,);
+          }), (route) => false);
         }
 
        /* if (_index <= 1) {
@@ -84,7 +92,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       steps: <Step>[
         Step(
           isActive: _index == 0,
-          title: Text('Owner info'),
+          title: Text('Personal'),
           content: Form(
             key:ownerForm,
             child: Column(
@@ -138,31 +146,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                /*TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Phone Number is Required';
-                      } else if (value.length != 10) {
-                        return 'Total Digits must be equal to 10';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.phone,
-                    maxLength: 10,
-                    decoration: InputDecoration(
-                        */ /*  prefixIcon: Icon(Icons.phone),*/ /*
-                        contentPadding: EdgeInsets.only(bottom: 3),
-                        labelText: 'Shop Phone number',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        */ /*  hintText: 'Eg. 0XXXXXXXXX',*/ /*
-                        hintStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black.withOpacity(0.4),
-                        ))),
-                const SizedBox(
-                  height: 10.0,
-                ),*/
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -189,29 +172,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 SizedBox(
                   height: 10.0,
                 ),
-                /*  TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Your Location is required';
-                    }
-                    return null;
-                  },
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.location_pin),
-                      contentPadding: EdgeInsets.only(bottom: 3),
-                      labelText: 'Land Mark',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      hintText: 'Eg. Davis Street',
-                      hintStyle: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black.withOpacity(0.4),
-                      )),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),*/
                 Row(
                   children: [
                     Radio(
@@ -248,91 +208,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                TextFormField(
-                  maxLength: 15,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Owner's contact is Required";
-                    }
-                    return null;
-                  },
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    /*  prefixIcon: Icon(Icons.person),*/
-                      contentPadding: const EdgeInsets.only(bottom: 3),
-                      labelText: "Owner's contact",
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      /* hintText: 'Eg. John',*/
-                      hintStyle: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black.withOpacity(0.4),
-                      )),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Step(
-          isActive: _index == 1,
-          title: Text('Shop Details'),
-          content: Form(
-            key: shopDetailForm,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TextFormField(
-                maxLength: 15,
-                validator: (value) {
-                  if (value!.trim() == null || value.isEmpty) {
-                    return 'Name of shop is Required';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                    /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
-                    contentPadding: const EdgeInsets.only(bottom: 3),
-                    labelText: 'Shop name',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: "Eg.John's shop",*/
-                    hintStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black.withOpacity(0.4),
-                    )),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextFormField(
-                maxLength: 15,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Landmark is required";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                    /*  prefixIcon: Icon(Icons.person),*/
-                    contentPadding: EdgeInsets.only(bottom: 3),
-                    labelText: 'Popular nearby location',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: 'Eg. John',*/
-                    hintStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black.withOpacity(0.4),
-                    )),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-                  ListTile(title: Text('Primary type',style: TextStyle(fontWeight: FontWeight.bold),),
+                ListTile(title: Text('Primary type',style: TextStyle(fontWeight: FontWeight.bold),),
                   subtitle: DropdownButton(
-
-
-                    // Initial Value
+                                        // Initial Value
                     value: dropdownvalue,
 
                     // Down Arrow Icon
@@ -353,13 +231,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       });
                     },
                   ),
-                  )
-
-            ]),
+                )
+              ],
+            ),
           ),
         ),
         Step(
-          isActive: _index == 2,
+          isActive: _index == 1,
           title: Text('Contact'),
           content:  Form(
             key:contactForm,
