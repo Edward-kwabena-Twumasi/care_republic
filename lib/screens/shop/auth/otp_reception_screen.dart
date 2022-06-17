@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:thecut/scaling/scaler.dart';
 
-import '../../../scaling/scaler.dart';
+
 
 class OTPReceptionScreen extends StatefulWidget {
   const OTPReceptionScreen({Key? key}) : super(key: key);
@@ -66,8 +67,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
             ),
             Padding(
               padding: EdgeInsets.all(5),
-              child: Text(
-                """Verify phone number""",
+              child: Text("Verify phone number",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),

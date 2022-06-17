@@ -27,7 +27,7 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
             ),
             Padding(
               padding: EdgeInsets.all(size.cw(1)),
-              child: Text("Create an account to find work around you",
+              child: Text("Create a shop to hire and find customers around you",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp),
               ),
