@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 import 'package:thecut/scaling/scaler.dart';
+import 'package:thecut/screens/orientation/shop_registration_screen.dart';
 
 
 
 class OTPReceptionScreen extends StatefulWidget {
-  const OTPReceptionScreen({Key? key}) : super(key: key);
+  final String authType;
+  final String source;
+  const OTPReceptionScreen({Key? key,  required this.authType, required this.source}) : super(key: key);
 
   @override
   State<OTPReceptionScreen> createState() => _OTPReceptionScreenState();
@@ -57,6 +60,19 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
   @override
   Widget build(BuildContext context) {
     Sizer size = Sizer(hasAppBar: false, hasBottomNav: false, context: context);
+
+    final FocusNode _pinPutFocusNode = FocusNode();
+
+
+    final TextEditingController _pinPutController = TextEditingController();
+
+    BoxDecoration _pinPutDecoration() {
+      return BoxDecoration(
+        border: Border.all(color: Colors.deepPurpleAccent),
+        borderRadius: BorderRadius.circular(15.0),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -86,19 +102,36 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
             SizedBox(
               height: 50,
             ),
-            Pinput(
-              length: 4,
-              onCompleted: (pin) => print(pin),
-              defaultPinTheme: PinTheme(
-                width: 56,
-                height: 56,
-                textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-                  borderRadius: BorderRadius.circular(20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal:size.cw(20)),
+              child: PinPut(
+                fieldsCount: 4,
+                submittedFieldDecoration: _pinPutDecoration().copyWith(
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
+                selectedFieldDecoration: _pinPutDecoration(),
+                followingFieldDecoration: _pinPutDecoration().copyWith(
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                    color: Colors.deepPurpleAccent.withOpacity(.5),
+                  )),
+                 onSubmit : (pin){
+                  print('2. On Submitted Called');
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+                    if(widget.authType=='signin'){
+                      return Scaffold(
+                          appBar: AppBar(title: Text('Success Screen'),),
+                          body:Center(child: Container(child: Text('Signed in Successfully'),)));
+                    }else{
+                      return const ShopRegistrationScreen();
+                    }
+
+                  }), (route) => false);
+                   /* Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+                      return const AuthLinkerScreen();
+                    }), (route) => false);*/
+                  },
               ),
-                androidSmsAutofillMethod:AndroidSmsAutofillMethod.smsRetrieverApi
             ),
             SizedBox(
               height: 5,
@@ -116,7 +149,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
                         ),
                       ])
                     : Text(
-                        "${(timeOut / 60).toInt().toString().padLeft(2, '0')}:${(timeOut % 60).toInt().toString().padLeft(2, '0')}"))
+                        "${(timeOut ~/ 60).toString().padLeft(2, '0')}:${(timeOut % 60).toInt().toString().padLeft(2, '0')}"))
           ],
         ),
       ),

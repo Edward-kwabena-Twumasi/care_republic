@@ -5,7 +5,11 @@ import '../scaling/scaler.dart';
 import '../screens/orientation/otp_reception_screen.dart';
 
 class SignInPhoneEntryScreen extends StatefulWidget {
-  const SignInPhoneEntryScreen({Key? key}) : super(key: key);
+  final String source;
+  final String authType;
+
+  SignInPhoneEntryScreen({Key? key, required this.source, required this.authType}) : super(key: key);
+
 
   @override
   _SignInPhoneEntryScreenState createState() => _SignInPhoneEntryScreenState();

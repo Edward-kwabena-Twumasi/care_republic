@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/orientation/otp_reception_screen.dart';
+import 'package:thecut/screens/worker/auth/otp_reception_screen.dart';
 
-class PhoneEntryScreen extends StatefulWidget {
-  const PhoneEntryScreen({Key? key}) : super(key: key);
+class WorkerPhoneEntryScreen extends StatefulWidget {
+  final String source;
+  final String authType;
 
+  const WorkerPhoneEntryScreen({Key? key, required this.source, this.authType='signup'}) : super(key: key);
   @override
-  State<PhoneEntryScreen> createState() => _PhoneEntryScreenState();
+  State<WorkerPhoneEntryScreen> createState() => _WorkerPhoneEntryScreenState();
 }
 
-class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
+class _WorkerPhoneEntryScreenState extends State<WorkerPhoneEntryScreen> {
 
   TextEditingController phoneCtrl=TextEditingController();
+  Map<String,Map<String,dynamic>> authSystem={
+    'signup':{'switch_text':"Already have and account? Sign in",
+              'welcome_text':"Create an account to find work around you"},
+    'signin':{'switch_text':"Don't have an account yet? Create one",
+      'welcome_text':"Log in to connect with clients and find work"}
+  };
+
+  String chosenAuth='signup';
+
+  @override
+  initState(){
+    super.setState(() {
+      chosenAuth=widget.authType;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +44,7 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
             ),
             Padding(
               padding: EdgeInsets.all(size.cw(1)),
-              child: Text("Create an account to find work around you",
+              child: Text(authSystem[chosenAuth]!['welcome_text'],
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp),
               ),
@@ -83,7 +100,7 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (builder) {
-                          return const OTPReceptionScreen();
+                          return  OTPReceptionScreen(authType: chosenAuth,);
                         }));
                       },
                       child: Text("SEND OTP"))),
@@ -91,9 +108,19 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
             Spacer(),
             Center(
               child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Already have and account? Sign in",
+                  onPressed: () {
+                    String nextAuth='';
+                    if(chosenAuth=='signup'){
+                     nextAuth='signin';
+                    }else{
+                      nextAuth='signup';
+                    }
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
+                      return WorkerPhoneEntryScreen(source: 'worker',authType: nextAuth,);
+                    }));
+                  },
+                  child:  Text(
+                    authSystem[chosenAuth]!['switch_text'],
                     style: TextStyle(color: Color(0xFFDA285E)),
                   )),
             )

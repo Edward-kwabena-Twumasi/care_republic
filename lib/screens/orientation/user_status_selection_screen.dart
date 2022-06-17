@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thecut/screens/client/client_main_screen.dart';
+import 'package:thecut/screens/shop/auth/phone_entry_screen.dart';
+import 'package:thecut/screens/worker/auth/phone_entry_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../scaling/scaler.dart';
@@ -31,14 +34,15 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                     Text(
                       "What are you here for?",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
               ),
               Text(
-                  'Add shops for users to locate you,enroll as a worker or explore services',
-                  style: TextStyle(fontSize: 12.sp,),textAlign: TextAlign.center,),
+                'Add shops for users to locate you,enroll as a worker or explore services',
+                style: TextStyle(fontSize: 12.sp,),
+                textAlign: TextAlign.center,),
               SizedBox(
                 height: size.ch(5),
               ),
@@ -46,9 +50,11 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      _launchUrl("https://youtu.be/SN8owIj7vNI");
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return const ShopPhoneEntryScreen(source: 'makeup',);
+                      }));
                     },
-                    child: StatusObject(
+                    child: const StatusObject(
                       title: "Makeup",
                       subTitle: "Find your customers",
                       assetUrl: 'assets/makeup_state.jpg',
@@ -58,9 +64,11 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _launchUrl("https://youtu.be/SN8owIj7vNI");
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return  const ShopPhoneEntryScreen(source: 'saloon',);
+                      }));
                     },
-                    child: StatusObject(
+                    child: const StatusObject(
                       title: "Saloon",
                       subTitle: "Find your customers",
                       assetUrl: 'assets/saloon_state.jpg',
@@ -74,9 +82,11 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      _launchUrl("https://youtu.be/SN8owIj7vNI");
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return ShopPhoneEntryScreen(source: 'merchant',);
+                      }));
                     },
-                    child: StatusObject(
+                    child: const StatusObject(
                       title: "Merchant",
                       subTitle: "Sell your stuff",
                       assetUrl: 'assets/merchant_state.jpg',
@@ -86,9 +96,11 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _launchUrl("https://youtu.be/SN8owIj7vNI");
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return WorkerPhoneEntryScreen(source: 'worker',);
+                      }));
                     },
-                    child: StatusObject(
+                    child: const StatusObject(
                       title: "Worker",
                       subTitle: "Find your customers",
                       assetUrl: 'assets/worker_state.jpg',
@@ -102,9 +114,11 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      _launchUrl("https://youtu.be/SN8owIj7vNI");
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return ClientMainScreen();
+                      }));
                     },
-                    child: StatusObject(
+                    child: const StatusObject(
                       title: "Customer",
                       subTitle: "Explore services",
                       assetUrl: 'assets/customer_state.jpg',
@@ -135,14 +149,13 @@ class StatusObject extends StatefulWidget {
 
   /* final String url,
   final */
-  const StatusObject(
-      {Key? key,
-      required this.title,
-      required this.subTitle,
-      required this.backgroundColor,
-      this.titleColor = Colors.black,
-      this.subTitleColor = Colors.black54,
-      required this.assetUrl})
+  const StatusObject({Key? key,
+    required this.title,
+    required this.subTitle,
+    required this.backgroundColor,
+    this.titleColor = Colors.black,
+    this.subTitleColor = Colors.black54,
+    required this.assetUrl})
       : super(key: key);
 
   @override
@@ -185,7 +198,7 @@ class _StatusObjectState extends State<StatusObject> {
             height: size.ch(15),
             width: size.cw(49),
             decoration: BoxDecoration(
-                /* border: Border.all(
+              /* border: Border.all(
                     color: Colors.black,
                     width: 1.0,
                     style: BorderStyle.solid),*/
@@ -210,12 +223,12 @@ class _StatusObjectState extends State<StatusObject> {
                 ),
                 FittedBox(
                     child: Text(
-                  widget.subTitle,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: widget.subTitleColor,
-                  ),
-                )),
+                      widget.subTitle,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: widget.subTitleColor,
+                      ),
+                    )),
                 Spacer(
                   flex: 3,
                 )

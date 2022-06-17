@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class WorkerRegistrationScreen  extends StatelessWidget {
-   const WorkerRegistrationScreen({Key? key}) : super(key: key);
+class ClientRegistrationScreen  extends StatelessWidget {
+   const ClientRegistrationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  Text("Worker Registration")),
+      appBar: AppBar(title:  Text("Client Registration")),
       body: const MyStatefulWidget(),
     );
   }

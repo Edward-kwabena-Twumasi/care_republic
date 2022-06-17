@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ShopRegistrationScreen  extends StatelessWidget {
+class ShopRegistrationScreen extends StatelessWidget {
   const ShopRegistrationScreen({Key? key}) : super(key: key);
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  Text("Shop registration")),
+      appBar: AppBar(title: Text("Shop registration")),
       body: const MyStatefulWidget(),
     );
   }
@@ -27,6 +24,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _index = 0;
   String sexGroup = '1';
   DateTime? dob = null;
+
   // Initial Selected Value
   String dropdownvalue = 'Barbering';
 
@@ -40,8 +38,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   ];
 
   final GlobalKey<FormState> ownerForm = GlobalKey<FormState>();
-  final GlobalKey<FormState> shopDetailForm=GlobalKey<FormState>();
-  final GlobalKey<FormState> contactForm=GlobalKey<FormState>();
+  final GlobalKey<FormState> shopDetailForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> contactForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +49,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           children: <Widget>[
             TextButton(
               onPressed: controls.onStepContinue,
-              child:  Text(_index==2?'PROCEED':'NEXT'),
+              child: Text(_index == 2 ? 'PROCEED' : 'NEXT'),
             ),
             TextButton(
-              onPressed: _index==0?null:controls.onStepCancel,
-              child:  Text('BACK'),
+              onPressed: _index == 0 ? null : controls.onStepCancel,
+              child: Text('BACK'),
             ),
           ],
         );
@@ -70,26 +68,52 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         }
       },
       onStepContinue: () {
-        if(_index==0){
-          if(ownerForm.currentState!.validate()){
+        if (_index == 0) {
+          if (ownerForm.currentState!.validate()) {
             setState(() {
               _index += 1;
             });
           }
-        }else if(_index==1){
-          if(shopDetailForm.currentState!.validate()){
+        } else if (_index == 1) {
+          if (shopDetailForm.currentState!.validate()) {
             setState(() {
               _index += 1;
             });
           }
-        }else{
-          
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
-            return Container(color: Colors.blue,);
-          }), (route) => false);
+        } else {
+          if (shopDetailForm.currentState!.validate()) {
+            showDialog(
+                context: context,
+                builder: (builder) {
+                  return AlertDialog(
+                    content: Text('Registration Successful'),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(builder).pop();
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (builder) {
+                              return Scaffold(
+                                  appBar: AppBar(
+                                    title: Text('Success Screen'),
+                                  ),
+                                  body: Center(
+                                      child: Container(
+                                    child: Text('Signed in Successfully'),
+                                  )));
+                            }));
+                          },
+                          child: Text('Ok'))
+                    ],
+                  );
+                });
+            /*Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+              return ShopLocationRegistrationScreen();
+            }), (route) => false);*/
+          }
         }
 
-       /* if (_index <= 1) {
+        /* if (_index <= 1) {
           setState(() {
             _index += 1;
           });
@@ -105,7 +129,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           isActive: _index == 0,
           title: Text('Owner info'),
           content: Form(
-            key:ownerForm,
+            key: ownerForm,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -277,7 +301,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   },
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    /*  prefixIcon: Icon(Icons.person),*/
+                      /*  prefixIcon: Icon(Icons.person),*/
                       contentPadding: const EdgeInsets.only(bottom: 3),
                       labelText: "Owner's contact",
                       floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -347,43 +371,44 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               const SizedBox(
                 height: 10.0,
               ),
-                  ListTile(title: Text('Primary type',style: TextStyle(fontWeight: FontWeight.bold),),
-                  subtitle: DropdownButton(
+              ListTile(
+                title: Text(
+                  'Primary type',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: DropdownButton(
+                  // Initial Value
+                  value: dropdownvalue,
 
+                  // Down Arrow Icon
+                  icon: const Icon(Icons.keyboard_arrow_down),
 
-                    // Initial Value
-                    value: dropdownvalue,
-
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                    // Array list of items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
-                    },
-                  ),
-                  )
-
+                  // Array list of items
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                    });
+                  },
+                ),
+              )
             ]),
           ),
         ),
         Step(
           isActive: _index == 2,
           title: Text('Contact'),
-          content:  Form(
-            key:contactForm,
+          content: Form(
+            key: contactForm,
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               TextFormField(
                 validator: (value) {
                   if (value!.trim() == null || value.isEmpty) {
@@ -393,7 +418,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
+                    /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
                     contentPadding: const EdgeInsets.only(bottom: 3),
                     labelText: 'Email',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -417,7 +442,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /*  prefixIcon: Icon(Icons.person),*/
+                    /*  prefixIcon: Icon(Icons.person),*/
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Primary number',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -440,7 +465,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /*  prefixIcon: Icon(Icons.person),*/
+                    /*  prefixIcon: Icon(Icons.person),*/
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Instagram handle',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -454,7 +479,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               const SizedBox(
                 height: 10.0,
               ),
-
             ]),
           ),
         ),

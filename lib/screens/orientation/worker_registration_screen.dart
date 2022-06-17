@@ -70,12 +70,32 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             setState(() {
               _index += 1;
             });
+
           }
         }else{
-          
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+          showDialog(
+              context: context,
+              builder: (builder) {
+                return AlertDialog(
+                  content: Text('Registration Successful'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(builder).pop();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (builder) {
+                                return Scaffold(
+                                    appBar: AppBar(title: Text('Success Screen'),),
+                                    body:Center(child: Container(child: Text('Signed in Successfully'),)));;
+                              }));
+                        },
+                        child: Text('ok'))
+                  ],
+                );
+              });
+         /* Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
             return Container(color: Colors.blue,);
-          }), (route) => false);
+          }), (route) => false);*/
         }
 
        /* if (_index <= 1) {

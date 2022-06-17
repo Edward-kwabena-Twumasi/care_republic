@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
+import 'package:pinput/pin_put/pin_put.dart';
+
 
 import '../../scaling/scaler.dart';
 
@@ -86,19 +87,12 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
             SizedBox(
               height: 50,
             ),
-            Pinput(
-              length: 4,
-              onCompleted: (pin) => print(pin),
-              defaultPinTheme: PinTheme(
-                width: 56,
-                height: 56,
-                textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-                  borderRadius: BorderRadius.circular(20),
-                ),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: size.cw(10)),
+              child: PinPut(
+                fieldsCount: 4,
+                onSubmit: (pin) => print(pin),
               ),
-                androidSmsAutofillMethod:AndroidSmsAutofillMethod.smsRetrieverApi
             ),
             SizedBox(
               height: 5,

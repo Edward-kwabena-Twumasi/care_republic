@@ -1,12 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 
-import '../../../scaling/scaler.dart';
+import 'package:thecut/scaling/scaler.dart';
+import 'package:thecut/screens/orientation/worker_registration_screen.dart';
+import 'package:thecut/screens/worker/auth/auth_linker_screen.dart';
 
 class OTPReceptionScreen extends StatefulWidget {
-  const OTPReceptionScreen({Key? key}) : super(key: key);
+  final String authType;
+  final String source;
+  const OTPReceptionScreen({Key? key, required this.authType, this.source='worker'}) : super(key: key);
 
   @override
   State<OTPReceptionScreen> createState() => _OTPReceptionScreenState();
@@ -56,6 +60,14 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
   @override
   Widget build(BuildContext context) {
     Sizer size = Sizer(hasAppBar: false, hasBottomNav: false, context: context);
+
+    BoxDecoration _pinPutDecoration() {
+      return BoxDecoration(
+        border: Border.all(color: Colors.deepPurpleAccent),
+        borderRadius: BorderRadius.circular(15.0),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -64,10 +76,10 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
             SizedBox(
               height: size.ch(20),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(5),
               child: Text(
-                """Verify phone number""",
+                "Verify phone number",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
@@ -75,7 +87,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
             SizedBox(
               height: 10,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(5),
               child: Text(
                   "We have sent an OTP to you phone, Do enter it to verify your account",
@@ -83,22 +95,32 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
                   style:
                       TextStyle(fontWeight: FontWeight.normal, fontSize: 17)),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
-            Pinput(
-              length: 4,
-              onCompleted: (pin) => print(pin),
-              defaultPinTheme: PinTheme(
-                width: 56,
-                height: 56,
-                textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-                  borderRadius: BorderRadius.circular(20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.cw(20)),
+              child: PinPut(
+                fieldsCount: 4,
+                submittedFieldDecoration: _pinPutDecoration().copyWith(
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
+                selectedFieldDecoration: _pinPutDecoration(),
+                followingFieldDecoration: _pinPutDecoration().copyWith(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      color: Colors.deepPurpleAccent.withOpacity(.5),
+                    )),
+                onSubmit: (pin){
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+                    if(widget.authType=='signin'){
+                      return const AuthLinkerScreen();
+                    }else{
+                      return WorkerRegistrationScreen();
+                    }
+                  }), (route) => false);
+                },
               ),
-                androidSmsAutofillMethod:AndroidSmsAutofillMethod.smsRetrieverApi
             ),
             SizedBox(
               height: 5,
@@ -106,17 +128,17 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
             Center(
                 child: timeOut == 0
                     ? Column(children: [
-                        Text("Didn't get any code?"),
+                        const Text("Didn't get any code?"),
                         TextButton(
                           onPressed: updateTimer,
-                          child: Text("SEND NEW CODE",
+                          child: const Text("SEND NEW CODE",
                               style: TextStyle(
                                 color: Color(0xFFDA285E),
                               )),
                         ),
                       ])
                     : Text(
-                        "${(timeOut / 60).toInt().toString().padLeft(2, '0')}:${(timeOut % 60).toInt().toString().padLeft(2, '0')}"))
+                        "${(timeOut ~/ 60).toString().padLeft(2, '0')}:${(timeOut % 60).toInt().toString().padLeft(2, '0')}"))
           ],
         ),
       ),

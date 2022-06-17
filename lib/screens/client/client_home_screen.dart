@@ -104,7 +104,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
           child: Padding(
               padding: EdgeInsets.all(size.ch(2)),
               child: Text(
-                "Hello, ${'Aliko'} 😦",
+                "Welcome to theCut,😍",/*${'Aliko'}*/
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
               )),
         ),
@@ -190,8 +190,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
           ),
         ),
         Container(
-          height: size.ch(12),
-          color: Colors.black,
+          height: size.ch(13),
           child: Padding(
             padding: EdgeInsets.all(size.cw(0.2)),
             child: ListView(
@@ -207,8 +206,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                        'Category',
-                        style: TextStyle(color: Colors.white),
+                        'Makeup',
+                        style: TextStyle(color: Colors.black),
                       ))
                     ],
                   ),
@@ -223,8 +222,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                        'Category',
-                        style: TextStyle(color: Colors.white),
+                        'Trim',
+                        style: TextStyle(color: Colors.black),
                       )),
                     ],
                   ),
@@ -239,8 +238,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                        'Category',
-                        style: TextStyle(color: Colors.white),
+                        'Retouch',
+                        style: TextStyle(color: Colors.black),
                       )),
                     ],
                   ),
@@ -255,8 +254,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                            'Category',
-                            style: TextStyle(color: Colors.white),
+                            'Wash',
+                            style: TextStyle(color: Colors.black),
                           ))
                     ],
                   ),
@@ -271,8 +270,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                            'Category',
-                            style: TextStyle(color: Colors.white),
+                            'Extension',
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   ),
@@ -287,8 +286,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                            'Category',
-                            style: TextStyle(color: Colors.white),
+                            'Dying',
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   ),
@@ -303,8 +302,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                            'Category',
-                            style: TextStyle(color: Colors.white),
+                            'Afro',
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   ),
@@ -319,8 +318,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                            'Category',
-                            style: TextStyle(color: Colors.white),
+                            'Creams',
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   ),
@@ -335,8 +334,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       ),
                       const FittedBox(
                           child: Text(
-                            'Category',
-                            style: TextStyle(color: Colors.white),
+                            'Perfume',
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   ),

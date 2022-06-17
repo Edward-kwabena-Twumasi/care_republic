@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/screens/client/client_home_screen.dart';
+import 'package:thecut/screens/client/client_map_screen.dart';
+import 'package:thecut/screens/client/client_unauthed_screen.dart';
 
 class ClientMainScreen extends StatefulWidget {
   const ClientMainScreen({Key? key}) : super(key: key);
@@ -14,9 +16,9 @@ class _ClientMainScreenState extends State<ClientMainScreen> {
 
   List<Widget> pages = [
     ClientHomeScreen(),
-    ClientHomeScreen(),
-    ClientHomeScreen(),
-    ClientHomeScreen(),
+    ClientMapScreen(),
+    ClientUnAuthedScreen(),
+    ClientUnAuthedScreen(),
   ];
 
   @override

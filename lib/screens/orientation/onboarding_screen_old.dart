@@ -1,6 +1,6 @@
+
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:thecut/screens/orientation/user_status_selection_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   @override
@@ -22,29 +22,31 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('images/$assetName.jpg'),
+                image: AssetImage('assets/$assetName.png'),
                 alignment: Alignment.bottomCenter,
-                fit: BoxFit.cover)));
+                fit: BoxFit.cover
+            )
+        )
+    );
 
     return Align(
-      child: Image.asset('images/$assetName.jpg', width: 350.0),
+      child: Image.asset('assets/$assetName.png', width: 350.0),
       alignment: Alignment.bottomCenter,
     );
   }
-
   Widget _buildImageJPG(String assetName) {
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('images/$assetName.jpg'),
+                image: AssetImage('assets/$assetName.jpg'),
                 alignment: Alignment.bottomCenter,
-                fit: BoxFit.contain)));
+                fit: BoxFit.contain
+            )
+        )
+    );
 
     return Align(
-      child: Image.asset(
-        'images/$assetName.jpg',
-        width: 350.0,
-      ),
+      child: Image.asset('assets/$assetName.jpg', width: 350.0,),
       alignment: Alignment.bottomCenter,
     );
   }
@@ -57,7 +59,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      /*  pageColor: Colors.blueAccent,*/
+    /*  pageColor: Colors.blueAccent,*/
       imagePadding: EdgeInsets.zero,
     );
 
@@ -66,13 +68,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         key: introKey,
         pages: [
           PageViewModel(
-            title: "Salon",
-            body: "Add salon, let customers find you easily",
-            image: _buildImage('saloon_state'),
-            decoration: PageDecoration(
-             /* pageColor: Colors.black.withOpacity(1)*/
-                pageColor: Color(0xffe4e5e7).withOpacity(1)
-            ),
+            title: "Touch your hair",
+            body:
+            "Get a shave or register as barber",
+            image: _buildImage('v1'),
+            decoration: pageDecoration,
             /*   footer: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
@@ -82,16 +82,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   );
                 },
                 child: Text('Join us'),
-              )*/
-          ),
+              )*/),
           PageViewModel(
-            title: "Cosmetic shop",
-            body: "Add shop, showcase products for sale👌",
-            image: _buildImage('cosmetics_state'),
-            decoration: PageDecoration(
-              pageColor: Color(0xffe3e4e6).withOpacity(1)
-            )
-            //pageDecoration,
+            title: "Want a quick shave?",
+            body: "With just a few clicks you will have a new look👌",
+            image: _buildImage('v1-mod'),
+            decoration: pageDecoration,
             /*footer: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
@@ -101,50 +97,58 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   );
                 },
                 child: Text('Get a Cut'),
-              )*/
-          ),
+              )*/),
           PageViewModel(
-            title: "Client",
-            body: "Search and find the right shops and services",
-            image: _buildImage('customer_state'),
-            decoration: PageDecoration(
-              pageColor: Color(0xffe2e3e4).withOpacity(1)
-            ),
-
-          ),
+            title: "Are you a barber?",
+            body: "Join a shop now to do what you do best",
+            image: _buildImage('v3'),
+            decoration: pageDecoration,
+            /*footer: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => Container(
+                      color: Colors.green,
+                    )),
+                  );
+                },
+                child: Text('Serve'),
+              )*/),
           PageViewModel(
-            title: "Makeup",
-            body: "Add a makeup shop,help enhance beauty",
-            image: _buildImage('makeup_state'),
-            decoration: PageDecoration(
-                pageColor: Color(0xffd99673).withOpacity(0.7)
-            ),
-          ),
+            title: "Are you a barber?",
+            body: "Join a shop now to do what you do best",
+            image: _buildImage('v3'),
+            decoration: pageDecoration,
+            /*footer: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => Container(
+                      color: Colors.green,
+                    )),
+                  );
+                },
+                child: Text('Serve'),
+              )*/),
           PageViewModel(
-            title: "Worker",
-            body: "Enroll as a barber or hairdresser for shops to find",
-            image: _buildImage('worker_state'),
-            decoration: PageDecoration(
-                pageColor: Color(0xffd1b0a1).withOpacity(0.1)
-            ),
-          ),
+            title: "Get a make up",
+            body: "Join a shop now to do what you do best",
+            image: _buildImage('v8'),
+            decoration: pageDecoration,
+            /*footer: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => Container(
+                      color: Colors.green,
+                    )),
+                  );
+                },
+                child: Text('Serve'),
+              )*/),
           PageViewModel(
-            title: "Ready",
-            //body: "Begin your experience💕",
-            image: _buildImage('barbershop'),
-            bodyWidget: SizedBox(
-              width: MediaQuery.of(context).size.width*0.8,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (builder) {
-                      return UserStatusSelectionScreen();
-                    }));
-                  },
-                  child: Text("Begin")),
-            ),
-            decoration: PageDecoration(
-                pageColor: Color(0xffd1b0a1).withOpacity(0.1)
-            ),
+            title: "Follow & Subscribe",
+            body:
+            "Join the team💕",
+            image: _buildImage('v5'),
+            decoration: pageDecoration,
           ),
         ],
         onDone: () => _onIntroEnd(context),
@@ -156,7 +160,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         nextFlex: 0,
         skip: const Text('Skip'),
         next: const Icon(Icons.arrow_forward),
-        done: const Text('', style: TextStyle(fontWeight: FontWeight.w600)),
+        done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
         //this is dot decoration
         dotsDecorator: DotsDecorator(
           //delete const if want to change active color

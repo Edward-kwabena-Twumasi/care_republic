@@ -83,8 +83,7 @@ class _PreferencesState extends State<Preferences> {
               Center(
                 child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: Text(
-                    """Choose your preferences""",
+                  child: Text("Choose your preferences",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
