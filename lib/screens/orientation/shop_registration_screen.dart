@@ -103,13 +103,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   )));
                             }));
                           },
-                          child: Text('Ok '))
+                          child: Text('Ok'))
                     ],
                   );
                 });
-            /*Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
-              return ShopLocationRegistrationScreen();
-            }), (route) => false);*/
           }
         }
 
@@ -158,7 +155,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   height: 10.0,
                 ),
                 TextFormField(
-                  maxLength: 15,
+                  maxLength: 10,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Shop Owner's Name is Required";

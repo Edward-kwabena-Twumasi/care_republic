@@ -266,7 +266,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               TextFormField(
                 validator: (value) {
                   if (value!.trim() == null || value.isEmpty) {
-                    return 'Email of shop is Required';
+                    return 'Contact of worker is Required';
                   }
                   return null;
                 },

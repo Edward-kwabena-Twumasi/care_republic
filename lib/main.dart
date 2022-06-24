@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:thecut/providers/client_provider.dart';
 import 'package:thecut/providers/provider.dart';
+import 'package:thecut/providers/shop_provider.dart';
+import 'package:thecut/providers/worker_provider.dart';
 import 'package:thecut/screens/orientation/onboarding_screen.dart';
 import 'package:thecut/screens/orientation/splash_screen.dart';
 
@@ -28,20 +31,27 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ApplicationProvider()),
+        ChangeNotifierProvider(create: (context) => WorkerProvider()),
+        ChangeNotifierProvider(create: (context) => ShopProvider()),
+        ChangeNotifierProvider(create: (context) => ClientProvider()),
       ],
-      child: ScreenUtilInit(
-        child: MaterialApp(
-          title: 'theCut',
-          home: AnimatedSplashScreen(
-            splashIconSize: 120.0,
-            duration: 4000,
-            nextScreen: OnBoardingScreen(),
-            splash: SplashScreen(),
-            splashTransition: SplashTransition.slideTransition,
-            backgroundColor: Colors.black,
-          ),
-          debugShowCheckedModeBanner: false,
-        ),
+      child: Builder(
+        builder: (context) {
+          return ScreenUtilInit(
+            child: MaterialApp(
+              title: "theCut",
+              home: AnimatedSplashScreen(
+                splashIconSize: 120.0,
+                duration: 4000,
+                nextScreen: OnBoardingScreen(),
+                splash: SplashScreen(),
+                splashTransition: SplashTransition.slideTransition,
+                backgroundColor: Colors.black,
+              ),
+              debugShowCheckedModeBanner: false,
+            ),
+          );
+        }
       ),
     );
   }
