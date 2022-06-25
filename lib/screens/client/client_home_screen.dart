@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
+import 'package:thecut/screens/shop/salon_info.dart';
+import 'package:thecut/theme/custom_theme.dart';
 
 class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({Key? key}) : super(key: key);
@@ -104,7 +106,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
           child: Padding(
               padding: EdgeInsets.all(size.ch(2)),
               child: Text(
-                "Welcome to theCut,😍",/*${'Aliko'}*/
+                "Welcome to theCut,😍",
+                /*${'Aliko'}*/
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
               )),
         ),
@@ -197,13 +200,13 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               scrollDirection: Axis.horizontal,
               children: [
                 Padding(
-                  padding:  EdgeInsets.all(size.cw(1)),
+                  padding: EdgeInsets.all(size.cw(1)),
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
                         'Makeup',
@@ -217,9 +220,9 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
                         'Trim',
@@ -233,9 +236,9 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
                         'Retouch',
@@ -249,14 +252,14 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
-                            'Wash',
-                            style: TextStyle(color: Colors.black),
-                          ))
+                        'Wash',
+                        style: TextStyle(color: Colors.black),
+                      ))
                     ],
                   ),
                 ),
@@ -265,14 +268,14 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
-                            'Extension',
-                            style: TextStyle(color: Colors.black),
-                          )),
+                        'Extension',
+                        style: TextStyle(color: Colors.black),
+                      )),
                     ],
                   ),
                 ),
@@ -281,14 +284,14 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
-                            'Dying',
-                            style: TextStyle(color: Colors.black),
-                          )),
+                        'Dying',
+                        style: TextStyle(color: Colors.black),
+                      )),
                     ],
                   ),
                 ),
@@ -297,14 +300,14 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
-                            'Afro',
-                            style: TextStyle(color: Colors.black),
-                          )),
+                        'Afro',
+                        style: TextStyle(color: Colors.black),
+                      )),
                     ],
                   ),
                 ),
@@ -313,14 +316,14 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
-                            'Creams',
-                            style: TextStyle(color: Colors.black),
-                          )),
+                        'Creams',
+                        style: TextStyle(color: Colors.black),
+                      )),
                     ],
                   ),
                 ),
@@ -329,14 +332,14 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: size.ch(4),
-                        backgroundColor: Colors.blue,
-                      ),
+                          radius: size.ch(4),
+                          child: Icon(Icons.science),
+                          backgroundColor: colorScheme.secondary),
                       const FittedBox(
                           child: Text(
-                            'Perfume',
-                            style: TextStyle(color: Colors.black),
-                          )),
+                        'Perfume',
+                        style: TextStyle(color: Colors.black),
+                      )),
                     ],
                   ),
                 ),
@@ -344,52 +347,117 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             ),
           ),
         ),
+        //filters
         Padding(
           padding: EdgeInsets.all(size.ch(1)),
           child: SizedBox(
             height: size.ch(6),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 const Text('Nearby Your Location',style: TextStyle(fontWeight: FontWeight.bold)),
-                TextButton(onPressed: (){}, child:  Text('See All',style: TextStyle(color: Color(0xffff9000),fontWeight: FontWeight.bold),))
+                const Text('Nearby Your Location',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'See All',
+                      style: TextStyle(
+                          color: Color(0xffff9000),
+                          fontWeight: FontWeight.bold),
+                    ))
               ],
             ),
           ),
         ),
         Padding(
-          padding:  EdgeInsets.all(size.cw(1)),
+          padding: EdgeInsets.all(size.cw(1)),
           child: SizedBox(
-            height:size.ch(5),
-            child: ListView(
-                scrollDirection: Axis.horizontal,
+            height: size.ch(5),
+            child: ListView(scrollDirection: Axis.horizontal,
                 /*shrinkWrap: true,*/
                 children: [
-              Padding(
-                padding:  EdgeInsets.all(size.cw(1)),
-                child: ElevatedButton(onPressed: (){}, child: const Text('All')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(size.cw(1)),
-                child: ElevatedButton(onPressed: (){}, child: const Text('Haircut')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(size.cw(1)),
-                child: ElevatedButton(onPressed: (){}, child: const Text('Makeup')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(size.cw(1)),
-                child: ElevatedButton(onPressed: (){}, child: const Text('Manicure')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(size.cw(1)),
-                child: ElevatedButton(onPressed: (){}, child: const Text('Pedicure')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(size.cw(1)),
-                child: ElevatedButton(onPressed: (){}, child: const Text('Trim')),
-              ),
-            ]),
+                  Padding(
+                    padding: EdgeInsets.all(size.cw(1)),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            primary: colorScheme.secondary,
+                            side: BorderSide(color: colorScheme.secondary)),
+                        onPressed: () {},
+                        child: const Text('All')),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(size.cw(1)),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            primary: colorScheme.secondaryContainer,
+                            side: BorderSide(color: colorScheme.secondary)),
+                        onPressed: () {},
+                        child: const Text('Haircut')),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(size.cw(1)),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            primary: colorScheme.secondaryContainer,
+                            side: BorderSide(color: colorScheme.secondary)),
+                        onPressed: () {},
+                        child: const Text('Makeup')),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(size.cw(1)),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            primary: colorScheme.secondaryContainer,
+                            side: BorderSide(color: colorScheme.secondary)),
+                        onPressed: () {},
+                        child: const Text('Manicure')),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(size.cw(1)),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            primary: colorScheme.secondaryContainer,
+                            side: BorderSide(color: colorScheme.secondary)),
+                        onPressed: () {},
+                        child: const Text('Pedicure')),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(size.cw(1)),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            primary: colorScheme.secondaryContainer,
+                            side: BorderSide(color: colorScheme.secondary)),
+                        onPressed: () {},
+                        child: const Text('Trim')),
+                  ),
+                ]),
           ),
+        ),
+        Container(
+          height: size.ch(30),
+          child: ListView.builder(
+              itemBuilder: ((context, index) => Card(
+                    child: Container(
+                        width: size.cw(90),
+                        child: Column(children: [
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => SalonInfo())));
+                            },
+                            title: Text("Vivians shop"),
+                            subtitle: Text("Spintex Road"),
+                          )
+                        ])),
+                  ))),
         )
       ]),
     );
