@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:thecut/generator/id_generator.dart';
+import 'package:thecut/providers/include_provider.dart';
 
 class ShopRegistrationScreen extends StatelessWidget {
   const ShopRegistrationScreen({Key? key}) : super(key: key);
@@ -7,7 +10,7 @@ class ShopRegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Shop registration")),
+      appBar: AppBar(title: const Text("Shop registration")),
       body: const MyStatefulWidget(),
     );
   }
@@ -23,15 +26,15 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _index = 0;
   String sexGroup = '1';
-  DateTime? dob = null;
+  DateTime? dob;
 
   // Initial Selected Value
-  String dropdownvalue = 'Barbering';
+  String role = 'Barbering';
 
   // List of items in our dropdown menu
   var items = [
     'Barbering',
-    'Hair dressing',
+    'Saloon',
     'Unisex',
     'Makeup',
     'Merchant',
@@ -41,8 +44,36 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final GlobalKey<FormState> shopDetailForm = GlobalKey<FormState>();
   final GlobalKey<FormState> contactForm = GlobalKey<FormState>();
 
+  TextEditingController fNameCtrl = TextEditingController();
+  TextEditingController sNameCtrl = TextEditingController();
+  TextEditingController ownerContactCtrl = TextEditingController();
+  TextEditingController shopNameCtrl = TextEditingController();
+  TextEditingController landMarkCtrl = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  TextEditingController igHandleCtrl = TextEditingController();
+  TextEditingController phoneCtrl = TextEditingController();
+
+  @override
+  initState(){
+    super.initState();
+
+   /* WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        phoneCtrl.text=provider(context).activePhone;
+      });
+    });*/
+
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        phoneCtrl.text=provider(context).activePhone;
+      });
+    });
+
     return Stepper(
       controlsBuilder: (BuildContext context, ControlsDetails controls) {
         return Row(
@@ -81,46 +112,92 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             });
           }
         } else {
+         /* print({
+            "first_name": fNameCtrl.text,
+            "surname": sNameCtrl.text,
+            "dob": dob,
+            "owner_contact": ownerContactCtrl.text,
+            "sex": sexGroup == '0' ? "Male" : "Female",
+            "shop_name": shopNameCtrl.text,
+            "land_mark": landMarkCtrl.text,
+            "email": emailCtrl.text,
+            "ig_handle": igHandleCtrl.text,
+            "phone": phoneCtrl.text
+          });*/
+
           if (shopDetailForm.currentState!.validate()) {
-            showDialog(
-                context: context,
-                builder: (builder) {
-                  return AlertDialog(
-                    content: Text('Registration Successful'),
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(builder).pop();
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (builder) {
-                              return Scaffold(
-                                  appBar: AppBar(
-                                    title: Text('Success Screen'),
-                                  ),
-                                  body: Center(
-                                      child: Container(
-                                    child: Text('Signed in Successfully'),
-                                  )));
-                            }));
-                          },
-                          child: Text('Ok'))
-                    ],
+            /* provider(context)
+                .registryStream()
+                .listen((QuerySnapshot<Map<String, dynamic>> event) {
+              event.docs.forEach((element) {
+                print(element.data());
+              });
+            });*/
+            String uid = generateId();
+            print(uid);
+
+            provider(context)
+                .registeredStream(phoneCtrl.text)
+                .listen((QuerySnapshot<Map<String, dynamic>> event) {
+              if (event.docs.length < 1) {
+                //print("New Entry over here");
+                FirebaseFirestore.instance.collection("registry").doc(uid).set({
+                  "uid": uid,
+                  "active_id": getIdByRole(uid, role.toLowerCase()),
+                  "phone": phoneCtrl.text,
+                  "_ids": [getIdByRole(uid, role.toLowerCase())],
+                  "last_login": DateTime.now()
+                }).then((value){
+               /*   print(
+                      {
+                        "fname": fNameCtrl.text,
+                        "sname": sNameCtrl.text,
+                        "dob": dob,
+                        "owner_contact": ownerContactCtrl.text,
+                        "sex": sexGroup == '0' ? "Male" : "Female",
+                        "shop_name": shopNameCtrl.text,
+                        "land_mark": landMarkCtrl.text,
+                        "email": emailCtrl.text,
+                        "ig_handle": igHandleCtrl.text,
+                        "phone": phoneCtrl.text,
+                        "photo_url":"",
+                        "types":[role.toLowerCase()],
+                        "tags":[],
+                        "location":const GeoPoint(0,0),
+                        "desc":""
+                      }
+                  );*/
+
+                  provider(context,type: 'shop',listen: false).collection().doc(uid).set(
+                      {
+                        "_ids":[getIdByRole(uid, role.toLowerCase())],
+                        "fname": fNameCtrl.text,
+                        "sname": sNameCtrl.text,
+                        "dob": dob,
+                        "owner_contact": ownerContactCtrl.text,
+                        "sex": sexGroup == '0' ? "male" : "female",
+                        "shop_name": shopNameCtrl.text,
+                        "land_mark": landMarkCtrl.text,
+                        "email": emailCtrl.text,
+                        "ig_handle": igHandleCtrl.text,
+                        "phone": phoneCtrl.text,
+                        "photo_url":"",
+                        "types":[role.toLowerCase()],
+                        "tags":[],
+                        "location":const GeoPoint(0,0),
+                        "desc":""
+                      }
                   );
+                }).then((value){
+                  print('Shop Added Successfully');
                 });
+              }else{
+                print('Phone number Already exist in system');
+              }
+            });
           }
         }
-
-        /* if (_index <= 1) {
-          setState(() {
-            _index += 1;
-          });
-        }*/
       },
-      /*onStepTapped: (int index) {
-        setState(() {
-          _index = index;
-        });
-      },*/
       steps: <Step>[
         Step(
           isActive: _index == 0,
@@ -131,6 +208,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: fNameCtrl,
                   maxLength: 15,
                   validator: (value) {
                     if (value!.trim() == null || value.isEmpty) {
@@ -155,17 +233,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   height: 10.0,
                 ),
                 TextFormField(
+                  controller: sNameCtrl,
                   maxLength: 10,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Shop Owner's Name is Required";
+                      return "Shop Owner's Surname is Required";
                     }
                     return null;
                   },
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                       /*  prefixIcon: Icon(Icons.person),*/
-                      contentPadding: EdgeInsets.only(bottom: 3),
+                      contentPadding: const EdgeInsets.only(bottom: 3),
                       labelText: 'Surname',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       /* hintText: 'Eg. John',*/
@@ -289,7 +368,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   height: 10.0,
                 ),
                 TextFormField(
-                  maxLength: 15,
+                  controller: ownerContactCtrl,
+                  maxLength: 10,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Owner's contact is Required";
@@ -321,6 +401,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               TextFormField(
+                controller: shopNameCtrl,
                 maxLength: 15,
                 validator: (value) {
                   if (value!.trim() == null || value.isEmpty) {
@@ -345,6 +426,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 10.0,
               ),
               TextFormField(
+                controller: landMarkCtrl,
                 maxLength: 15,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -374,24 +456,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: DropdownButton(
-                  // Initial Value
-                  value: dropdownvalue,
-
-                  // Down Arrow Icon
+                  value: role,
                   icon: const Icon(Icons.keyboard_arrow_down),
-
-                  // Array list of items
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,
                       child: Text(items),
                     );
                   }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
                   onChanged: (String? newValue) {
                     setState(() {
-                      dropdownvalue = newValue!;
+                      role = newValue!;
                     });
                   },
                 ),
@@ -407,6 +482,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               TextFormField(
+                controller: emailCtrl,
                 validator: (value) {
                   if (value!.trim() == null || value.isEmpty) {
                     return 'Email of shop is Required';
@@ -415,11 +491,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                    /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
                     contentPadding: const EdgeInsets.only(bottom: 3),
                     labelText: 'Email',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: "Eg.John's shop",*/
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -430,6 +504,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 10.0,
               ),
               TextFormField(
+                enabled: false,
+                controller: phoneCtrl,
                 maxLength: 10,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -439,11 +515,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                    /*  prefixIcon: Icon(Icons.person),*/
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Primary number',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: 'Eg. John',*/
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -454,6 +528,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 10.0,
               ),
               TextFormField(
+                controller: igHandleCtrl,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Instagram handle is required";
@@ -462,11 +537,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                    /*  prefixIcon: Icon(Icons.person),*/
-                    contentPadding: EdgeInsets.only(bottom: 3),
+                    contentPadding: const EdgeInsets.only(bottom: 3),
                     labelText: 'Instagram handle',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: 'Eg. John',*/
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,

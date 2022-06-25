@@ -100,7 +100,7 @@ class _WorkerPhoneEntryScreenState extends State<WorkerPhoneEntryScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (builder) {
-                          return  OTPReceptionScreen(authType: chosenAuth,);
+                          return  OTPReceptionScreen(authType: chosenAuth,phone: phoneCtrl.text,);
                         }));
                       },
                       child: Text("SEND OTP"))),

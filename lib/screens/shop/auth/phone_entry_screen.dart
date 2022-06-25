@@ -101,7 +101,7 @@ class _ShopPhoneEntryScreenState extends State<ShopPhoneEntryScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (builder) {
-                          return OTPReceptionScreen(source: widget.source, authType: widget.authType,);
+                          return OTPReceptionScreen(source: widget.source, authType: widget.authType,phone:phoneCtrl.text);
                         }));
                       },
                       child: Text("SEND OTP"))),

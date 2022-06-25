@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:thecut/providers/include_provider.dart';
 
 import 'package:thecut/scaling/scaler.dart';
 import 'package:thecut/screens/orientation/worker_registration_screen.dart';
@@ -10,7 +11,8 @@ import 'package:thecut/screens/worker/auth/auth_linker_screen.dart';
 class OTPReceptionScreen extends StatefulWidget {
   final String authType;
   final String source;
-  const OTPReceptionScreen({Key? key, required this.authType, this.source='worker'}) : super(key: key);
+  final String phone;
+  const OTPReceptionScreen({Key? key, required this.authType, required this.phone,this.source='worker'}) : super(key: key);
 
   @override
   State<OTPReceptionScreen> createState() => _OTPReceptionScreenState();
@@ -112,6 +114,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
                       color: Colors.deepPurpleAccent.withOpacity(.5),
                     )),
                 onSubmit: (pin){
+                  provider(context).setActivePhone(widget.phone);
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
                     if(widget.authType=='signin'){
                       return const AuthLinkerScreen();

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:thecut/providers/include_provider.dart';
 import 'package:thecut/scaling/scaler.dart';
 import 'package:thecut/screens/orientation/shop_registration_screen.dart';
 
@@ -10,7 +11,8 @@ import 'package:thecut/screens/orientation/shop_registration_screen.dart';
 class OTPReceptionScreen extends StatefulWidget {
   final String authType;
   final String source;
-  const OTPReceptionScreen({Key? key,  required this.authType, required this.source}) : super(key: key);
+  final String phone;
+  const OTPReceptionScreen({Key? key,  required this.authType, required this.source, required this.phone}) : super(key: key);
 
   @override
   State<OTPReceptionScreen> createState() => _OTPReceptionScreenState();
@@ -118,6 +120,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
                  onSubmit : (pin){
                   print('2. On Submitted Called');
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+                    provider(context).setActivePhone(widget.phone);
                     if(widget.authType=='signin'){
                       return Scaffold(
                           appBar: AppBar(title: Text('Success Screen'),),

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:thecut/providers/client_provider.dart';
-import 'package:thecut/providers/provider.dart';
+import 'package:thecut/providers/app_provider.dart';
 import 'package:thecut/providers/shop_provider.dart';
 import 'package:thecut/providers/worker_provider.dart';
 import 'package:thecut/screens/orientation/onboarding_screen.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ApplicationProvider()),
+        ChangeNotifierProvider(create: (context) => AppProvider()),
         ChangeNotifierProvider(create: (context) => WorkerProvider()),
         ChangeNotifierProvider(create: (context) => ShopProvider()),
         ChangeNotifierProvider(create: (context) => ClientProvider()),
