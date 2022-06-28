@@ -207,111 +207,13 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                
                 MajorCategory(size: size, name: 'Trim',),
                 MajorCategory(size: size, name: 'Makeup',),
+                MajorCategory(size: size, name: 'Retouch',),       
+                MajorCategory(size: size, name: 'Wash',),
+               MajorCategory(size: size, name: 'Extension',),
+                MajorCategory(size: size, name: 'Dying',),
                 MajorCategory(size: size, name: 'Retouch',),
-
-               
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor:
-                              colorScheme.secondary.withOpacity(0.2)),
-                      const FittedBox(
-                          child: Text(
-                        'Wash',
-                        style: TextStyle(color: Colors.black),
-                      ))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor:
-                              colorScheme.secondary.withOpacity(0.2)),
-                      const FittedBox(
-                          child: Text(
-                        'Extension',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor:
-                              colorScheme.secondary.withOpacity(0.2)),
-                      const FittedBox(
-                          child: Text(
-                        'Dying',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor:
-                              colorScheme.secondary.withOpacity(0.2)),
-                      const FittedBox(
-                          child: Text(
-                        'Afro',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor:
-                              colorScheme.secondary.withOpacity(0.2)),
-                      const FittedBox(
-                          child: Text(
-                        'Creams',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.sailing),
-                          backgroundColor:
-                              colorScheme.secondary.withOpacity(0.2)),
-                      const FittedBox(
-                          child: Text(
-                        'Perfume',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
+                MajorCategory(size: size, name: 'Afro',),
+                MajorCategory(size: size, name: 'Perfume',),
               ],
             ),
           ),
