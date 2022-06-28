@@ -8,12 +8,44 @@ import 'package:thecut/scaling/scaler.dart';
 import 'package:thecut/screens/shop/salon_info.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
-class ClientHomeScreen extends StatefulWidget {
-  const ClientHomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _ClientHomeScreenState createState() => _ClientHomeScreenState();
-}
+//initializations
+List shops = [
+  {
+    "img": "https://picsum.photos/id/3/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/4/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/46/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/20/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/7/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+];
 
 final List<String> imgList = [
   'assets/announcement_1.png',
@@ -71,127 +103,100 @@ final List<Widget> imageSliders = imgList
         ))
     .toList();
 
+class ClientHomeScreen extends StatefulWidget {
+  const ClientHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _ClientHomeScreenState createState() => _ClientHomeScreenState();
+}
+
 class _ClientHomeScreenState extends State<ClientHomeScreen> {
   late bool isLoading = true;
   late PageController controller;
+  ScrollController scrollController = ScrollController();
   int _current = 0;
   final CarouselController _controller = CarouselController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController = ScrollController(initialScrollOffset: 1);
+  }
 
   @override
   Widget build(BuildContext context) {
     Sizer size = Sizer(context: context, hasBottomNav: true, hasAppBar: true);
-    return SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        AppBar(
-          backgroundColor: Color(0xffff9000),
-          leading: IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(Icons.menu)),
-          title: Text(
-            'theCut',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.mail)),
-            IconButton(
-              icon: Icon(Icons.bookmark),
-              onPressed: () {},
-            )
-          ],
-        ),
-        SizedBox(
-          height: size.ch(8),
-          child: Padding(
-              padding: EdgeInsets.all(size.ch(2)),
-              child: Text(
-                "Welcome to theCut,😍",
-                /*${'Aliko'}*/
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-              )),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: size.ch(2), horizontal: size.cw(2)),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Color(0x20c9c8c8),
-                borderRadius: BorderRadius.circular(size.ch(1))),
-            child: Row(
-              children: [
-                IconButton(
-                    splashRadius: size.cw(5),
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.search,
-                      color: Color(0x44c9c8c8),
-                    )),
-                Text(
-                  'Search',
-                  style: TextStyle(color: const Color(0x44c9c8c8)),
+    return NestedScrollView(
+      controller: scrollController,
+      headerSliverBuilder: ((context, innerBoxIsScrolled) => [
+            SliverOverlapAbsorber(
+              // This widget takes the overlapping behavior of the SliverAppBar,
+              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              sliver: SliverAppBar(
+                pinned: true,
+                backgroundColor: Color(0xffff9000),
+                leading: IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon: const Icon(Icons.menu)),
+                title: Text(
+                  'theCut',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Spacer(),
-                IconButton(
-                  splashRadius: size.cw(5),
-                  icon: Icon(
-                    Icons.filter_alt_outlined,
-                    color: Color(0xffff9000),
-                  ),
-                  onPressed: () {},
-                )
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: size.cw(2), vertical: size.ch(1)),
-          child: Container(
-            height: size.ch(25),
-            width: size.cw(96),
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(size.ch(5))),
-            child: LayoutBuilder(
-                builder: (BuildContext ctx, BoxConstraints constraints) {
-              final double SLIDER_HEIGHT = 0.35 * constraints.maxHeight;
-              final double CATEGORY_HEIGHT = 0.13 * constraints.maxHeight;
-              final double POPULAR_CARD = 0.22 * constraints.maxHeight;
-              final double SUGGESTION_CARDS = 0.22 * constraints.maxHeight;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //First child
-                  Container(
+                actions: [
+                  IconButton(onPressed: () {}, icon: Icon(Icons.mail)),
+                  IconButton(
+                    icon: Icon(Icons.bookmark),
+                    onPressed: () {},
+                  )
+                ],
+                expandedHeight: size.ch(33) + 60,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    padding: EdgeInsets.only(
+                        bottom: size.ch(0.3), top: size.ch(1) + 50),
                     height: size.ch(25),
                     width: size.cw(96),
                     /* width: MediaQuery.of(context).size.width,*/
-                    child: Stack(children: [
-                      CarouselSlider(
-                        carouselController: _controller,
-                        options: CarouselOptions(
-                            height: size.ch(25),
-                            viewportFraction: 1.2,
-                            autoPlay: true,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _current = index;
-                              });
-                            }),
-                        items: imgList
-                            .map((item) => ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(item,
-                                    fit: BoxFit.cover, width: size.cw(96))))
-                            .toList(),
-                      ),
-                    ]),
-                  )
-                ],
-              );
-            }),
-          ),
-        ),
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.all(size.ch(1)),
+                            child: Text(
+                              "Welcome to theCut,😍",
+                              /*${'Aliko'}*/
+                              style: TextStyle(
+                                  fontSize: 20.sp, fontWeight: FontWeight.bold),
+                            )),
+                        CarouselSlider(
+                          carouselController: _controller,
+                          options: CarouselOptions(
+                              height: size.ch(25),
+                              viewportFraction: 1.2,
+                              autoPlay: true,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _current = index;
+                                });
+                              }),
+                          items: imgList
+                              .map((item) => ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(item,
+                                      fit: BoxFit.cover, width: size.cw(96))))
+                              .toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(height: size.ch(11)),
+
         Container(
           height: size.ch(13),
           child: Padding(
@@ -199,6 +204,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
+               
+                MajorCategory(size: size, name: 'Trim',),
+                MajorCategory(size: size, name: 'Makeup',),
+                MajorCategory(size: size, name: 'Retouch',),
+
+               
                 Padding(
                   padding: EdgeInsets.all(size.cw(1)),
                   child: Column(
@@ -206,55 +217,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       CircleAvatar(
                           radius: size.ch(4),
                           child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
-                      const FittedBox(
-                          child: Text(
-                        'Makeup',
-                        style: TextStyle(color: Colors.black),
-                      ))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
-                      const FittedBox(
-                          child: Text(
-                        'Trim',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
-                      const FittedBox(
-                          child: Text(
-                        'Retouch',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(size.cw(1)),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                          radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
+                          backgroundColor:
+                              colorScheme.secondary.withOpacity(0.2)),
                       const FittedBox(
                           child: Text(
                         'Wash',
@@ -270,7 +234,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       CircleAvatar(
                           radius: size.ch(4),
                           child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
+                          backgroundColor:
+                              colorScheme.secondary.withOpacity(0.2)),
                       const FittedBox(
                           child: Text(
                         'Extension',
@@ -286,7 +251,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       CircleAvatar(
                           radius: size.ch(4),
                           child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
+                          backgroundColor:
+                              colorScheme.secondary.withOpacity(0.2)),
                       const FittedBox(
                           child: Text(
                         'Dying',
@@ -302,7 +268,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       CircleAvatar(
                           radius: size.ch(4),
                           child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
+                          backgroundColor:
+                              colorScheme.secondary.withOpacity(0.2)),
                       const FittedBox(
                           child: Text(
                         'Afro',
@@ -318,7 +285,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       CircleAvatar(
                           radius: size.ch(4),
                           child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
+                          backgroundColor:
+                              colorScheme.secondary.withOpacity(0.2)),
                       const FittedBox(
                           child: Text(
                         'Creams',
@@ -333,8 +301,9 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                     children: [
                       CircleAvatar(
                           radius: size.ch(4),
-                          child: Icon(Icons.science),
-                          backgroundColor: colorScheme.secondary),
+                          child: Icon(Icons.sailing),
+                          backgroundColor:
+                              colorScheme.secondary.withOpacity(0.2)),
                       const FittedBox(
                           child: Text(
                         'Perfume',
@@ -372,7 +341,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
         Padding(
           padding: EdgeInsets.all(size.cw(1)),
           child: SizedBox(
-            height: size.ch(5),
+            height: size.ch(8),
             child: ListView(scrollDirection: Axis.horizontal,
                 /*shrinkWrap: true,*/
                 children: [
@@ -381,85 +350,172 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: StadiumBorder(),
+                            padding: EdgeInsets.all(5),
                             primary: colorScheme.secondary,
                             side: BorderSide(color: colorScheme.secondary)),
                         onPressed: () {},
-                        child: const Text('All')),
+                        child: Text('All',
+                            style: TextStyle(color: colorScheme.onSecondary))),
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.cw(1)),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: StadiumBorder(),
-                            primary: colorScheme.secondaryContainer,
+                            padding: EdgeInsets.all(5),
+                            primary: colorScheme.onSecondary,
                             side: BorderSide(color: colorScheme.secondary)),
                         onPressed: () {},
-                        child: const Text('Haircut')),
+                        child: Text(
+                          'Haircut',
+                          style: TextStyle(color: colorScheme.secondary),
+                        )),
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.cw(1)),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: StadiumBorder(),
-                            primary: colorScheme.secondaryContainer,
+                            padding: EdgeInsets.all(5),
+                            primary: colorScheme.onSecondary,
                             side: BorderSide(color: colorScheme.secondary)),
                         onPressed: () {},
-                        child: const Text('Makeup')),
+                        child: Text('Makeup',
+                            style: TextStyle(color: colorScheme.secondary))),
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.cw(1)),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: StadiumBorder(),
-                            primary: colorScheme.secondaryContainer,
+                            padding: EdgeInsets.all(5),
+                            primary: colorScheme.onSecondary,
                             side: BorderSide(color: colorScheme.secondary)),
                         onPressed: () {},
-                        child: const Text('Manicure')),
+                        child: Text('Manicure',
+                            style: TextStyle(color: colorScheme.secondary))),
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.cw(1)),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: StadiumBorder(),
-                            primary: colorScheme.secondaryContainer,
+                            padding: EdgeInsets.all(5),
+                            primary: colorScheme.onSecondary,
                             side: BorderSide(color: colorScheme.secondary)),
                         onPressed: () {},
-                        child: const Text('Pedicure')),
+                        child: Text('Pedicure',
+                            style: TextStyle(color: colorScheme.secondary))),
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.cw(1)),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(5),
                             shape: StadiumBorder(),
-                            primary: colorScheme.secondaryContainer,
+                            primary: colorScheme.onSecondary,
                             side: BorderSide(color: colorScheme.secondary)),
                         onPressed: () {},
-                        child: const Text('Trim')),
+                        child: Text('Trim',
+                            style: TextStyle(color: colorScheme.secondary))),
                   ),
                 ]),
           ),
         ),
-        Container(
-          height: size.ch(30),
+        Expanded(
           child: ListView.builder(
-              itemBuilder: ((context, index) => Card(
-                    child: Container(
-                        width: size.cw(90),
-                        child: Column(children: [
-                          ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => SalonInfo())));
-                            },
-                            title: Text("Vivians shop"),
-                            subtitle: Text("Spintex Road"),
-                          )
-                        ])),
-                  ))),
-        )
+              shrinkWrap: true,
+              // scrollDirection:Axis.horizontal,
+              itemCount: shops.length,
+              itemBuilder: ((context, index) =>
+                  ShopCard(size: size, context: context, shop: shops[index]))),
+        ),
       ]),
+    );
+  }
+}
+
+class ShopCard extends StatelessWidget {
+  const ShopCard({
+    Key? key,
+    required this.size,
+    required this.context,
+    required this.shop,
+  }) : super(key: key);
+
+  final Sizer size;
+  final BuildContext context;
+  final Map<String,dynamic> shop;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Container(
+          width: size.cw(90),
+          height: size.cw(30),
+          child: Row(children: [
+            Container(
+                height: size.cw(30),
+                width: size.cw(30),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(shop["img"]), fit: BoxFit.cover))),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => SalonInfo())));
+                      },
+                      title: Text(shop["name"]),
+                      subtitle: Text(shop["location"]),
+                    ),
+                  ),
+                  Chip(
+                    label: Text(shop["rating"]),
+                    avatar: Icon(Icons.star),
+                  )
+                ],
+              ),
+            )
+          ])),
+    );
+  }
+}
+
+//Major category
+class MajorCategory extends StatelessWidget {
+  const MajorCategory({
+    Key? key,
+    required this.size, required this.name,
+  }) : super(key: key);
+
+  final Sizer size;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(size.cw(1)),
+      child: Column(
+        children: [
+          CircleAvatar(
+              radius: size.ch(4),
+              child: Icon(Icons.science),
+              backgroundColor: colorScheme.secondary.withOpacity(0.2)),
+           FittedBox(
+              child: Text(
+           name,
+            style: TextStyle(color: Colors.black),
+          )),
+        ],
+      ),
     );
   }
 }

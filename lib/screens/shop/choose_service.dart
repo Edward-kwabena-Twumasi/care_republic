@@ -32,9 +32,12 @@ class ChooseService extends SearchDelegate {
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 7,
-              itemBuilder: ((context, index) => Chip(
-                    label: Text(searchTerm),
-                  ))),
+              itemBuilder: ((context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal:5.0,vertical: 1),
+                child: Chip(
+                      label: Text(searchTerm),
+                    ),
+              ))),
         ));
   }
 
