@@ -4,4 +4,4 @@ C:
 cd C:/flutterdev/care_republic
 git add .
 git commit -m "beauty care app eddies branch"
-git push -u origin_edd eddie
+git push -u origin_edd main
