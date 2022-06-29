@@ -45,6 +45,20 @@ List shops = [
     "location": "Location 1",
     "rating": "3",
   },
+  {
+    "img": "https://picsum.photos/id/21/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "4",
+  },
+  {
+    "img": "https://picsum.photos/id/70/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
 ];
 
 final List<String> imgList = [
@@ -102,6 +116,7 @@ final List<Widget> imageSliders = imgList
           ),
         ))
     .toList();
+List filterNames = ["All"];
 
 class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({Key? key}) : super(key: key);
@@ -125,7 +140,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Sizer size = Sizer(context: context, hasBottomNav: true, hasAppBar: true);
+    Sizer size = Sizer(context: context, hasBottomNav: true, hasAppBar: false);
     return NestedScrollView(
       controller: scrollController,
       headerSliverBuilder: ((context, innerBoxIsScrolled) => [
@@ -160,6 +175,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                     width: size.cw(96),
                     /* width: MediaQuery.of(context).size.width,*/
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                             padding: EdgeInsets.all(size.ch(1)),
@@ -169,23 +185,25 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               style: TextStyle(
                                   fontSize: 20.sp, fontWeight: FontWeight.bold),
                             )),
-                        CarouselSlider(
-                          carouselController: _controller,
-                          options: CarouselOptions(
-                              height: size.ch(25),
-                              viewportFraction: 1.2,
-                              autoPlay: true,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  _current = index;
-                                });
-                              }),
-                          items: imgList
-                              .map((item) => ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(item,
-                                      fit: BoxFit.cover, width: size.cw(96))))
-                              .toList(),
+                        Center(
+                          child: CarouselSlider(
+                            carouselController: _controller,
+                            options: CarouselOptions(
+                                height: size.ch(25),
+                                viewportFraction: 1.2,
+                                autoPlay: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _current = index;
+                                  });
+                                }),
+                            items: imgList
+                                .map((item) => ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(item,
+                                        fit: BoxFit.cover, width: size.cw(96))))
+                                .toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -204,16 +222,42 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-               
-                MajorCategory(size: size, name: 'Trim',),
-                MajorCategory(size: size, name: 'Makeup',),
-                MajorCategory(size: size, name: 'Retouch',),       
-                MajorCategory(size: size, name: 'Wash',),
-               MajorCategory(size: size, name: 'Extension',),
-                MajorCategory(size: size, name: 'Dying',),
-                MajorCategory(size: size, name: 'Retouch',),
-                MajorCategory(size: size, name: 'Afro',),
-                MajorCategory(size: size, name: 'Perfume',),
+                MajorCategory(
+                  size: size,
+                  name: 'Trim',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Makeup',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Retouch',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Wash',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Extension',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Dying',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Retouch',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Afro',
+                ),
+                MajorCategory(
+                  size: size,
+                  name: 'Perfume',
+                ),
               ],
             ),
           ),
@@ -247,80 +291,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             child: ListView(scrollDirection: Axis.horizontal,
                 /*shrinkWrap: true,*/
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(size.cw(1)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            padding: EdgeInsets.all(5),
-                            primary: colorScheme.secondary,
-                            side: BorderSide(color: colorScheme.secondary)),
-                        onPressed: () {},
-                        child: Text('All',
-                            style: TextStyle(color: colorScheme.onSecondary))),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.cw(1)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            padding: EdgeInsets.all(5),
-                            primary: colorScheme.onSecondary,
-                            side: BorderSide(color: colorScheme.secondary)),
-                        onPressed: () {},
-                        child: Text(
-                          'Haircut',
-                          style: TextStyle(color: colorScheme.secondary),
-                        )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.cw(1)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            padding: EdgeInsets.all(5),
-                            primary: colorScheme.onSecondary,
-                            side: BorderSide(color: colorScheme.secondary)),
-                        onPressed: () {},
-                        child: Text('Makeup',
-                            style: TextStyle(color: colorScheme.secondary))),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.cw(1)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            padding: EdgeInsets.all(5),
-                            primary: colorScheme.onSecondary,
-                            side: BorderSide(color: colorScheme.secondary)),
-                        onPressed: () {},
-                        child: Text('Manicure',
-                            style: TextStyle(color: colorScheme.secondary))),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.cw(1)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(),
-                            padding: EdgeInsets.all(5),
-                            primary: colorScheme.onSecondary,
-                            side: BorderSide(color: colorScheme.secondary)),
-                        onPressed: () {},
-                        child: Text('Pedicure',
-                            style: TextStyle(color: colorScheme.secondary))),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.cw(1)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(5),
-                            shape: StadiumBorder(),
-                            primary: colorScheme.onSecondary,
-                            side: BorderSide(color: colorScheme.secondary)),
-                        onPressed: () {},
-                        child: Text('Trim',
-                            style: TextStyle(color: colorScheme.secondary))),
-                  ),
+                  FilterCategory(size: size, name: 'All'),
+                  FilterCategory(size: size, name: 'Haircut'),
+                  FilterCategory(size: size, name: 'Makeup'),
+                  FilterCategory(size: size, name: 'Manicure'),
+                  FilterCategory(size: size, name: 'Pedicure'),
+                  FilterCategory(size: size, name: 'Trim'),
                 ]),
           ),
         ),
@@ -337,6 +313,54 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   }
 }
 
+//Filter category widget
+class FilterCategory extends StatefulWidget {
+  const FilterCategory({
+    Key? key,
+    required this.size,
+    required this.name,
+  }) : super(key: key);
+
+  final Sizer size;
+  final String name;
+
+  @override
+  State<FilterCategory> createState() => _FilterCategoryState();
+}
+
+class _FilterCategoryState extends State<FilterCategory> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: widget.size.cw(1.1), vertical: widget.size.cw(0.5)),
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: StadiumBorder(),
+              padding: EdgeInsets.all(5),
+              primary: filterNames.contains(widget.name)
+                  ? colorScheme.secondary
+                  : colorScheme.onSecondary,
+              side: BorderSide(color: colorScheme.secondary)),
+          onPressed: () {
+            setState(() {
+              
+              filterNames.contains(widget.name)
+                ? filterNames.remove(widget.name)
+                : filterNames.add(widget.name);
+            });
+            
+          },
+          child: Text(widget.name,
+              style: TextStyle(
+                  color: filterNames.contains(widget.name)
+                      ? colorScheme.onSecondary
+                      : colorScheme.secondary))),
+    );
+  }
+}
+
+//shop card widget
 class ShopCard extends StatelessWidget {
   const ShopCard({
     Key? key,
@@ -347,7 +371,7 @@ class ShopCard extends StatelessWidget {
 
   final Sizer size;
   final BuildContext context;
-  final Map<String,dynamic> shop;
+  final Map<String, dynamic> shop;
 
   @override
   Widget build(BuildContext context) {
@@ -395,7 +419,8 @@ class ShopCard extends StatelessWidget {
 class MajorCategory extends StatelessWidget {
   const MajorCategory({
     Key? key,
-    required this.size, required this.name,
+    required this.size,
+    required this.name,
   }) : super(key: key);
 
   final Sizer size;
@@ -411,9 +436,9 @@ class MajorCategory extends StatelessWidget {
               radius: size.ch(4),
               child: Icon(Icons.science),
               backgroundColor: colorScheme.secondary.withOpacity(0.2)),
-           FittedBox(
+          FittedBox(
               child: Text(
-           name,
+            name,
             style: TextStyle(color: Colors.black),
           )),
         ],
