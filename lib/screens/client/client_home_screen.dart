@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/scaling/scaler.dart';
+import 'package:thecut/screens/client/category_page.dart';
+import 'package:thecut/screens/shop/about_shop.dart';
 import 'package:thecut/screens/shop/salon_info.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
@@ -149,7 +152,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               sliver: SliverAppBar(
                 pinned: true,
-                backgroundColor: Color(0xffff9000),
+                backgroundColor: colorScheme.primary,
                 leading: IconButton(
                     onPressed: () {
                       Scaffold.of(context).openDrawer();
@@ -166,25 +169,59 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                     onPressed: () {},
                   )
                 ],
-                expandedHeight: size.ch(33) + 60,
+                expandedHeight: size.ch(35) + 70,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     padding: EdgeInsets.only(
-                        bottom: size.ch(0.3), top: size.ch(1) + 50),
+                        bottom: size.ch(0.3), top: size.ch(1) + 40),
                     height: size.ch(25),
                     width: size.cw(96),
                     /* width: MediaQuery.of(context).size.width,*/
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                            padding: EdgeInsets.all(size.ch(1)),
-                            child: Text(
-                              "Welcome to theCut,😍",
-                              /*${'Aliko'}*/
-                              style: TextStyle(
-                                  fontSize: 20.sp, fontWeight: FontWeight.bold),
-                            )),
+                             Padding(
+                               padding: const EdgeInsets.only(left:8.0),
+                               child: Text(
+                                    "Welcome to theCut 😍",
+                                    /*${'Aliko'}*/
+                                    style: TextStyle(
+                                        fontSize: 20.sp, fontWeight: FontWeight.bold,color: Colors.white),
+                                  ),
+                             ),
+                        Center(
+                          child: Padding(
+                              padding: EdgeInsets.all(size.ch(1)),
+                              child: Card(
+                                //surfaceTintColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                elevation: 20,
+                                semanticContainer: false,
+                                borderOnForeground: false,
+                               // shadowColor: Colors.transparent,
+                                color: Colors.transparent,
+                                child: Container(
+                                  padding: EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                   color: Colors.white10,
+                                   borderRadius: BorderRadius.circular(10) 
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                  Text(
+                                  "Search",
+                                  /*${'Aliko'}*/
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                     // Text("Search",style: TextStyle(color: Colors.white),),
+                                      Icon(Icons.search_outlined,color: Colors.white,)
+                                    ],
+                                  ),
+                                ),
+                              )),
+                        ),
                         Center(
                           child: CarouselSlider(
                             carouselController: _controller,
@@ -225,38 +262,43 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                 MajorCategory(
                   size: size,
                   name: 'Trim',
+                  icon: Icons.cut,
                 ),
                 MajorCategory(
                   size: size,
                   name: 'Makeup',
+                  icon: Icons.color_lens,
                 ),
                 MajorCategory(
                   size: size,
                   name: 'Retouch',
+                  icon: Icons.touch_app,
                 ),
                 MajorCategory(
                   size: size,
                   name: 'Wash',
+                  icon: Icons.wash,
                 ),
                 MajorCategory(
                   size: size,
                   name: 'Extension',
+                  icon: Icons.extension,
                 ),
                 MajorCategory(
                   size: size,
                   name: 'Dying',
+                  icon: Icons.colorize
                 ),
-                MajorCategory(
-                  size: size,
-                  name: 'Retouch',
-                ),
+                
                 MajorCategory(
                   size: size,
                   name: 'Afro',
+                  icon: FontAwesomeIcons.houseDamage,
                 ),
                 MajorCategory(
                   size: size,
                   name: 'Perfume',
+                  icon: FontAwesomeIcons.sprayCan,
                 ),
               ],
             ),
@@ -333,23 +375,21 @@ class _FilterCategoryState extends State<FilterCategory> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: widget.size.cw(1.1), vertical: widget.size.cw(0.5)),
+          horizontal: widget.size.cw(1.2), vertical: widget.size.cw(0.2)),
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               shape: StadiumBorder(),
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
               primary: filterNames.contains(widget.name)
                   ? colorScheme.secondary
                   : colorScheme.onSecondary,
               side: BorderSide(color: colorScheme.secondary)),
           onPressed: () {
             setState(() {
-              
               filterNames.contains(widget.name)
-                ? filterNames.remove(widget.name)
-                : filterNames.add(widget.name);
+                  ? filterNames.remove(widget.name)
+                  : filterNames.add(widget.name);
             });
-            
           },
           child: Text(widget.name,
               style: TextStyle(
@@ -376,17 +416,24 @@ class ShopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: Container(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: SizedBox(
           width: size.cw(90),
-          height: size.cw(30),
+          height: size.cw(35),
           child: Row(children: [
-            Container(
-                height: size.cw(30),
-                width: size.cw(30),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(shop["img"]), fit: BoxFit.cover))),
+            Padding(
+              padding:  EdgeInsets.all(size.cw(2)),
+              child: Container(
+                  height: size.cw(30),
+                  width: size.cw(30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      15
+                    ),
+                      image: DecorationImage(
+                        
+                          image: NetworkImage(shop["img"]), fit: BoxFit.cover))),
+            ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -403,9 +450,17 @@ class ShopCard extends StatelessWidget {
                       subtitle: Text(shop["location"]),
                     ),
                   ),
-                  Chip(
-                    label: Text(shop["rating"]),
-                    avatar: Icon(Icons.star),
+                  Align(
+                    
+                    alignment: Alignment.centerLeft,
+                    child: Chip(
+                      padding: EdgeInsets.only(left: 8),
+                      labelPadding: EdgeInsets.zero,
+                      labelStyle: TextStyle(fontSize: 20.sp,color: colorScheme.primary),
+                      backgroundColor: Colors.transparent,
+                      label: Text(shop["rating"]),
+                      avatar: Icon(Icons.star,color: colorScheme.secondary.withOpacity(0.6),),
+                    ),
                   )
                 ],
               ),
@@ -420,28 +475,32 @@ class MajorCategory extends StatelessWidget {
   const MajorCategory({
     Key? key,
     required this.size,
-    required this.name,
+    required this.name, required this.icon,
   }) : super(key: key);
 
   final Sizer size;
   final String name;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(size.cw(1)),
-      child: Column(
-        children: [
-          CircleAvatar(
-              radius: size.ch(4),
-              child: Icon(Icons.science),
-              backgroundColor: colorScheme.secondary.withOpacity(0.2)),
-          FittedBox(
-              child: Text(
-            name,
-            style: TextStyle(color: Colors.black),
-          )),
-        ],
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: ((context) => CatetegoryPage(category: name)))),
+      child: Padding(
+        padding: EdgeInsets.all(size.cw(1)),
+        child: Column(
+          children: [
+            CircleAvatar(
+                radius: size.ch(3.4),
+                child: Icon(icon,color: colorScheme.secondary,),
+                backgroundColor: colorScheme.secondary.withOpacity(0.2)),
+            FittedBox(
+                child: Text(
+              name,
+              style: TextStyle(color: Colors.black),
+            )),
+          ],
+        ),
       ),
     );
   }
