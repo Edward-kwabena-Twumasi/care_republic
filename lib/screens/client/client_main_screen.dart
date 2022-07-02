@@ -35,6 +35,7 @@ class _ClientMainScreenState extends State<ClientMainScreen> {
         child: SafeArea(
             child: Scaffold(
           bottomNavigationBar: BottomNavigationBar(
+            
              /* type: BottomNavigationBarType.shifting,*/
               backgroundColor: const Color.fromARGB(255, 61, 13, 13),
               selectedItemColor: Colors.black,
