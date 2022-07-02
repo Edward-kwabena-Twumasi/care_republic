@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:thecut/screens/shop/service_category_page.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
 import '../../scaling/scaler.dart';
-import 'choose_service.dart';
+import 'search_style.dart';
 
 List serviceStyles = [
   {
@@ -296,7 +297,7 @@ class ActionMenu extends StatelessWidget {
     );
   }
 }
-
+//shop specialists card
 class ShopSpecialist extends StatelessWidget {
   const ShopSpecialist({Key? key, required this.size}) : super(key: key);
   final Sizer size;
@@ -316,7 +317,7 @@ class ShopSpecialist extends StatelessWidget {
         ));
   }
 }
-//shop specialists card
+
 
 //Shop tab navigation
 class ShopTabs extends StatefulWidget {
@@ -478,19 +479,17 @@ class _ShopTabsState extends State<ShopTabs>
                     child: ListTile(
                       contentPadding: EdgeInsets.symmetric(horizontal: 8),
                       onTap: () {
-                        showSearch(
-                            context: context,
-                            delegate:
-                                ChooseService("Hair cut", serviceStyles,widget.size));
+                        Navigator.push(context, MaterialPageRoute(builder: (builder){
+                          return ServiceCatetegoryPage(category: "Haircut");
+                        }));
                       },
                       enabled: true,
                       title: Text("Hair Cut"),
                       trailing: TextButton(
                           onPressed: () {
-                            showSearch(
-                                context: context,
-                                delegate: ChooseService(
-                                    "Service", serviceStyles, widget.size));
+                            Navigator.push(context, MaterialPageRoute(builder: (builder){
+                              return ServiceCatetegoryPage(category: "Haircut");
+                            }));
                           },
                           child: Text("See all")),
                     ),

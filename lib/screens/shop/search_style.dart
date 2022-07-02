@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:thecut/screens/shop/booking_page.dart';
 
 import '../../scaling/scaler.dart';
 import '../../theme/custom_theme.dart';
@@ -11,12 +12,13 @@ const shopData = {
   "services": []
 };
 
-class ChooseService extends SearchDelegate {
+class SearchStyle extends SearchDelegate {
   final String searchTerm;
   final List serviceStyles;
   String defaultDisp = "List";
+  List selected=[];
   final Sizer size;
-  ChooseService(this.searchTerm, this.serviceStyles, this.size);
+  SearchStyle(this.searchTerm, this.serviceStyles, this.size);
   @override
   // TODO: implement searchFieldLabel
   String? get searchFieldLabel => "Choose service";
@@ -26,24 +28,7 @@ class ChooseService extends SearchDelegate {
   // InputDecorationTheme? get searchFieldDecorationTheme => InputDecorationTheme(
 
   // );
-  PreferredSizeWidget? buildBottom(BuildContext context) {
-    // TODO: implement buildBottom
-    return PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: Container(
-          height: 50,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 7,
-              itemBuilder: ((context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0, vertical: 1),
-                    child: Chip(
-                      label: Text(searchTerm ),
-                    ),
-                  ))),
-        ));
-  }
+
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -76,25 +61,30 @@ class ChooseService extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     // TODO: implement buildResults
-    return ListView(
-      children: [
-        ListTile(
-          title: Text("Down cut"),
-        ),
-        ListTile(
-          title: Text("Fading"),
-        )
-      ],
+    return  StatefulBuilder(builder: (BuildContext context,StateSetter setState) {
+      List suggestions=serviceStyles.map((style) => style["name"].contains(query)).toList();
+      Color color=Colors.white;
+      return ListView.builder(
+          itemCount: suggestions.length,
+          itemBuilder: ((context, index) => StyleCard(
+              size: size, context: context, service: suggestions[index],
+            color: color)
+          ));
+    },
+
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    return ListView.builder(
-        itemCount: serviceStyles.length,
-        itemBuilder: ((context, index) => StyleCard(
-            size: size, context: context, service: serviceStyles[index])));
+    return  StatefulBuilder(builder: (BuildContext context, setState) {
+
+      Color color=Colors.white;
+      return Text("Chosen style");
+    },
+
+    );
   }
 }
 
@@ -104,16 +94,18 @@ class StyleCard extends StatelessWidget {
     Key? key,
     required this.size,
     required this.context,
-    required this.service,
+    required this.service, required this.color,
   }) : super(key: key);
 
   final Sizer size;
   final BuildContext context;
   final Map<String, dynamic> service;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: color.withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Container(
           
@@ -138,12 +130,12 @@ class StyleCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListTile(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: ((context) => SalonInfo())));
-                      },
+                      // onTap: () {
+                      //   Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: ((context) => BookAppointment())));
+                      // },
                       title: Text(service["name"]),
                       subtitle: Text(service["duration"]+" mins"),
                     ),

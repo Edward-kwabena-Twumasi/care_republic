@@ -6,9 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/client/category_page.dart';
-import 'package:thecut/screens/shop/about_shop.dart';
-import 'package:thecut/screens/shop/salon_info.dart';
+import 'package:thecut/screens/client/shop_category_page.dart';
+import 'package:thecut/screens/shop/shop_information_page.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
 //initializations
@@ -192,34 +191,58 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                         Center(
                           child: Padding(
                               padding: EdgeInsets.all(size.ch(1)),
-                              child: Card(
-                                //surfaceTintColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                elevation: 20,
-                                semanticContainer: false,
-                                borderOnForeground: false,
-                               // shadowColor: Colors.transparent,
-                                color: Colors.transparent,
-                                child: Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                   color: Colors.white10,
-                                   borderRadius: BorderRadius.circular(10) 
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Card(
+                                      //surfaceTintColor: Colors.white,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      elevation: 20,
+                                      semanticContainer: false,
+                                      borderOnForeground: false,
+                                     // shadowColor: Colors.transparent,
+                                      color: Colors.transparent,
+                                      child: Container(
+                                        padding: EdgeInsets.all(6),
+                                        decoration: BoxDecoration(
+                                         color: Colors.white10,
+                                         borderRadius: BorderRadius.circular(10) 
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                        Text(
+                                        "Search",
+                                        /*${'Aliko'}*/
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                           // Text("Search",style: TextStyle(color: Colors.white),),
+                                            Icon(Icons.search_outlined,color: Colors.white,)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                  Text(
-                                  "Search",
-                                  /*${'Aliko'}*/
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                     // Text("Search",style: TextStyle(color: Colors.white),),
-                                      Icon(Icons.search_outlined,color: Colors.white,)
-                                    ],
-                                  ),
-                                ),
+                                  //filter icon
+                                  Card(
+                                    //surfaceTintColor: Colors.white,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    elevation: 20,
+                                    semanticContainer: false,
+                                    borderOnForeground: false,
+                                    // shadowColor: Colors.transparent,
+                                    color: Colors.transparent,
+                                    child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white10,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Icon(Icons.filter_alt_outlined,color: Colors.white,),
+                                    ),
+                                  )
+                                ],
                               )),
                         ),
                         Center(
@@ -419,13 +442,13 @@ class ShopCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
           width: size.cw(90),
-          height: size.cw(35),
+          height: size.cw(25),
           child: Row(children: [
             Padding(
               padding:  EdgeInsets.all(size.cw(2)),
               child: Container(
-                  height: size.cw(30),
-                  width: size.cw(30),
+                  height: size.cw(25),
+                  width: size.cw(25),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
                       15

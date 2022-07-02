@@ -29,7 +29,7 @@ final textTheme = TextTheme(
       fontSize: 8.sp, fontWeight: FontWeight.w400, letterSpacing: 1.5),
 );
 
-final ColorScheme colorScheme=ColorScheme.light(
+final ColorScheme colorScheme=const ColorScheme.light(
 primary: Color(0xFF1976D2),
  onPrimary:  Color(0xFFFFFFFF),
   primaryContainer: Color(0xFFBBDEFB),

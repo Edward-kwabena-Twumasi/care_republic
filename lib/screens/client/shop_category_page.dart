@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/shop/salon_info.dart';
+import 'package:thecut/screens/shop/shop_information_page.dart';
 
 import '../../theme/custom_theme.dart';
 
@@ -119,41 +119,9 @@ class _CatetegoryPageState extends State<CatetegoryPage> {
         elevation: 0,
         automaticallyImplyLeading: true,
         title: Text(widget.category),
-        bottom: PreferredSize(child: 
-            Center(
-                          child: Padding(
-                              padding: EdgeInsets.all(size.ch(1)),
-                              child: Card(
-                                //surfaceTintColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                elevation: 20,
-                                semanticContainer: false,
-                                borderOnForeground: false,
-                               // shadowColor: Colors.transparent,
-                                color: Colors.transparent,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 4,vertical: 8),
-                                  decoration: BoxDecoration(
-                                   color: Colors.white10,
-                                   borderRadius: BorderRadius.circular(10) 
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                  Text(
-                                  "Search",
-                                  /*${'Aliko'}*/
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                     // Text("Search",style: TextStyle(color: Colors.white),),
-                                      Icon(Icons.search_outlined,color: Colors.white,)
-                                    ],
-                                  ),
-                                ),
-                              )),
-                        ),
-         preferredSize:Size.fromHeight(70)),
+        actions:[
+          IconButton(onPressed: (){}, icon: Icon(Icons.search))
+        ]
       ),
       body: ListView.builder(
               shrinkWrap: true,
@@ -184,13 +152,13 @@ class ShopCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
           width: size.cw(90),
-          height: size.cw(35),
+          height: size.cw(25),
           child: Row(children: [
             Padding(
               padding: EdgeInsets.all(size.cw(2)),
               child: Container(
-                  height: size.cw(30),
-                  width: size.cw(30),
+                  height: size.cw(25),
+                  width: size.cw(25),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
