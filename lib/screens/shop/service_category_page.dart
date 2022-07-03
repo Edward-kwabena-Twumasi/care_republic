@@ -54,6 +54,9 @@ class ServiceCatetegoryPage extends StatefulWidget {
 }
 
 class _CatetegoryPageState extends State<ServiceCatetegoryPage> {
+List selectedServices=[];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +79,26 @@ class _CatetegoryPageState extends State<ServiceCatetegoryPage> {
         body: ListView.builder(
           padding: EdgeInsets.only(top:10),
             shrinkWrap: true,
-            // scrollDirection:Axis.horizontal,
             itemCount: serviceStyles.length,
             itemBuilder: ((context, index) =>
-StyleCard(size: size, context: context, service: serviceStyles[index])            ))
+GestureDetector(
+  onTap: (){
+   setState((){
+     selectedServices.contains(serviceStyles[index]["id"])?selectedServices.remove(serviceStyles[index]["id"]):
+     selectedServices.add(serviceStyles[index]["id"]);
+   });
+  },
+  child:   Container(
+    padding: EdgeInsets.zero,
+    decoration: BoxDecoration(
+      border: Border.all(color:selectedServices.contains(serviceStyles[index]["id"])? Colors.blue:Colors.transparent,
+      width: 2
+      ),
+        borderRadius: BorderRadius.circular(15),
+
+    ),
+      child: StyleCard(size: size, context: context, service: serviceStyles[index])),
+)            ))
     );
   }
 }
@@ -96,6 +115,7 @@ class StyleCard extends StatelessWidget {
   final Sizer size;
   final BuildContext context;
   final Map<String, dynamic> service;
+
   //final Color color;
 
   @override
