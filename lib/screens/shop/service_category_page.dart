@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
+import 'package:thecut/screens/shop/booking_page.dart';
 import 'package:thecut/screens/shop/search_style.dart';
 import 'package:thecut/screens/shop/shop_information_page.dart';
 
@@ -55,6 +56,7 @@ class ServiceCatetegoryPage extends StatefulWidget {
 
 class _CatetegoryPageState extends State<ServiceCatetegoryPage> {
 List selectedServices=[];
+List bookServices=[];
 
 
 
@@ -63,6 +65,11 @@ List selectedServices=[];
     Sizer size = Sizer(context: context, hasBottomNav: true, hasAppBar: false);
 
     return Scaffold(
+      floatingActionButton: ElevatedButton(onPressed:(){
+        Navigator.push(context, MaterialPageRoute(builder: (builder){
+          return BookAppointment(services: bookServices,);
+        }));
+      },child:Text("Book appointment")),
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: true,
@@ -86,6 +93,9 @@ GestureDetector(
    setState((){
      selectedServices.contains(serviceStyles[index]["id"])?selectedServices.remove(serviceStyles[index]["id"]):
      selectedServices.add(serviceStyles[index]["id"]);
+
+     selectedServices.contains(serviceStyles[index]["id"])?bookServices.remove(serviceStyles[index]):
+     bookServices.add(serviceStyles[index]);
    });
   },
   child:   Container(

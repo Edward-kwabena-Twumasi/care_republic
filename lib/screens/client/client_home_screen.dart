@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +11,8 @@ import 'package:thecut/scaling/scaler.dart';
 import 'package:thecut/screens/client/shop_category_page.dart';
 import 'package:thecut/screens/shop/shop_information_page.dart';
 import 'package:thecut/theme/custom_theme.dart';
+
+import 'merchant_shop.dart';
 
 //initializations
 List shops = [
@@ -118,8 +122,9 @@ final List<Widget> imageSliders = imgList
           ),
         ))
     .toList();
-List filterNames = ["All"];
 
+
+List filterNames = ["All"];
 class ClientHomeScreen extends StatefulWidget {
   const ClientHomeScreen({Key? key}) : super(key: key);
 
@@ -138,6 +143,9 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
     // TODO: implement initState
     super.initState();
     scrollController = ScrollController(initialScrollOffset: 1);
+    scrollController.addListener(() {
+      print(scrollController.offset.toString()+" is Current offset");
+    });
   }
 
   @override
@@ -150,6 +158,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               // This widget takes the overlapping behavior of the SliverAppBar,
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               sliver: SliverAppBar(
+
                 pinned: true,
                 backgroundColor: colorScheme.primary,
                 leading: IconButton(
@@ -168,104 +177,150 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                     onPressed: () {},
                   )
                 ],
-                expandedHeight: size.ch(35) + 70,
+                expandedHeight: size.ch(49) ,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    padding: EdgeInsets.only(
-                        bottom: size.ch(0.3), top: size.ch(1) + 40),
-                    height: size.ch(25),
-                    width: size.cw(96),
+
+
+                  background:Container(
+                   padding: EdgeInsets.zero,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage("images/client_home_background.jpg"),fit: BoxFit.cover)
+                    ),
+                    // padding: EdgeInsets.only(
+                    //     bottom: size.ch(0.3), top:  40),
+                    height: size.ch(49),
+                    width: size.cw(100),
                     /* width: MediaQuery.of(context).size.width,*/
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                             Padding(
-                               padding: const EdgeInsets.only(left:8.0),
-                               child: Text(
-                                    "Welcome to theCut 😍",
-                                    /*${'Aliko'}*/
-                                    style: TextStyle(
-                                        fontSize: 20.sp, fontWeight: FontWeight.bold,color: Colors.white),
-                                  ),
-                             ),
-                        Center(
-                          child: Padding(
-                              padding: EdgeInsets.all(size.ch(1)),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Card(
-                                      //surfaceTintColor: Colors.white,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      elevation: 20,
-                                      semanticContainer: false,
-                                      borderOnForeground: false,
-                                     // shadowColor: Colors.transparent,
-                                      color: Colors.transparent,
-                                      child: Container(
-                                        padding: EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                         color: Colors.white10,
-                                         borderRadius: BorderRadius.circular(10) 
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                        Text(
-                                        "Search",
+                    //Create parent backdrop filter
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                          sigmaX: 10,
+                          sigmaY: 10
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black26
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                                 Padding(
+                                   padding: const EdgeInsets.only(top:50,left:8.0),
+                                   child: Text(
+                                        "Welcome to theCut 😍",
                                         /*${'Aliko'}*/
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                            fontSize: 20.sp, fontWeight: FontWeight.bold,color: Colors.white),
                                       ),
-                                           // Text("Search",style: TextStyle(color: Colors.white),),
-                                            Icon(Icons.search_outlined,color: Colors.white,)
-                                          ],
+                                 ),
+                            Center(
+                              child: Padding(
+                                  padding: EdgeInsets.all(size.ch(1)),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(right:4.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 15,
+                                                  spreadRadius: 15,
+                                                  color: Colors.black12
+                                                )
+                                              ]
+                                            ),
+                                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(8),
+                                              child: BackdropFilter(
+                                                //surfaceTintColor: Colors.white,
+
+                                                filter: ImageFilter.blur(
+                                                  sigmaX: 10,
+                                                  sigmaY: 10
+                                                ),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(size.ch(2)),
+                                                  decoration: BoxDecoration(
+                                                   color: Colors.white.withOpacity(0.4),
+                                                   borderRadius: BorderRadius.circular(5)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                  Text(
+                                                  "Search",
+                                                  /*${'Aliko'}*/
+                                                  style: TextStyle(color: Colors.white),
+                                                ),
+                                                     // Text("Search",style: TextStyle(color: Colors.white),),
+                                                      Icon(Icons.search_outlined,color: Colors.white,)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  //filter icon
-                                  Card(
-                                    //surfaceTintColor: Colors.white,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                    elevation: 20,
-                                    semanticContainer: false,
-                                    borderOnForeground: false,
-                                    // shadowColor: Colors.transparent,
-                                    color: Colors.transparent,
-                                    child: Container(
-                                      padding: EdgeInsets.all(6),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white10,
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: Icon(Icons.filter_alt_outlined,color: Colors.white,),
-                                    ),
-                                  )
-                                ],
-                              )),
+                                      //filter icon
+                                      ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 15,
+                                                    spreadRadius: 15,
+                                                    color: Colors.black12
+                                                )
+                                              ]
+                                          ),
+                                          child: BackdropFilter(
+                                            //surfaceTintColor: Colors.white,
+                                            filter: ImageFilter.blur(
+                                                sigmaX: 10,
+                                                sigmaY: 10
+                                            ),
+                                            child: Container(
+                                              padding: EdgeInsets.all(size.ch(2)),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white.withOpacity(0.4),
+                                                  borderRadius: BorderRadius.circular(5)
+                                              ),
+                                              child: Icon(Icons.filter_alt_outlined,color: Colors.white,),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                            Center(
+                              child: CarouselSlider(
+                                carouselController: _controller,
+                                options: CarouselOptions(
+                                    height: size.ch(25),
+                                    viewportFraction: 1.2,
+                                    autoPlay: true,
+                                    onPageChanged: (index, reason) {
+                                      setState(() {
+                                        _current = index;
+                                      });
+                                    }),
+                                items: imgList
+                                    .map((item) => ClipRRect(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        child: Image.asset(item,
+                                            fit: BoxFit.cover, width: size.cw(96))))
+                                    .toList(),
+                              ),
+                            ),
+                          ],
                         ),
-                        Center(
-                          child: CarouselSlider(
-                            carouselController: _controller,
-                            options: CarouselOptions(
-                                height: size.ch(25),
-                                viewportFraction: 1.2,
-                                autoPlay: true,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                }),
-                            items: imgList
-                                .map((item) => ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(item,
-                                        fit: BoxFit.cover, width: size.cw(96))))
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -396,29 +451,43 @@ class FilterCategory extends StatefulWidget {
 class _FilterCategoryState extends State<FilterCategory> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: widget.size.cw(1.2), vertical: widget.size.cw(0.2)),
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              shape: StadiumBorder(),
-              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-              primary: filterNames.contains(widget.name)
-                  ? colorScheme.secondary
-                  : colorScheme.onSecondary,
-              side: BorderSide(color: colorScheme.secondary)),
-          onPressed: () {
-            setState(() {
-              filterNames.contains(widget.name)
-                  ? filterNames.remove(widget.name)
-                  : filterNames.add(widget.name);
-            });
-          },
-          child: Text(widget.name,
-              style: TextStyle(
-                  color: filterNames.contains(widget.name)
-                      ? colorScheme.onSecondary
-                      : colorScheme.secondary))),
+    return Container(
+      decoration:BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        boxShadow:[
+          
+          BoxShadow(
+            blurRadius: 1.0,
+            spreadRadius: 0.2,
+            color: Colors.black12.withOpacity(0.1),
+            
+          )
+        ]
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(),
+                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+                primary: filterNames.contains(widget.name)
+                    ? colorScheme.secondary
+                    : colorScheme.onSecondary,
+                //side: BorderSide(color: colorScheme.secondary)
+    ),
+            onPressed: () {
+              setState(() {
+                filterNames.contains(widget.name)
+                    ? filterNames.remove(widget.name)
+                    : filterNames.add(widget.name);
+              });
+            },
+            child: Text(widget.name,
+                style: TextStyle(
+                    color: filterNames.contains(widget.name)
+                        ? colorScheme.onSecondary
+                        : colorScheme.secondary))),
+      ),
     );
   }
 }
@@ -467,7 +536,11 @@ class ShopCard extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => SalonInfo())));
+                                builder: ((context) =>
+                                    MerchantShopInfo()
+                                    //SalonInfo()
+
+                                )));
                       },
                       title: Text(shop["name"]),
                       subtitle: Text(shop["location"]),

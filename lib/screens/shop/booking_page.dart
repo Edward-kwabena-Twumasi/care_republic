@@ -9,10 +9,10 @@ DateTime selectedtime = DateTime.now();
 
 class BookAppointment extends StatefulWidget {
   // final String shopId;
-  // final String shopName;
+   final List services;
 
   const BookAppointment(
-      {Key? key})
+      {Key? key, required this.services})
       : super(key: key);
 
   @override
@@ -203,6 +203,13 @@ class BookAppointmentState extends State<BookAppointment> {
                         ),
                       ),
                     ),
+                ListView.builder(
+                  padding: EdgeInsets.only(top:10),
+                  shrinkWrap: true,
+                  itemCount: widget.services.length,
+                  itemBuilder: ((context, index) =>
+                  Text(widget.services[index]["name"])
+                  ))
 
                     
                   ],
