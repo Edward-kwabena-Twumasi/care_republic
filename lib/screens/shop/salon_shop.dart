@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,7 +8,23 @@ import 'package:thecut/theme/custom_theme.dart';
 
 import '../../scaling/scaler.dart';
 import 'search_style.dart';
-
+List shopSpecialists = [
+  {
+    "img": "https://picsum.photos/id/3/200/200",
+    "name": "John",
+    "id": "b1"
+  },
+  {
+    "img": "https://picsum.photos/id/5/200/200",
+    "name": "Jaden",
+    "id": "b2"
+  },
+  {
+    "img": "https://picsum.photos/id/7/200/200",
+    "name": "Haruna",
+    "id": "b3"
+  }
+];
 List serviceStyles = [
   {
     "img": "https://picsum.photos/id/3/200/200",
@@ -44,6 +62,7 @@ List serviceStyles = [
     "duration": "30"
   }
 ];
+
 
 class SalonInfo extends StatefulWidget {
   const SalonInfo({Key? key}) : super(key: key);
@@ -114,10 +133,22 @@ class _SalonInfoState extends State<SalonInfo> {
                             image: DecorationImage(
                                 image: AssetImage("images/manshaving.jpg"),
                                 fit: BoxFit.cover)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [],
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaY: 2,
+                            sigmaX: 4
+                          ),
+                          child: Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Colors.black12
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [],
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -160,6 +191,7 @@ class _SalonInfoState extends State<SalonInfo> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
+
                                     Container(
                                         width: size.cw(20),
                                         height: size.cw(9),
@@ -239,21 +271,14 @@ class _SalonInfoState extends State<SalonInfo> {
                       subtitle: Container(
                         padding: EdgeInsets.zero,
                         height: size.cw(24),
-                        child: ListView(
+                        child: ListView.builder(
+                          itemCount: shopSpecialists.length,
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            ShopSpecialist(
-                              size: size,
-                            ),
-                            ShopSpecialist(
-                              size: size,
-                            ),
-                            ShopSpecialist(
-                              size: size,
-                            ),
-                            // ShopSpecialist(size: size,),
-                            // ShopSpecialist(size: size,)
-                          ],
+                          itemBuilder: (context,index)=>Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ShopSpecialist(size: size,data:shopSpecialists[index]),
+                          ),
+
                         ),
                       )),
                   Expanded(
@@ -299,22 +324,23 @@ class ActionMenu extends StatelessWidget {
 }
 //shop specialists card
 class ShopSpecialist extends StatelessWidget {
-  const ShopSpecialist({Key? key, required this.size}) : super(key: key);
+  const ShopSpecialist({Key? key, required this.size, required this.data}) : super(key: key);
   final Sizer size;
+  final Map<String,dynamic> data;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 40,
-        child: Card(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: size.cw(8),
-              ),
-              Text("John")
-            ],
-          ),
-        ));
+    return  Column(
+          children: [
+            CircleAvatar(
+              radius: size.cw(7),
+              backgroundImage: NetworkImage(data["img"]),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Text("John"),
+            )
+          ],
+        );
   }
 }
 

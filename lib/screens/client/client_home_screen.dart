@@ -8,20 +8,23 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/client/shop_category_page.dart';
-import 'package:thecut/screens/shop/shop_information_page.dart';
+import 'package:thecut/screens/orientation/shop_category_page.dart';
+import 'package:thecut/screens/shop/makeup_shop.dart';
+import 'package:thecut/screens/shop/salon_shop.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
-import 'merchant_shop.dart';
+import '../shop/merchant_shop.dart';
 
 //initializations
 List shops = [
   {
     "img": "https://picsum.photos/id/3/200/200",
-    "name": "Vivians shop",
+    "name": "Afi Makeups",
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type":2,
+    "typename":"makeup"
   },
   {
     "img": "https://picsum.photos/id/4/200/200",
@@ -29,6 +32,8 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type":1,
+    "typename":"salon"
   },
   {
     "img": "https://picsum.photos/id/46/200/200",
@@ -36,6 +41,8 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type":0,
+    "typename":"Merchant"
   },
   {
     "img": "https://picsum.photos/id/20/200/200",
@@ -43,6 +50,8 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type":0,
+    "typename":"Merchant"
   },
   {
     "img": "https://picsum.photos/id/7/200/200",
@@ -50,20 +59,26 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type":1,
+    "typename":"salon"
   },
   {
     "img": "https://picsum.photos/id/21/200/200",
     "name": "Vivians shop",
     "id": "shp1",
-    "location": "Location 1",
+    "location": "Kumasi Boho",
     "rating": "4",
+    "type":1,
+    "typename":"salon"
   },
   {
     "img": "https://picsum.photos/id/70/200/200",
-    "name": "Vivians shop",
+    "name": "J Makeup shop",
     "id": "shp1",
-    "location": "Location 1",
+    "location": "Atonsu",
     "rating": "3",
+    "type":2,
+    "typename":"makeup"
   },
 ];
 
@@ -138,6 +153,13 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   ScrollController scrollController = ScrollController();
   int _current = 0;
   final CarouselController _controller = CarouselController();
+
+  List shopTypeScreens=[
+     Scaffold(body: MerchantShopInfo()),
+    SalonInfo(),
+    MakeupShopInfo()
+  ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -426,7 +448,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               // scrollDirection:Axis.horizontal,
               itemCount: shops.length,
               itemBuilder: ((context, index) =>
-                  ShopCard(size: size, context: context, shop: shops[index]))),
+                  ShopCard(size: size, context: context, shop: shops[index],shopTypeList:shopTypeScreens))),
         ),
       ]),
     );
@@ -454,15 +476,15 @@ class _FilterCategoryState extends State<FilterCategory> {
     return Container(
       decoration:BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        boxShadow:[
-          
-          BoxShadow(
-            blurRadius: 1.0,
-            spreadRadius: 0.2,
-            color: Colors.black12.withOpacity(0.1),
-            
-          )
-        ]
+        // boxShadow:[
+        //
+        //   // BoxShadow(
+        //   //   blurRadius: 1.0,
+        //   //   spreadRadius: 0.2,
+        //   //   color: Colors.black12.withOpacity(0.1),
+        //   //
+        //   // )
+        // ]
       ),
       child: Padding(
         padding: const EdgeInsets.all(3.0),
@@ -499,11 +521,13 @@ class ShopCard extends StatelessWidget {
     required this.size,
     required this.context,
     required this.shop,
+     required this.shopTypeList,
   }) : super(key: key);
 
   final Sizer size;
   final BuildContext context;
   final Map<String, dynamic> shop;
+  final List shopTypeList;
 
   @override
   Widget build(BuildContext context) {
@@ -511,7 +535,7 @@ class ShopCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
           width: size.cw(90),
-          height: size.cw(25),
+          height: size.cw(28),
           child: Row(children: [
             Padding(
               padding:  EdgeInsets.all(size.cw(2)),
@@ -537,8 +561,7 @@ class ShopCard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: ((context) =>
-                                    MerchantShopInfo()
-                                    //SalonInfo()
+                                   shopTypeList[shop["type"]]
 
                                 )));
                       },
@@ -547,15 +570,22 @@ class ShopCard extends StatelessWidget {
                     ),
                   ),
                   Align(
-                    
                     alignment: Alignment.centerLeft,
-                    child: Chip(
-                      padding: EdgeInsets.only(left: 8),
-                      labelPadding: EdgeInsets.zero,
-                      labelStyle: TextStyle(fontSize: 20.sp,color: colorScheme.primary),
-                      backgroundColor: Colors.transparent,
-                      label: Text(shop["rating"]),
-                      avatar: Icon(Icons.star,color: colorScheme.secondary.withOpacity(0.6),),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:15.0),
+                      child: Row(
+                        children: [
+                          Text(shop["typename"]),
+                          Chip(
+                            padding: EdgeInsets.only(left: 8),
+                            labelPadding: EdgeInsets.zero,
+                            labelStyle: TextStyle(fontSize: 20.sp,color: colorScheme.primary),
+                            backgroundColor: Colors.transparent,
+                            label: Text(shop["rating"]),
+                            avatar: Icon(Icons.star,color: colorScheme.secondary.withOpacity(0.6),),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],

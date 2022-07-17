@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/shop/shop_information_page.dart';
+import 'package:thecut/screens/shop/salon_shop.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
 //initializations
