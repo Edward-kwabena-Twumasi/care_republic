@@ -1,56 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:thecut/generator/id_generator.dart';
+import 'package:thecut/providers/include_provider.dart';
+import 'package:thecut/screens/client/client_main_screen.dart';
+import 'package:thecut/screens/worker/worker_main_screen.dart';
 
-class WorkerRegistrationScreen  extends StatelessWidget {
-   const WorkerRegistrationScreen({Key? key}) : super(key: key);
+class WorkerRegistrationScreen extends StatefulWidget {
+  final Map<String,dynamic>? prevDetails;
+  const WorkerRegistrationScreen({Key? key,this.prevDetails}) : super(key: key);
+
+  @override
+  State<WorkerRegistrationScreen> createState() => _WorkerRegistrationScreenState();
+}
+
+class _WorkerRegistrationScreenState extends State<WorkerRegistrationScreen> {
+  int _index = 0;
+  String sexGroup = '0';
+  DateTime? dob = null;
+
+  // Initial Selected Value
+  String workerType = 'Barber';
+  String uid = '';
+
+  // List of items in our dropdown menu
+  var items = ['Barber', 'Hair dresser', 'Makeup artist'];
+
+  final GlobalKey<FormState> ownerForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> shopDetailForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> contactForm = GlobalKey<FormState>();
+
+  final TextEditingController fNameCtrl = TextEditingController();
+  final TextEditingController igHandleCtrl = TextEditingController();
+  final TextEditingController sNameCtrl = TextEditingController();
+  final TextEditingController phoneCtrl = TextEditingController();
+  final TextEditingController emailCtrl = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      uid = generateId();
+      print(uid);
+      if(widget.prevDetails!=null){
+        phoneCtrl.text=widget.prevDetails!['phone'];
+        emailCtrl.text=widget.prevDetails!['email'];
+        fNameCtrl.text=widget.prevDetails!['fname'];
+        sNameCtrl.text=widget.prevDetails!['sname'];
+      }
+    });
+
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  Text("Worker Registration")),
-      body: const MyStatefulWidget(),
-    );
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _index = 0;
-  String sexGroup = '1';
-  DateTime? dob = null;
-  // Initial Selected Value
-  String dropdownvalue = 'Barber';
-
-  // List of items in our dropdown menu
-  var items = [
-    'Barber',
-    'Hair dresser',
-    'Makeup artist'
-  ];
-
-  final GlobalKey<FormState> ownerForm = GlobalKey<FormState>();
-  final GlobalKey<FormState> shopDetailForm=GlobalKey<FormState>();
-  final GlobalKey<FormState> contactForm=GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Stepper(
+        body:Stepper(
       controlsBuilder: (BuildContext context, ControlsDetails controls) {
         return Row(
           children: <Widget>[
             TextButton(
               onPressed: controls.onStepContinue,
-              child:  Text(_index==1?'PROCEED':'NEXT'),
+              child: Text(_index == 1 ? 'PROCEED' : 'NEXT'),
             ),
             TextButton(
-              onPressed: _index==0?null:controls.onStepCancel,
-              child:  Text('BACK'),
+              onPressed: _index == 0 ? null : controls.onStepCancel,
+              child: Text('BACK'),
             ),
           ],
         );
@@ -65,60 +82,74 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         }
       },
       onStepContinue: () {
-        if(_index==0){
-          if(ownerForm.currentState!.validate()){
+        if (_index == 0) {
+          if (ownerForm.currentState!.validate()) {
             setState(() {
               _index += 1;
             });
-
           }
-        }else{
-          showDialog(
-              context: context,
-              builder: (builder) {
-                return AlertDialog(
-                  content: Text('Registration Successful'),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(builder).pop();
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (builder) {
-                                return Scaffold(
-                                    appBar: AppBar(title: Text('Success Screen'),),
-                                    body:Center(child: Container(child: Text('Signed in Successfully'),)));;
-                              }));
-                        },
-                        child: Text('ok'))
-                  ],
-                );
-              });
-         /* Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
-            return Container(color: Colors.blue,);
-          }), (route) => false);*/
+        } else if (_index == 1) {
+          if(contactForm.currentState!.validate()) {
+            provider(context).collection().doc(uid).set({
+            "uid": uid,
+            "active_id": getIdByRole(uid, workerType.toLowerCase()),
+            "phone": phoneCtrl.text,
+            "_ids": [getIdByRole(uid, workerType.toLowerCase())],
+            "last_login": DateTime.now()
+          }).then((_){
+            provider(context, type: 'worker', listen: false)
+                .collection()
+                .doc(uid)
+                .set({
+              "_ids": [getIdByRole(uid, workerType.toLowerCase())],
+              "fname": fNameCtrl.text,
+              "sname": sNameCtrl.text,
+              "dob": dob,
+              "sex": sexGroup == '0' ? "male" : "female",
+              "email": emailCtrl.text,
+              "phone": phoneCtrl.text,
+              "desc":"",
+              "photo_url": "",
+              "resume_url":""
+            }).then((value) {
+              print('Worker Added Successfully');
+              showDialog(
+                  context: context,
+                  builder: (builder) {
+                    return AlertDialog(
+                      content: Text('Registration Successful'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(builder).pop();
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (builder) {
+                                    return WorkerMainScreen();
+                                  }));
+                            },
+                            child: Text('ok'))
+                      ],
+                    );
+                  });
+            });
+          });
+          }
+
         }
 
-       /* if (_index <= 1) {
-          setState(() {
-            _index += 1;
-          });
-        }*/
       },
-      /*onStepTapped: (int index) {
-        setState(() {
-          _index = index;
-        });
-      },*/
+
       steps: <Step>[
         Step(
           isActive: _index == 0,
           title: Text('Personal'),
           content: Form(
-            key:ownerForm,
+            key: ownerForm,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: fNameCtrl,
                   maxLength: 15,
                   validator: (value) {
                     if (value!.trim() == null || value.isEmpty) {
@@ -143,10 +174,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   height: 10.0,
                 ),
                 TextFormField(
+                  controller: sNameCtrl,
                   maxLength: 15,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Shop Owner's Name is Required";
+                      return "Surname is Required";
                     }
                     return null;
                   },
@@ -228,10 +260,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                ListTile(title: Text('Primary type',style: TextStyle(fontWeight: FontWeight.bold),),
+                ListTile(
+                  title: Text(
+                    'Primary type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   subtitle: DropdownButton(
-                                        // Initial Value
-                    value: dropdownvalue,
+                    // Initial Value
+                    value: workerType,
 
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -247,7 +283,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     // change button value to selected value
                     onChanged: (String? newValue) {
                       setState(() {
-                        dropdownvalue = newValue!;
+                        workerType = newValue!;
                       });
                     },
                   ),
@@ -259,20 +295,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         Step(
           isActive: _index == 1,
           title: Text('Contact'),
-          content:  Form(
-            key:contactForm,
+          content: Form(
+            key: contactForm,
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               TextFormField(
+                controller: emailCtrl,
                 validator: (value) {
                   if (value!.trim() == null || value.isEmpty) {
-                    return 'Contact of worker is Required';
+                    return 'Email of worker is Required';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
+                    /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
                     contentPadding: const EdgeInsets.only(bottom: 3),
                     labelText: 'Email',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -287,6 +324,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 10.0,
               ),
               TextFormField(
+                enabled: false,
+                controller: phoneCtrl,
                 maxLength: 10,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -296,7 +335,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /*  prefixIcon: Icon(Icons.person),*/
+                    /*  prefixIcon: Icon(Icons.person),*/
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Primary number',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -311,15 +350,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 10.0,
               ),
               TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Instagram handle is required";
-                  }
-                  return null;
-                },
+                controller: igHandleCtrl,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /*  prefixIcon: Icon(Icons.person),*/
+                    /*  prefixIcon: Icon(Icons.person),*/
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Instagram handle',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -333,11 +367,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               const SizedBox(
                 height: 10.0,
               ),
-
             ]),
           ),
         ),
       ],
-    );
+    ));
   }
 }

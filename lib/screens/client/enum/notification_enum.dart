@@ -1,0 +1,3 @@
+enum Notification{
+  appointmentSuccess,jobOpening,universal,successfulRegistration,appointmentDeclination,paymentSuccess
+}

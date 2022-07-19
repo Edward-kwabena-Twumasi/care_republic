@@ -89,53 +89,53 @@ final List<String> imgList = [
 
 final List<Widget> imageSliders = imgList
     .map((item) => Container(
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      width: 1000.0,
-                      imageUrl: item,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(
-                        backgroundColor: Colors.blue,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          'No. ${imgList.indexOf(item)} image',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-        ))
+  child: Container(
+    margin: const EdgeInsets.all(5.0),
+    child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        child: Stack(
+          children: <Widget>[
+            CachedNetworkImage(
+              fit: BoxFit.cover,
+              width: 1000.0,
+              imageUrl: item,
+              placeholder: (context, url) =>
+              const CircularProgressIndicator(
+                backgroundColor: Colors.blue,
+                color: Colors.black,
+              ),
+            ),
+            Positioned(
+              bottom: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(200, 0, 0, 0),
+                      Color.fromARGB(0, 0, 0, 0)
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 20.0),
+                child: Text(
+                  'No. ${imgList.indexOf(item)} image',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )),
+  ),
+))
     .toList();
 
 
@@ -155,7 +155,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   final CarouselController _controller = CarouselController();
 
   List shopTypeScreens=[
-     Scaffold(body: MerchantShopInfo()),
+    Scaffold(body: MerchantShopInfo()),
     SalonInfo(),
     MakeupShopInfo()
   ];
@@ -176,132 +176,88 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
     return NestedScrollView(
       controller: scrollController,
       headerSliverBuilder: ((context, innerBoxIsScrolled) => [
-            SliverOverlapAbsorber(
-              // This widget takes the overlapping behavior of the SliverAppBar,
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              sliver: SliverAppBar(
+        SliverOverlapAbsorber(
+          // This widget takes the overlapping behavior of the SliverAppBar,
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+          sliver: SliverAppBar(
 
-                pinned: true,
-                backgroundColor: colorScheme.primary,
-                leading: IconButton(
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    icon: const Icon(Icons.menu)),
-                title: Text(
-                  'theCut',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+            pinned: true,
+            backgroundColor: colorScheme.primary,
+            leading: IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: const Icon(Icons.menu)),
+            title: Text(
+              'theCut',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.mail)),
+              IconButton(
+                icon: Icon(Icons.bookmark),
+                onPressed: () {},
+              )
+            ],
+            expandedHeight: size.ch(49) ,
+            flexibleSpace: FlexibleSpaceBar(
+
+
+              background:Container(
+                padding: EdgeInsets.zero,
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage("images/client_home_background.jpg"),fit: BoxFit.cover)
                 ),
-                actions: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.mail)),
-                  IconButton(
-                    icon: Icon(Icons.bookmark),
-                    onPressed: () {},
-                  )
-                ],
-                expandedHeight: size.ch(49) ,
-                flexibleSpace: FlexibleSpaceBar(
-
-
-                  background:Container(
-                   padding: EdgeInsets.zero,
+                // padding: EdgeInsets.only(
+                //     bottom: size.ch(0.3), top:  40),
+                height: size.ch(49),
+                width: size.cw(100),
+                /* width: MediaQuery.of(context).size.width,*/
+                //Create parent backdrop filter
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                      sigmaX: 10,
+                      sigmaY: 10
+                  ),
+                  child: Container(
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage("images/client_home_background.jpg"),fit: BoxFit.cover)
+                        color: Colors.black26
                     ),
-                    // padding: EdgeInsets.only(
-                    //     bottom: size.ch(0.3), top:  40),
-                    height: size.ch(49),
-                    width: size.cw(100),
-                    /* width: MediaQuery.of(context).size.width,*/
-                    //Create parent backdrop filter
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                          sigmaX: 10,
-                          sigmaY: 10
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black26
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top:50,left:8.0),
+                          child: Text(
+                            "Welcome to theCut 😍",
+                            /*${'Aliko'}*/
+                            style: TextStyle(
+                                fontSize: 20.sp, fontWeight: FontWeight.bold,color: Colors.white),
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                                 Padding(
-                                   padding: const EdgeInsets.only(top:50,left:8.0),
-                                   child: Text(
-                                        "Welcome to theCut 😍",
-                                        /*${'Aliko'}*/
-                                        style: TextStyle(
-                                            fontSize: 20.sp, fontWeight: FontWeight.bold,color: Colors.white),
-                                      ),
-                                 ),
-                            Center(
-                              child: Padding(
-                                  padding: EdgeInsets.all(size.ch(1)),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(right:4.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
+                        Center(
+                          child: Padding(
+                              padding: EdgeInsets.all(size.ch(1)),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right:4.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
                                                   blurRadius: 15,
                                                   spreadRadius: 15,
                                                   color: Colors.black12
-                                                )
-                                              ]
-                                            ),
-                                            child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(8),
-                                              child: BackdropFilter(
-                                                //surfaceTintColor: Colors.white,
-
-                                                filter: ImageFilter.blur(
-                                                  sigmaX: 10,
-                                                  sigmaY: 10
-                                                ),
-                                                child: Container(
-                                                  padding: EdgeInsets.all(size.ch(2)),
-                                                  decoration: BoxDecoration(
-                                                   color: Colors.white.withOpacity(0.4),
-                                                   borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.max,
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                  Text(
-                                                  "Search",
-                                                  /*${'Aliko'}*/
-                                                  style: TextStyle(color: Colors.white),
-                                                ),
-                                                     // Text("Search",style: TextStyle(color: Colors.white),),
-                                                      Icon(Icons.search_outlined,color: Colors.white,)
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                              )
+                                            ]
                                         ),
-                                      ),
-                                      //filter icon
-                                      ClipRRect(
+                                        child: ClipRRect(
                                           borderRadius: BorderRadius.circular(8),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    blurRadius: 15,
-                                                    spreadRadius: 15,
-                                                    color: Colors.black12
-                                                )
-                                              ]
-                                          ),
                                           child: BackdropFilter(
                                             //surfaceTintColor: Colors.white,
+
                                             filter: ImageFilter.blur(
                                                 sigmaX: 10,
                                                 sigmaY: 10
@@ -312,43 +268,87 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                                                   color: Colors.white.withOpacity(0.4),
                                                   borderRadius: BorderRadius.circular(5)
                                               ),
-                                              child: Icon(Icons.filter_alt_outlined,color: Colors.white,),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "Search",
+                                                    /*${'Aliko'}*/
+                                                    style: TextStyle(color: Colors.white),
+                                                  ),
+                                                  // Text("Search",style: TextStyle(color: Colors.white),),
+                                                  Icon(Icons.search_outlined,color: Colors.white,)
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                            Center(
-                              child: CarouselSlider(
-                                carouselController: _controller,
-                                options: CarouselOptions(
-                                    height: size.ch(25),
-                                    viewportFraction: 1.2,
-                                    autoPlay: true,
-                                    onPageChanged: (index, reason) {
-                                      setState(() {
-                                        _current = index;
-                                      });
-                                    }),
-                                items: imgList
-                                    .map((item) => ClipRRect(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        child: Image.asset(item,
-                                            fit: BoxFit.cover, width: size.cw(96))))
-                                    .toList(),
-                              ),
-                            ),
-                          ],
+                                      ),
+                                    ),
+                                  ),
+                                  //filter icon
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 15,
+                                                spreadRadius: 15,
+                                                color: Colors.black12
+                                            )
+                                          ]
+                                      ),
+                                      child: BackdropFilter(
+                                        //surfaceTintColor: Colors.white,
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 10,
+                                            sigmaY: 10
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.all(size.ch(2)),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.4),
+                                              borderRadius: BorderRadius.circular(5)
+                                          ),
+                                          child: Icon(Icons.filter_alt_outlined,color: Colors.white,),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
                         ),
-                      ),
+                        Center(
+                          child: CarouselSlider(
+                            carouselController: _controller,
+                            options: CarouselOptions(
+                                height: size.ch(25),
+                                viewportFraction: 1.2,
+                                autoPlay: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _current = index;
+                                  });
+                                }),
+                            items: imgList
+                                .map((item) => ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(item,
+                                    fit: BoxFit.cover, width: size.cw(96))))
+                                .toList(),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          ]),
+          ),
+        ),
+      ]),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(height: size.ch(11)),
 
@@ -385,11 +385,11 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   icon: Icons.extension,
                 ),
                 MajorCategory(
-                  size: size,
-                  name: 'Dying',
-                  icon: Icons.colorize
+                    size: size,
+                    name: 'Dying',
+                    icon: Icons.colorize
                 ),
-                
+
                 MajorCategory(
                   size: size,
                   name: 'Afro',
@@ -490,13 +490,13 @@ class _FilterCategoryState extends State<FilterCategory> {
         padding: const EdgeInsets.all(3.0),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(),
-                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-                primary: filterNames.contains(widget.name)
-                    ? colorScheme.secondary
-                    : colorScheme.onSecondary,
-                //side: BorderSide(color: colorScheme.secondary)
-    ),
+              shape: StadiumBorder(),
+              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+              primary: filterNames.contains(widget.name)
+                  ? colorScheme.secondary
+                  : colorScheme.onSecondary,
+              //side: BorderSide(color: colorScheme.secondary)
+            ),
             onPressed: () {
               setState(() {
                 filterNames.contains(widget.name)
@@ -521,7 +521,7 @@ class ShopCard extends StatelessWidget {
     required this.size,
     required this.context,
     required this.shop,
-     required this.shopTypeList,
+    required this.shopTypeList,
   }) : super(key: key);
 
   final Sizer size;
@@ -543,11 +543,11 @@ class ShopCard extends StatelessWidget {
                   height: size.cw(25),
                   width: size.cw(25),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      15
-                    ),
+                      borderRadius: BorderRadius.circular(
+                          15
+                      ),
                       image: DecorationImage(
-                        
+
                           image: NetworkImage(shop["img"]), fit: BoxFit.cover))),
             ),
             Expanded(
@@ -561,7 +561,7 @@ class ShopCard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: ((context) =>
-                                   shopTypeList[shop["type"]]
+                                shopTypeList[shop["type"]]
 
                                 )));
                       },
@@ -622,9 +622,9 @@ class MajorCategory extends StatelessWidget {
                 backgroundColor: colorScheme.secondary.withOpacity(0.2)),
             FittedBox(
                 child: Text(
-              name,
-              style: TextStyle(color: Colors.black),
-            )),
+                  name,
+                  style: TextStyle(color: Colors.black),
+                )),
           ],
         ),
       ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:thecut/screens/client/client_main_screen.dart';
 
-class Preferences extends StatefulWidget {
-  const Preferences({Key? key}) : super(key: key);
+class ClientServicePreferenceScreen extends StatefulWidget {
+  const ClientServicePreferenceScreen({Key? key}) : super(key: key);
 
   @override
-  State<Preferences> createState() => _PreferencesState();
+  State<ClientServicePreferenceScreen> createState() => _ClientServicePreferenceScreenState();
 }
 
-class _PreferencesState extends State<Preferences> {
+class _ClientServicePreferenceScreenState extends State<ClientServicePreferenceScreen> {
   bool showForMales = false;
   bool showForFemales = false;
 
@@ -72,15 +73,24 @@ class _PreferencesState extends State<Preferences> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.red,
+          onPressed: (){
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+            return const ClientMainScreen();
+          }), (route) => false);
+        },
+        child: Text("Skip"),
+        ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Center(
+              const Center(
                 child: Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
@@ -90,10 +100,10 @@ class _PreferencesState extends State<Preferences> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Center(
+              const Center(
                 child: Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
@@ -103,56 +113,76 @@ class _PreferencesState extends State<Preferences> {
                           TextStyle(fontWeight: FontWeight.normal, fontSize: 17)),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Text("Sex category",
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Wrap(
-                  alignment: WrapAlignment.start,
-                  spacing: 10,
-                  runSpacing: 5,
+
+              Center(
+                child: Column(
                   children: [
-                    ...sexCategory
-                        .map(
-                          (sex) => FilterChip(
-                              selectedColor: Colors.green.withOpacity(0.25),
-                              backgroundColor: Colors.white,
-                              elevation: 2,
-                              labelStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green),
-                              onSelected: ((value) {
-                                setState(() {
-                                  sex["selected"] = value;
-                                     sex["label"]=="Male"?
-        
-                                  showForMales = value:showForFemales=value;
-                                });
-                              }),
-                              label: Text(sex["label"]),
-                              selected: sex["selected"]),
-                        )
-                        .toList()
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text("Sex category",
+                          textAlign: TextAlign.center,
+                          style:
+                          TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Wrap(
+                        alignment: WrapAlignment.start,
+                        spacing: 10,
+                        runSpacing: 5,
+                        children: [
+                          ...sexCategory
+                              .map(
+                                (sex) => FilterChip(
+                                    selectedColor: Colors.green.withOpacity(0.25),
+                                    backgroundColor: Colors.white,
+                                    elevation: 2,
+                                    labelStyle: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green),
+                                    onSelected: ((value) {
+                                      setState(() {
+                                        sex["selected"] = value;
+                                           sex["label"]=="Male"?
+
+                                        showForMales = value:showForFemales=value;
+                                      });
+                                    }),
+                                    label: Text(sex["label"]),
+                                    selected: sex["selected"]),
+                              )
+                              .toList()
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              showForMales? Padding(
+              showForMales?  Padding(
                 padding: EdgeInsets.all(10),
-                child: Text("For Males",
-                    textAlign: TextAlign.center,
-                    style:
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("For Males",
+                        textAlign: TextAlign.center,
+                        style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                    Checkbox(
+                      side: BorderSide(color: Colors.black),
+                      activeColor: Colors.black,
+                      value: true, onChanged: (bool? newValue) {
+                      setState(() {
+                        //_throwShotAway = newValue!;
+                      });
+                    },)
+                  ],
+                ),
               ):Text(""),
               showForMales?
               Padding(
@@ -165,13 +195,13 @@ class _PreferencesState extends State<Preferences> {
                     ...maleCategory
                         .map(
                           (maleCategory) => FilterChip(
-                            avatar: CircleAvatar(
+                            avatar: const CircleAvatar(
                               backgroundImage: AssetImage("images/salon.jpg"),
                             ),
                               selectedColor: Colors.green.withOpacity(0.25),
                               backgroundColor: Colors.white,
                               elevation: 2,
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.green),
                               onSelected: ((value) {
@@ -188,12 +218,25 @@ class _PreferencesState extends State<Preferences> {
                 ),
               ):Text(""),
                showForFemales?
-              Padding(
+               Padding(
                 padding: EdgeInsets.all(10),
-                child: Text("For Females",
-                    textAlign: TextAlign.center,
-                    style:
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("For Females",
+                        textAlign: TextAlign.center,
+                        style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                    Checkbox(
+                      side: BorderSide(color: Colors.black),
+                      activeColor: Colors.black,
+                      value: true, onChanged: (bool? newValue) {
+                      setState(() {
+                        //_throwShotAway = newValue!;
+                      });
+                    },)
+                  ],
+                ),
               ):Text(""),
               showForFemales?
               Padding(
@@ -206,13 +249,13 @@ class _PreferencesState extends State<Preferences> {
                     ...femaleCategory
                         .map(
                           (femaleCategory) => FilterChip(
-                            avatar: CircleAvatar(
+                            avatar: const CircleAvatar(
                               backgroundImage: AssetImage("images/salon.jpg"),
                             ),
                               selectedColor: Colors.green.withOpacity(0.25),
                               backgroundColor: Colors.white,
                               elevation: 2,
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.green),
                               onSelected: ((value) {

@@ -4,7 +4,7 @@ class Sizer {
   final BuildContext context;
   final bool hasAppBar;
   final bool hasBottomNav;
-  Sizer({required this.hasAppBar, required this.hasBottomNav, required this.context});
+  Sizer({ this.hasAppBar=false, this.hasBottomNav=false, required this.context});
 
   MediaQueryData mediaQueryData(){
     return MediaQuery.of(context);

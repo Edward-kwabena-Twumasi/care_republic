@@ -148,10 +148,23 @@ class _PreferencesState extends State<Preferences> {
               ),
               showForMales? Padding(
                 padding: EdgeInsets.all(10),
-                child: Text("For Males",
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("For Males",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                    Checkbox(
+                      side: BorderSide(color: Colors.black),
+                      activeColor: Colors.black,
+                      value: true, onChanged: (bool? newValue) {
+                      setState(() {
+                        //_throwShotAway = newValue!;
+                      });
+                    },)
+                  ],
+                ),
               ):Text(""),
               showForMales?
               Padding(
@@ -189,10 +202,26 @@ class _PreferencesState extends State<Preferences> {
                showForFemales?
               Padding(
                 padding: EdgeInsets.all(10),
-                child: Text("For Females",
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("For Females",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                    Container(
+                      color: Colors.red,
+                      child: Checkbox(
+                        side: BorderSide(color: Colors.black),
+                        activeColor: Colors.black,
+                        value: true, onChanged: (bool? newValue) {
+                        setState(() {
+                          //_throwShotAway = newValue!;
+                        });
+                      },),
+                    )
+                  ],
+                ),
               ):Text(""),
               showForFemales?
               Padding(

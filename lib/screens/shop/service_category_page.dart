@@ -69,8 +69,8 @@ class ServiceCatetegoryPage extends StatefulWidget {
 }
 
 class _CatetegoryPageState extends State<ServiceCatetegoryPage> {
-List selectedServices=[];
-List bookServices=[];
+  List selectedServices=[];
+  List bookServices=[];
 
 
 
@@ -88,101 +88,101 @@ List bookServices=[];
           elevation: 0,
           automaticallyImplyLeading: true,
           title: Text(widget.category),
-         actions: [
-           IconButton(onPressed: (){
-             showSearch(
-                 context: context,
-                 delegate:
-                 SearchStyle("",serviceStyles,size));
-           }, icon:Icon(Icons.search))
-         ],
+          actions: [
+            IconButton(onPressed: (){
+              showSearch(
+                  context: context,
+                  delegate:
+                  SearchStyle("",serviceStyles,size));
+            }, icon:Icon(Icons.search))
+          ],
         ),
         body: ListView.builder(
-          padding: EdgeInsets.only(top:10,
-          bottom: 70
-          ),
+            padding: EdgeInsets.only(top:10,
+                bottom: 70
+            ),
             shrinkWrap: true,
             itemCount: serviceStyles.length,
             itemBuilder: ((context, index) =>
-Padding(
-  padding: const EdgeInsets.all(10.0),
-  child:   GestureDetector(
-    onTap: (){
-     setState((){
-       if(selectedServices.contains(serviceStyles[index]["id"])) {
-         selectedServices.remove(serviceStyles[index]["id"]);
-         bookServices.remove(serviceStyles[index]);
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child:   GestureDetector(
+                    onTap: (){
+                      setState((){
+                        if(selectedServices.contains(serviceStyles[index]["id"])) {
+                          selectedServices.remove(serviceStyles[index]["id"]);
+                          bookServices.remove(serviceStyles[index]);
 
-     }
-       else{
-         selectedServices.add(serviceStyles[index]["id"]);
-         bookServices.add(serviceStyles[index]);
-       }
+                        }
+                        else{
+                          selectedServices.add(serviceStyles[index]["id"]);
+                          bookServices.add(serviceStyles[index]);
+                        }
 
-       // selectedServices.contains(serviceStyles[index]["id"])?bookServices.remove(serviceStyles[index]):
-       // bookServices.add(serviceStyles[index]);
-     });
+                        // selectedServices.contains(serviceStyles[index]["id"])?bookServices.remove(serviceStyles[index]):
+                        // bookServices.add(serviceStyles[index]);
+                      });
 
-     if(selectedServices.isNotEmpty) {
-       showBottomSheet(
-         enableDrag: true,
-           elevation: 5,
-           shape: RoundedRectangleBorder(
-             borderRadius: BorderRadius.only(
-               topLeft: Radius.circular(20),
-               topRight: Radius.circular(20),
-             )
-           ),
-           //backgroundColor: Colors.black26,
-           context: context, builder: (builder) {
-         return Container(
+                      if(selectedServices.isNotEmpty) {
+                        showBottomSheet(
+                            enableDrag: true,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                )
+                            ),
+                            //backgroundColor: Colors.black26,
+                            context: context, builder: (builder) {
+                          return Container(
 
-           width: MediaQuery
-               .of(context)
-               .size
-               .width,
-           height: 70,
-           child: Center(
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: Text(selectedServices.length.toString()+" selected",
-                     style: TextStyle(color: Colors.black),),
-                 ),
-                 Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: ElevatedButton(onPressed: () {
-                     Navigator.push(context, MaterialPageRoute(builder: (builder) {
-                       return BookAppointment(services: bookServices,);
-                     }));
-                   }, child: Text("Book appointment")),
-                 ),
-               ],
-             ),
-           ),
-         );
-       });
-     }
-     else {
-       Navigator.pop(context);
-       print("No services");
-     }
-    },
-    child:   Container(
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            height: 70,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(selectedServices.length.toString()+" selected",
+                                      style: TextStyle(color: Colors.black),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (builder) {
+                                        return BookAppointment(services: bookServices,);
+                                      }));
+                                    }, child: Text("Book appointment")),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                      }
+                      else {
+                        Navigator.pop(context);
+                        print("No services");
+                      }
+                    },
+                    child:   Container(
 
-      padding: EdgeInsets.zero,
-      decoration: BoxDecoration(
-        border: Border.all(color:selectedServices.contains(serviceStyles[index]["id"])? Colors.blue:Colors.transparent,
-        width: 1
-        ),
-          borderRadius: BorderRadius.circular(15),
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          border: Border.all(color:selectedServices.contains(serviceStyles[index]["id"])? Colors.blue:Colors.transparent,
+                              width: 1
+                          ),
+                          borderRadius: BorderRadius.circular(15),
 
-      ),
-        child: StyleCard(size: size, context: context, service: serviceStyles[index])),
-  ),
-)            ))
+                        ),
+                        child: StyleCard(size: size, context: context, service: serviceStyles[index])),
+                  ),
+                )            ))
     );
   }
 }

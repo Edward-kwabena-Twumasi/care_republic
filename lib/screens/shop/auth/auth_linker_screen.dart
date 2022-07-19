@@ -16,6 +16,7 @@ class _AuthLinkerScreenState extends State<AuthLinkerScreen> {
       ),
       body: Container(
         color: Colors.blueAccent,
+        child: Center(child: const Text('Shop Screen Under Review'),),
       ),
     );
   }

@@ -80,8 +80,8 @@ class SearchStyle extends SearchDelegate {
       return ListView.builder(
           itemCount: suggestions.length,
           itemBuilder: ((context, index) => StyleCard(
-              size: size, context: context, service: suggestions[index],
-             )
+            size: size, context: context, service: suggestions[index],
+          )
           ));
     },
 

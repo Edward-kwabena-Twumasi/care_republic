@@ -9,7 +9,7 @@ DateTime selectedtime = DateTime.now();
 
 class BookAppointment extends StatefulWidget {
   // final String shopId;
-   final List services;
+  final List services;
 
   const BookAppointment(
       {Key? key, required this.services})
@@ -33,7 +33,7 @@ class BookAppointmentState extends State<BookAppointment> {
 
   //List<Appointment> listOfAppointments = <Appointment>[];
   TimeOfDay time =
-      TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
+  TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
   DateTime date = DateTime.now();
   //late StreamSubscription shopProductSubscription;
 
@@ -74,12 +74,12 @@ class BookAppointmentState extends State<BookAppointment> {
       child: Scaffold(
         floatingActionButton: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              shape: StadiumBorder()
+                shape: StadiumBorder()
             ),
             onPressed: (){}, child: Text("Proceed")),
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-            /*centerTitle: true,*/
+          /*centerTitle: true,*/
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             title: Text("Book Appointment",
@@ -146,29 +146,29 @@ class BookAppointmentState extends State<BookAppointment> {
                           children: [
                             Expanded(
                                 child: Text(
-                              DateFormat(' dd MMM. yyyy, EEE   hh:mm aaa')
-                                  .format(date),
-                              style: TextStyle(fontWeight: FontWeight.w400),
-                            )),
+                                  DateFormat(' dd MMM. yyyy, EEE   hh:mm aaa')
+                                      .format(date),
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                )),
                             IconButton(
                               icon: Icon(Icons.calendar_today),
                               color: Colors.green,
                               onPressed: () {
                                 showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
-                                        lastDate:
-                                            DateTime(DateTime.now().year + 100))
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate:
+                                    DateTime(DateTime.now().year + 100))
                                     .then((chosenDate) {
                                   setState(() {
                                     date = chosenDate != null
                                         ? DateTime(
-                                            chosenDate.year,
-                                            chosenDate.month,
-                                            chosenDate.day,
-                                            time.hour,
-                                            time.minute)
+                                        chosenDate.year,
+                                        chosenDate.month,
+                                        chosenDate.day,
+                                        time.hour,
+                                        time.minute)
                                         : date;
                                   });
                                   //print(chosenDate.toString());
@@ -179,7 +179,7 @@ class BookAppointmentState extends State<BookAppointment> {
                               color: Colors.orange,
                               onPressed: () {
                                 showTimePicker(
-                                        context: context, initialTime: time)
+                                    context: context, initialTime: time)
                                     .then((chosenTime) {
                                   setState(() {
                                     time = chosenTime ?? time;
@@ -203,15 +203,34 @@ class BookAppointmentState extends State<BookAppointment> {
                         ),
                       ),
                     ),
-                ListView.builder(
-                  padding: EdgeInsets.only(top:10),
-                  shrinkWrap: true,
-                  itemCount: widget.services.length,
-                  itemBuilder: ((context, index) =>
-                  Text(widget.services[index]["name"])
-                  ))
+                    Padding(
+                      padding: EdgeInsets.only(left: 11, bottom: 4, top: 8),
+                      child: Text(
+                        'Services summary',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      child: ListView.builder(
 
-                    
+                          padding: EdgeInsets.only(top:10),
+                          shrinkWrap: true,
+                          itemCount: widget.services.length,
+                          itemBuilder: ((context, index) =>
+                              Card(
+
+                                shape:RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                  child:ListTile(
+                                      //tileColor: Colors.grey,
+                                      title: Text(widget.services[index]["name"]))
+                              )
+                          )),
+                    )
+
+
                   ],
                 ),
               ),
@@ -273,4 +292,3 @@ class BookAppointmentState extends State<BookAppointment> {
     }
   }
 }
-
