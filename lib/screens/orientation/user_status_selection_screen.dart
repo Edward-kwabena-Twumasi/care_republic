@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/screens/client/client_main_screen.dart';
 import 'package:thecut/screens/client/client_service_preferences_screen.dart';
+import 'package:thecut/screens/client/user_filters.dart';
 import 'package:thecut/screens/shop/auth/phone_entry_screen.dart';
 import 'package:thecut/screens/worker/auth/phone_entry_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -116,7 +117,7 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return ClientServicePreferenceScreen();
+                        return UserFiltersScreen();
                       }));
                     },
                     child: const StatusObject(
