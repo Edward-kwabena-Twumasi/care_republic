@@ -288,18 +288,21 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                                     ),
                                   ),
                                   //filter icon
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                                blurRadius: 15,
-                                                spreadRadius: 15,
-                                                color: Colors.black12
+                                  GestureDetector(
+                                    onTap: (){
+                                      showBottomSheet(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(20),
+                                              topLeft: Radius.circular(20)
                                             )
-                                          ]
-                                      ),
+                                          ),
+                                          context: context, builder: (builder){
+                                        return Wrap();
+                                      });
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
                                       child: BackdropFilter(
                                         //surfaceTintColor: Colors.white,
                                         filter: ImageFilter.blur(
