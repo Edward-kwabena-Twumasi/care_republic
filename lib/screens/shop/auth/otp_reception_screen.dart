@@ -293,7 +293,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (_) {
                   return ShopMainScreen(
-                    source: widget.source,
+                   
                   );
                 }), (route) => false);
               } else {
@@ -429,8 +429,7 @@ class _OTPReceptionScreenState extends State<OTPReceptionScreen> {
                                                   context,
                                                   MaterialPageRoute(builder:
                                                       (BuildContext context) {
-                                                return ShopMainScreen(
-                                                    source: widget.source);
+                                                return ShopMainScreen();
                                               }), (route) => false);
                                             });
                                           });

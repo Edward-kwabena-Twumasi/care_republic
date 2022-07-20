@@ -41,7 +41,7 @@ CollectionReference<Map<String,dynamic>> collection(){
 
 
   setTemporaryShopDetails(Map<String,dynamic> incomingShop){
-    tempShopDetails=incomingShop;
+   // tempShopDetails=incomingShop;
     incomingShop.keys.forEach((key) {
       tempShopDetails[key]=incomingShop[key];
     });

@@ -105,7 +105,7 @@ List<Widget> profileGenerator(List _ids, BuildContext buildContext) {
           child: ListTile(
               onTap: (){
                 Navigator.pushReplacement(buildContext, MaterialPageRoute(builder: (_){
-                  return const ShopMainScreen(source: 'merchant',);
+                  return const ShopMainScreen();
                 }));
               },
               dense: true,
@@ -121,7 +121,7 @@ List<Widget> profileGenerator(List _ids, BuildContext buildContext) {
           child: ListTile(
               onTap: (){
                 Navigator.pushReplacement(buildContext, MaterialPageRoute(builder: (_){
-                  return const ShopMainScreen(source: 'makeup',);
+                  return const ShopMainScreen();
                 }));
               },
               dense: true,
@@ -137,7 +137,7 @@ List<Widget> profileGenerator(List _ids, BuildContext buildContext) {
           child: ListTile(
               onTap: (){
                 Navigator.pushReplacement(buildContext, MaterialPageRoute(builder: (_){
-                  return const ShopMainScreen(source: 'unisex',);
+                  return const ShopMainScreen();
                 }));
               },
               dense: true,
@@ -153,7 +153,7 @@ List<Widget> profileGenerator(List _ids, BuildContext buildContext) {
           child: ListTile(
               onTap: (){
                 Navigator.pushReplacement(buildContext, MaterialPageRoute(builder: (_){
-                  return const ShopMainScreen(source: 'saloon',);
+                  return const ShopMainScreen();
                 }));
               },
               dense: true,
@@ -169,7 +169,7 @@ List<Widget> profileGenerator(List _ids, BuildContext buildContext) {
           child: ListTile(
               onTap: (){
                 Navigator.pushReplacement(buildContext, MaterialPageRoute(builder: (_){
-                  return const ShopMainScreen(source: 'barbering');
+                  return const ShopMainScreen();
                 }));
               },
               dense: true,

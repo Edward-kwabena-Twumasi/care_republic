@@ -41,7 +41,7 @@ class _ShopAgreementScreenState extends State<ShopAgreementScreen> {
             shopProvider.collection().doc(shopProvider.tempShopDetails['uid']).set(shopProvider.tempShopDetails).then((value){
               print("Shop Added Successfully to Firebase");
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(_){
-                return const ShopMainScreen(source: 'shop');
+                return const ShopMainScreen();
               }), (route) => false);
             });
 
