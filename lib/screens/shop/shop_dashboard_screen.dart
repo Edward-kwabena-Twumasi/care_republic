@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thecut/screens/shop/revenue_chart.dart';
+
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -9,188 +11,185 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
- 
+
+  late ScrollController scrollController;
+
+  int switchId=0;
+
+  void initState(){
+    super.initState();
+    scrollController=ScrollController();
+    scrollController.addListener(() {
+
+      print(scrollController.offset);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: BouncingScrollPhysics(),
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
+    return Column(
       children: [
-        Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(""), fit: BoxFit.cover)
-                    )),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.7,
-          child: Text("Hi"))
+        AppBar(
+          title: Text("My shop"),
+        ),
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            children: [
+
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Text("Overview",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
+              // ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: SizedBox(
+                    height: 39,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                          color:Colors.blue,
+                          width: 1.5
+                        )
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              style:ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                elevation: 0,
+                                shape: StadiumBorder(),
+                                primary: switchId==0?Colors.blue:Colors.white,
+                                  textStyle: TextStyle(
+                                    color: switchId==1?Colors.blue:Colors.white,
+                                  )
+                              ),
+                              onPressed: (){
+                                setState((){
+                                  switchId=0;
+                            scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve:Curves.bounceIn );
+                                });
+
+                          }, child: Text("New",style:TextStyle(
+                            color: switchId==1?Colors.blue:Colors.white,
+                          ) ,)),
+                          ElevatedButton(
+
+                              style:ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  shape: StadiumBorder(),
+                                  primary: switchId==1?Colors.blue:Colors.white,
+                                textStyle: TextStyle(
+                                  color: switchId==0?Colors.blue:Colors.white,
+                                )
+                              ),
+                              onPressed: (){
+                            setState(() {
+                              switchId=1;
+                              scrollController.animateTo(scrollController.offset+MediaQuery.of(context).size.width*0.9
+                                  , duration: Duration(milliseconds: 500), curve:Curves.bounceIn );
+                            });
+                          }, child: Text("Financial",style:TextStyle(
+                            color: switchId==0?Colors.blue:Colors.white,
+                          ) ))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 120,
+                child: ListView(
+                  controller: scrollController,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    AnalyticsSummary(name: "New Customers",number: 50,percentage: 2,),
+                    AnalyticsSummary(name: "New Appointments",number: 50,percentage: 5,),
+                    AnalyticsSummary(name: "Average Income",number: 399,percentage: 19,),
+                    AnalyticsSummary(name: "Gross profit",number: 2050,percentage: 20,)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Revenue",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LineChartSample1(),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Current",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 }
 
-Widget DashInfoCards(int payments, int pending, int confirmed) {
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(7.0),
-        child: SizedBox(
-          height: 170,
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.pink, width: 2))),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Categories(icon: Icons.category),
-                          Text(pending.toString(),
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.pink)),
-                          Text("Requests")
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.indigo, width: 2))),
-                    child: Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Categories(icon: Icons.lock_clock),
-                          Center(
-                              child: Text(confirmed.toString(),
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.indigo))),
-                          Text("Appointments")
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: 170,
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.pink, width: 2))),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Categories(icon: Icons.payment),
-                          Center(
-                              child: Text(payments.toString(),
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.pink))),
-                          Text("Payments")
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.indigo, width: 2))),
-                    child: Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Categories(icon: Icons.takeout_dining),
-                          Center(
-                              child: Text("10",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.indigo))),
-                          Text("Job Applications")
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
-}
+class AnalyticsSummary extends StatelessWidget {
+  const AnalyticsSummary({
+    Key? key, required this.name, required this.number, required this.percentage,
+  }) : super(key: key);
 
-//tags model class
-class Categories extends StatelessWidget {
-  const Categories({Key? key, required this.icon}) : super(key: key);
-  final IconData icon;
+  final String name;
+  final int number;
+  final int percentage;
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: CircleAvatar(
-        radius: 20,
-        backgroundColor: Colors.red.shade50,
-        child: IconButton(
-          onPressed: () {},
-          icon: Icon(icon),
-          color: Colors.black,
+      padding: const EdgeInsets.all( 8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+        ),
+        child: Container(
+          width: MediaQuery.of(context).size.width*0.4,
+          decoration: BoxDecoration(
+              // gradient: LinearGradient(
+              //   colors: [
+              //     Color(0xff2c274c),
+              //     Color(0xff46426c),
+              //   ],
+              //   begin: Alignment.bottomCenter,
+              //   end: Alignment.topCenter,
+              // ),
+            borderRadius: BorderRadius.circular(10)
+          ),
+          padding: EdgeInsets.all(4),
+          child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(name),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FittedBox(child: Text("${number} ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 26),)),
+                    Text("+ ${percentage}%")
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
+

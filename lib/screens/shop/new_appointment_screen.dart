@@ -21,10 +21,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   
   void initState() {
     super.initState();
-    // DateTime now = DateTime.now();
-    // DateTime temp = now.add(Duration(days: 1));
-    // DateTime tomorrow = DateTime(temp.year, temp.month, temp.day, 0, 0, 0);
-    setState(() {
+      setState(() {
      
     });
 
@@ -39,13 +36,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     appointmentsSubscription.cancel();
   }
 
-  Map<String, dynamic> requestObject = {
-    "img": "images/nicesalon.jpg",
-    "name": "Kay",
-    "date": "20th Oct",
-    "time": "12:00 pm",
-    "message": "Hello"
-  };
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,51 +44,45 @@ class _AppointmentPageState extends State<AppointmentPage> {
       Column(
 
         children: [
-          Container(
-            color: Colors.black,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row( mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Appointments',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
-                ],
-              ),
+          AppBar(
+            title: Text("Appointments"),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Pending Requests',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
+          (appointments.length > 0)
+              ? Container(
+            height: 155,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: appointments.length,
+                itemBuilder: (context, i) => Request(
+                    (appointments.elementAt(i)).data(),
+                    appointments.elementAt(i).id,
+                    context)),
+          )
+              : Text('No Request Pending'),
+          Expanded(
+            child: ListView(
 
-          ListView(
+             // crossAxisAlignment: CrossAxisAlignment.start,
+              //shrinkWrap: true,
+              children: [
 
-           // crossAxisAlignment: CrossAxisAlignment.start,
-            shrinkWrap: true,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Pending Requests',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Confirmed Appointments',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              (appointments.length > 0)
-                  ? Container(
-                      height: 155,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: appointments.length,
-                          itemBuilder: (context, i) => Request(
-                              (appointments.elementAt(i)).data(),
-                              appointments.elementAt(i).id,
-                              context)),
-                    )
-                  : Text('No Request Pending'),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Confirmed Appointments',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
     
 

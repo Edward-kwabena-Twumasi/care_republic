@@ -50,27 +50,6 @@ class _ShopDrawerState extends State<ShopDrawer> {
               height: 10,
             ),
 
-            // buildMenuItem(
-            //     text: 'Profile',
-            //     icon: Icons.person,
-            //     onClicked: () {
-            //       //selectedItem(context, 0);
-            //       Navigator.push(context,
-            //           MaterialPageRoute(builder: (builder) {
-            //             return ShopSettingsScreen();
-            //           }));
-            //     }),
-            //
-            // buildMenuItem(
-            //     text: 'Shop styles',
-            //     icon: Icons.add,
-            //     onClicked: () {
-            //       //selectedItem(context, 0);
-            //       Navigator.push(context, MaterialPageRoute(builder: (builder) {
-            //         return AddShopStyle();
-            //       }));
-            //     }),
-
             buildMenuItem(
                 text: 'Profile',
                 icon: Icons.person,
