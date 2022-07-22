@@ -18,19 +18,19 @@ class _ShopClientsState extends State<ShopClients> {
     return Column(
       
       children:[
-        Container(
-          color: Colors.black,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row( mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Clients',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
-              ],
-            ),
-          ),
-        ),
+       AppBar(
+         title: Text("My Clients"),
+       ),
 
-       
+       Expanded(child: ListView.builder(
+           itemCount: 9,
+           itemBuilder: (context,i)=>
+           ListTile(
+             leading: CircleAvatar(),
+             title: Text("Julie"),
+             subtitle: Text(" Last visited today"),
+           )
+       ))
 
                     
       ]
@@ -38,61 +38,18 @@ class _ShopClientsState extends State<ShopClients> {
   }
 }
 
+
 class ShopClient extends StatelessWidget {
   const ShopClient({Key? key,required this.name,required this.phone}) : super(key: key);
 final String name;
 final String phone;
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return ListTile(
 
-      children: [
+      title: Text(name),
 
-        Padding(
-
-          padding: const EdgeInsets.all(10.0),
-
-          child: Container(
-
-            height: 40,
-
-            width: 40,
-
-            decoration: BoxDecoration(
-
-                borderRadius:BorderRadius.circular(50),
-
-                image: DecorationImage(
-
-                    image: AssetImage("images/salon.jpg"),
-
-                    fit: BoxFit.cover)),
-
-          ),
-
-        ),
-
-        Expanded(
-
-            child: Column(
-
-              crossAxisAlignment:CrossAxisAlignment.start,
-
-              children: [
-
-                ListTile(
-
-                  title: Text(name),
-
-                  subtitle: Text(phone),
-
-                ),
-
-              ],
-
-            ))
-
-      ],
+      subtitle: Text(phone),
 
     );
   }

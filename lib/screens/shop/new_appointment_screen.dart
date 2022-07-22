@@ -15,9 +15,22 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> appointments = [];
+  List<Map<String, dynamic>> appointments = [
+    {
+      "client_name":"Joe",
+      "date":DateTime.now(),
+    },
+    {
+      "client_name":"Biden",
+      "date":DateTime.now(),
+    },
+    {
+      "client_name":"Putin",
+      "date":DateTime.now(),
+    }
+  ];
 
-  late StreamSubscription appointmentsSubscription;
+  //late StreamSubscription appointmentsSubscription;
   
   void initState() {
     super.initState();
@@ -33,7 +46,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     // _timer.cancel();
     super.dispose();
 
-    appointmentsSubscription.cancel();
+   // appointmentsSubscription.cancel();
   }
 
 
@@ -60,43 +73,68 @@ class _AppointmentPageState extends State<AppointmentPage> {
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: appointments.length,
-                itemBuilder: (context, i) => Request(
-                    (appointments.elementAt(i)).data(),
-                    appointments.elementAt(i).id,
-                    context)),
+                itemBuilder: (context, i) =>RequestCard(appointment: appointments[i])
+
+            ),
           )
               : Text('No Request Pending'),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Confirmed Appointments',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+
+          ),
           Expanded(
             child: ListView(
-
              // crossAxisAlignment: CrossAxisAlignment.start,
               //shrinkWrap: true,
               children: [
-
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Confirmed Appointments',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                ListTile(
+                  leading: CircleAvatar(),
+                      title: Text("Eddie"),
+                  subtitle: Text("Coming at 7am"),
+                  trailing: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.green)
+                      ),
+                      child: Text("Paid")),
                 ),
+                ListTile(
+                  leading: CircleAvatar(),
+                  title: Text("Prince Edward"),
+                  subtitle: Text("Coming at 7am"),
+                  trailing: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.green)
+                      ),
+                      child: Text("Unpaid")),
+                )
               ],
             ),
           ),
-    
 
 
         ],
       );
-  }
+  }}
 
-  Widget Request(
-      Map<String, dynamic> appointment, String aptid, BuildContext context) {
-    print(appointment["date"].toDate().toString());
+
+
+class RequestCard extends StatelessWidget {
+  const RequestCard({
+    Key? key, required this.appointment
+  }) : super(key: key);
+
+final Map<String,dynamic> appointment;
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
-      height: 140,
-      width: MediaQuery.of(context).size.width - 36,
+
+      width: MediaQuery.of(context).size.width *0.7,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Column(
@@ -112,30 +150,17 @@ class _AppointmentPageState extends State<AppointmentPage> {
               ),
               child: ListTile(
                 leading: FaIcon(FontAwesomeIcons.clock, color: Colors.white),
-                title: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Row(
-                    children: [
-                      Text(
-                          DateFormat(' dd MMM. yyyy,    hh:mm aaa')
-                              .format(appointment["date"].toDate()),
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
+                title: Text(
+                    DateFormat(' dd MMM. yyyy,    hh:mm aaa')
+                        .format(appointment["date"]),
+                    style: TextStyle(color: Colors.white)),
               ),
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: ListTile(
-                  leading: DecoratedBox(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Colors.amber, width: 7)),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage("images/salon.jpg"),
-                      )),
+
                   title: Text(appointment["client_name"]),
                   trailing: IconButton(
                       onPressed: () {},
@@ -150,24 +175,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     ButtonBar(alignment: MainAxisAlignment.center, children: [
                   ElevatedButton(
                       onPressed: () {
-                        //provider().setUserAppointmentDetails(appointment);
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (ctx) {
-                        //   return Endorse(
-                        //     aptId: aptid,
-                        //     appointment: appointment,
-                        //   );
-                        // }));
+
                       },
-                      child: Text("Assign"),
+                      child: Text("Accept"),
                       style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 25, right: 25),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          primary: Colors.blue,
-                          textStyle: TextStyle(color: Colors.white))),
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          shape:StadiumBorder(),
+                          primary: Colors.blue)),
                   ElevatedButton(
                       onPressed: () {},
                       child: Text(
@@ -175,13 +189,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         style: TextStyle(color: Colors.blue),
                       ),
                       style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(
-                              top: 5, bottom: 5, left: 15, right: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          primary: Colors.grey[200],
-                          textStyle: TextStyle(color: Colors.blue))),
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          shape:StadiumBorder(),
+                          primary: Colors.grey[200]
+                      )),
                 ]),
               ),
             ),
@@ -192,28 +203,3 @@ class _AppointmentPageState extends State<AppointmentPage> {
   }
 }
 
-Widget appointmentCard(
-    String date, String img, String name) {
-  return SizedBox(
-   
-    height: 70,
-    child: ListTile(
-      //tileColor: Colors.blue,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      leading: CircleAvatar(
-        backgroundImage: AssetImage(img),
-      ),
-      title: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Text(name, style: TextStyle(color: Colors.black)),
-      ),
-      subtitle: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child:
-            Text(date, style: TextStyle(color: Colors.black))
-            
-         
-      ),
-    ),
-  );
-}
