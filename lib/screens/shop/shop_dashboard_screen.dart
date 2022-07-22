@@ -130,6 +130,54 @@ class _DashboardState extends State<Dashboard> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Current",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
               ),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: DataTable(
+                  columns: const <DataColumn>[
+                    DataColumn(
+                      label: Text(
+                        'Name',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Age',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Role',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                  ],
+                  rows: const <DataRow>[
+                    DataRow(
+                      cells: <DataCell>[
+                        DataCell(Text('Sarah')),
+                        DataCell(Text('19')),
+                        DataCell(Text('Student')),
+                      ],
+                    ),
+                    DataRow(
+                      cells: <DataCell>[
+                        DataCell(Text('Janine')),
+                        DataCell(Text('43')),
+                        DataCell(Text('Professor')),
+                      ],
+                    ),
+                    DataRow(
+                      cells: <DataCell>[
+                        DataCell(Text('William')),
+                        DataCell(Text('27')),
+                        DataCell(Text('Associate Professor')),
+                      ],
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

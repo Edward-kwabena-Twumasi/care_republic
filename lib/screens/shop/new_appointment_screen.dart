@@ -7,6 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'endorse_appointment.dart';
+
 class AppointmentPage extends StatefulWidget {
   const AppointmentPage({Key? key}) : super(key: key);
 
@@ -19,16 +21,40 @@ class _AppointmentPageState extends State<AppointmentPage> {
     {
       "client_name":"Joe",
       "date":DateTime.now(),
+      "status":"PENDING",
+      "duration":"30",
+      "payment_note":"Paid",
+
     },
     {
       "client_name":"Biden",
       "date":DateTime.now(),
+      "status":"CONFIRMED",
+      "duration":"30",
+      "payment_note":"Paid"
     },
     {
       "client_name":"Putin",
       "date":DateTime.now(),
+      "status":"CONFIRMED",
+      "duration":"30",
+      "payment_note":"Pay inshop"
+    }
+    ,
+    {
+      "client_name":"Biden",
+      "date":DateTime.now(),
+      "status":"CONFIRMED",
+      "payment_note":"Paid"
+    },
+    {
+      "client_name":"Putin",
+      "date":DateTime.now(),
+      "status":"CONFIRMED",
+      "payment_note":"Pay inshop"
     }
   ];
+
 
   //late StreamSubscription appointmentsSubscription;
   
@@ -46,9 +72,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     // _timer.cancel();
     super.dispose();
 
-   // appointmentsSubscription.cancel();
   }
-
 
 
   @override
@@ -88,31 +112,24 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
           ),
           Expanded(
-            child: ListView(
-             // crossAxisAlignment: CrossAxisAlignment.start,
-              //shrinkWrap: true,
-              children: [
-                ListTile(
-                  leading: CircleAvatar(),
-                      title: Text("Eddie"),
-                  subtitle: Text("Coming at 7am"),
-                  trailing: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.green)
+            child:  Padding(
+              padding: const EdgeInsets.only(left: 5.0,top: 4,right: 5),
+              child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)
                       ),
-                      child: Text("Paid")),
+                      border: Border.all(color: Colors.black12)
+                  ),
+                child: ListView(
+
+                  children: [
+                    ...appointments.map((confirmed) =>  ConfirmedCard(confirmed: confirmed,))
+
+                  ],
                 ),
-                ListTile(
-                  leading: CircleAvatar(),
-                  title: Text("Prince Edward"),
-                  subtitle: Text("Coming at 7am"),
-                  trailing: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.green)
-                      ),
-                      child: Text("Unpaid")),
-                )
-              ],
+              ),
             ),
           ),
 
@@ -120,6 +137,40 @@ class _AppointmentPageState extends State<AppointmentPage> {
         ],
       );
   }}
+
+class ConfirmedCard extends StatelessWidget {
+  const ConfirmedCard({
+    Key? key, required this.confirmed,
+  }) : super(key: key);
+  final Map<String,dynamic> confirmed;
+
+  @override
+  Widget build(BuildContext context) {
+    Color badgeColor=Colors.blue;
+    if(confirmed["payment_note"]=="Paid"){
+      badgeColor=Colors.green;
+    }
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+        ),
+        title: Text(confirmed["client_name"]),
+        subtitle: Text( confirmed['date'].toString()),
+        trailing:  Container(
+            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+            decoration: BoxDecoration(
+                color:badgeColor.withOpacity(0.2),
+                borderRadius:BorderRadius.circular(20)
+            ),
+            child: Text(confirmed["payment_note"],style: TextStyle(color: badgeColor),)),
+      ),
+    );
+  }
+}
 
 
 
@@ -175,7 +226,7 @@ final Map<String,dynamic> appointment;
                     ButtonBar(alignment: MainAxisAlignment.center, children: [
                   ElevatedButton(
                       onPressed: () {
-
+                    Navigator.push(context, MaterialPageRoute(builder: (builder)=>Endorse(aptId: '1', appointment: appointment,)));
                       },
                       child: Text("Accept"),
                       style: ElevatedButton.styleFrom(
