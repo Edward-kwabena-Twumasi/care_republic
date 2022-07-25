@@ -44,7 +44,7 @@ class ShopMainScreenState extends State<ShopMainScreen> {
   Map<String, dynamic> shopDetails = {};
   int index = 0;
   bool showsearch = true;
-
+   
 
   late StreamSubscription<QuerySnapshot<Map<String, dynamic>>> requestOverDueSubscription1;
 
