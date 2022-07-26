@@ -9,11 +9,45 @@ class ProductInfo extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfo> {
+  bool animateCart=false;
+  bool showViewCart=false;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       persistentFooterButtons: [
-        ActionButtons()
+
+       showViewCart?Row(
+         mainAxisAlignment: MainAxisAlignment.spaceAround,
+         children: [
+           ElevatedButton(
+               onPressed:(){},
+               child: Text("View cart",style: TextStyle(fontWeight: FontWeight.bold),),
+               style: ElevatedButton.styleFrom(
+                   padding: EdgeInsets.symmetric(
+                       vertical: 15, horizontal: 50),
+                   shape: StadiumBorder(),
+                   primary: Colors.black,
+                   textStyle: TextStyle(color: Colors.white))),
+           ElevatedButton(
+               onPressed:(){
+                 Navigator.pop(context);
+               },
+               child:Icon(Icons.close,color: Colors.white,),
+               style: ElevatedButton.styleFrom(
+                   padding: EdgeInsets.symmetric(
+                       vertical: 10, horizontal: 3),
+                   shape: StadiumBorder(),
+                   primary: Colors.black,
+                   textStyle: TextStyle(color: Colors.white)))
+         ],
+       )
+
+           : ActionButtons(addToCart: (){
+          setState(() {
+            animateCart = !animateCart;
+          });
+        })
       ],
 
 
@@ -28,6 +62,20 @@ class _ProductInfoState extends State<ProductInfo> {
               decoration: BoxDecoration(
                 image: DecorationImage(image: NetworkImage(widget.product["img"]??"https://picsum.photos/id/21/200/200"),fit: BoxFit.cover)
               ),
+              child:  AnimatedAlign(
+                alignment: animateCart ? Alignment.topRight : Alignment.bottomLeft,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.easeInOutQuint,
+                child: animateCart ? FlutterLogo(size: 50.0):Container(),
+                onEnd: (){
+                  print("Item added to cart successfully");
+                  setState((){
+                    animateCart=false;
+                    showViewCart=true;
+                  });
+                  return;
+                },
+              ),
             ),
           ),
           Expanded(child: Padding(
@@ -35,6 +83,7 @@ class _ProductInfoState extends State<ProductInfo> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -93,7 +142,8 @@ class _ProductInfoState extends State<ProductInfo> {
 }
 
 class ActionButtons extends StatelessWidget {
-  const ActionButtons({Key? key}) : super(key: key);
+  const ActionButtons({Key? key, required this.addToCart}) : super(key: key);
+  final VoidCallback addToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -101,33 +151,25 @@ class ActionButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ElevatedButton(
-            onPressed: () {
-
-            },
+            onPressed:addToCart,
             child: Text("Add to cart",style: TextStyle(fontWeight: FontWeight.bold),),
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
-                   vertical: 15, horizontal: 30),
+                   vertical: 15, horizontal: 40),
                 shape: StadiumBorder(),
                 primary: Colors.amber,
                 textStyle: TextStyle(color: Colors.white))),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: ElevatedButton(
-              onPressed: () {
+        ElevatedButton(
+            onPressed: () {
 Navigator.pop(context);
-              },
-              child: Text(
-                "Back",
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 15, horizontal: 20),
-                  shape: StadiumBorder(),
-                  primary: Colors.black,
-              )),
-        ),
+            },
+            child: Icon(Icons.close),
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 5),
+                shape: StadiumBorder(),
+                primary: Colors.black,
+            )),
         ElevatedButton(
             onPressed: () {
 
@@ -138,7 +180,7 @@ Navigator.pop(context);
             ),
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
-                   vertical: 15, horizontal: 30),
+                   vertical: 15, horizontal: 40),
                 shape: StadiumBorder(),
                 primary: Colors.green,
                 textStyle: TextStyle(color: Colors.white))),

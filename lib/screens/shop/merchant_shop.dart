@@ -407,6 +407,7 @@ class ItemCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Hero(
+
                   tag: "prodImg"+id,
               child: Container(
                   height: size.ch(23),
