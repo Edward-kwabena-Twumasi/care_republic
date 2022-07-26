@@ -9,51 +9,52 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/scaling/scaler.dart';
 import 'package:thecut/screens/orientation/shop_category_page.dart';
+import 'package:thecut/screens/shop/product_info.dart';
 import 'package:thecut/screens/shop/salon_shop.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
 //initializations
-List shops = [
+List products = [
   {
     "img": "https://picsum.photos/id/3/200/200",
     "name": "Pomage",
     "id": "shp1",
-    "location": "Location 1",
+    "price": "20",
     "rating": "3",
   },
   {
     "img": "https://picsum.photos/id/4/200/200",
     "name": "Spray",
     "id": "shp1",
-    "location": "Location 1",
+    "price": "30",
     "rating": "3",
   },
   {
     "img": "https://picsum.photos/id/46/200/200",
     "name": "Lotions",
     "id": "shp1",
-    "location": "Location 1",
+    "price": "40",
     "rating": "3",
   },
   {
     "img": "https://picsum.photos/id/20/200/200",
     "name": "Cleansers",
     "id": "shp1",
-    "location": "Location 1",
+    "price": "25",
     "rating": "3",
   },
   {
     "img": "https://picsum.photos/id/7/200/200",
     "name": "Wiper",
     "id": "shp1",
-    "location": "Location 1",
+    "price": "45",
     "rating": "3",
   },
   {
     "img": "https://picsum.photos/id/21/200/200",
     "name": "Deodorant",
     "id": "shp1",
-    "location": "Location 1",
+    "price": "16",
     "rating": "4",
   }
 ];
@@ -116,12 +117,9 @@ class _MerchantShopInfoState extends State<MerchantShopInfo> {
                   decoration: BoxDecoration(
                       image: DecorationImage(image: AssetImage("images/client_home_background.jpg"),fit: BoxFit.cover)
                   ),
-                  // padding: EdgeInsets.only(
-                  //     bottom: size.ch(0.3), top:  40),
                   height: size.ch(35),
                   width: size.cw(100),
-                  /* width: MediaQuery.of(context).size.width,*/
-                  //Create parent backdrop filter
+
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
                         sigmaX: 2,
@@ -149,7 +147,7 @@ class _MerchantShopInfoState extends State<MerchantShopInfo> {
                                       ),
                                     ),
                                     //filter icon
-                                    CustomIconButton(size: size,icon: FontAwesomeIcons.cartPlus)
+                                    CustomIconButton(size: size,icon: FontAwesomeIcons.cartPlus,onPressed: (){})
                                   ],
                                 )),
                           ),
@@ -172,7 +170,7 @@ class _MerchantShopInfoState extends State<MerchantShopInfo> {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: size.ch(10)),
             Padding(
-              padding: const EdgeInsets.all(3.0),
+              padding: const EdgeInsets.all(10.0),
               child: const Text('Product categories',
                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
             ),
@@ -194,7 +192,7 @@ class _MerchantShopInfoState extends State<MerchantShopInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(3.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: const Text('Picks for you',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize:20)),
                 ),
@@ -214,11 +212,11 @@ class _MerchantShopInfoState extends State<MerchantShopInfo> {
             Expanded(
               child:
               GridView.builder(
-                padding: EdgeInsets.zero,
-                  itemCount: shops.length,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: products.length,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     mainAxisSpacing: 1,
-                      crossAxisSpacing: 2,
+                     // crossAxisSpacing: 2,
                       childAspectRatio:2/3,
                       mainAxisExtent: size.ch(42),
                       maxCrossAxisExtent: size.ch(40)
@@ -226,7 +224,11 @@ class _MerchantShopInfoState extends State<MerchantShopInfo> {
                   itemBuilder: (itemBuilder, idx) {
                     return  Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ItemCard(size: size, context: context, shop: shops[idx]),
+                      child: GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (productinfo)=>ProductInfo(product: products[idx])));
+                          },
+                          child: ItemCard(size: size, context: context, product: products[idx], id: idx.toString())),
                     );
                   }),
 
@@ -286,29 +288,33 @@ class SearchBar extends StatelessWidget {
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
     Key? key,
-    required this.size, required this.icon,
+    required this.size, required this.icon, required this.onPressed,
   }) : super(key: key);
 
   final Sizer size;
   final IconData icon;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: BackdropFilter(
-        //surfaceTintColor: Colors.white,
-        filter: ImageFilter.blur(
-            sigmaX: 10,
-            sigmaY: 10
-        ),
-        child: Container(
-          padding: EdgeInsets.all(size.ch(2)),
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(5)
+    return GestureDetector(
+      onTap: onPressed,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: BackdropFilter(
+          //surfaceTintColor: Colors.white,
+          filter: ImageFilter.blur(
+              sigmaX: 10,
+              sigmaY: 10
           ),
-          child: Icon(icon,color: Colors.white,),
+          child: Container(
+            padding: EdgeInsets.all(size.ch(2)),
+            decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(5)
+            ),
+            child: Icon(icon,color: Colors.white,),
+          ),
         ),
       ),
     );
@@ -381,12 +387,13 @@ class ItemCard extends StatelessWidget {
     Key? key,
     required this.size,
     required this.context,
-    required this.shop,
+    required this.product, required this.id,
   }) : super(key: key);
 
   final Sizer size;
   final BuildContext context;
-  final Map<String, dynamic> shop;
+  final Map<String, dynamic> product;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -399,20 +406,23 @@ class ItemCard extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-            Container(
-                height: size.ch(23),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    image: DecorationImage(
+                Hero(
+                  tag: "prodImg"+id,
+              child: Container(
+                  height: size.ch(23),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                      ),
+                      image: DecorationImage(
 
-                        image: NetworkImage(shop["img"]), fit: BoxFit.cover,
-                      filterQuality: FilterQuality.high
+                          image: NetworkImage(product["img"]), fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high
 
-                    ))),
+                      ))),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -420,10 +430,10 @@ class ItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(shop["name"],style:TextStyle(fontWeight: FontWeight.bold)),
+                    Text(product["name"],style:TextStyle(fontWeight: FontWeight.bold)),
                  Padding(
                    padding: const EdgeInsets.all(3.0),
-                   child: Text(shop["location"]),
+                   child: Text(product["price"]),
                  ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -551,30 +561,29 @@ showMore(BuildContext context,Sizer size){
           SizedBox(
             height: 20,
           ),
-          Container(
-            padding: EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              color: Colors.black26
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 5.0),
-                  child: IconButton(onPressed: (){
+          Card(
+            color: Colors.black54,
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(2),
+
+              child: Row(
+                children: [
+                  CustomIconButton(size: size, icon: Icons.arrow_back,onPressed: (){
                     Navigator.pop(context);
-                  }, icon: Icon(Icons.arrow_back)),
-                ),
-                Expanded(child:
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0,right: 5.0),
-                  child: SearchBar(size: size),
-                )
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 3.0),
-                  child: CustomIconButton(size: size,icon: FontAwesomeIcons.cartPlus,),
-                )
-              ],
+                  }),
+                  Expanded(child:
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+                    child: SearchBar(size: size),
+                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 3.0),
+                    child: CustomIconButton(size: size,icon: FontAwesomeIcons.cartPlus,onPressed: (){}),
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -592,10 +601,11 @@ showMore(BuildContext context,Sizer size){
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 10),
                   itemCount: shops.length,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 4,
+                      mainAxisSpacing: 1,
+                     // crossAxisSpacing: 4,
                       childAspectRatio:2/3,
                       mainAxisExtent: size.ch(42),
                       maxCrossAxisExtent: size.ch(40)
@@ -603,7 +613,9 @@ showMore(BuildContext context,Sizer size){
                   itemBuilder: (itemBuilder, idx) {
                     return  Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ItemCard(size: size, context: context, shop: shops[idx]),
+                      child: GestureDetector(
+                          onTap: (){},
+                          child: ItemCard(size: size, context: context, product: products[idx], id: idx.toString())),
                     );
                   }),
             ),
