@@ -11,7 +11,11 @@ class ClientProvider extends ChangeNotifier{
     return FirebaseFirestore.instance.collection('client');
   }
 
-  Stream<QuerySnapshot<Map<String,dynamic>>> shopsStream(){
+  Future<QuerySnapshot<Map<String, dynamic>>> registeredStream(String uid) {
+    return collection().where('uid',isEqualTo: uid).get();
+  }
+
+  Stream<QuerySnapshot<Map<String,dynamic>>> clientsStream(){
     return collection().snapshots();
   }
 

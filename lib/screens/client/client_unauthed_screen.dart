@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
+import 'package:thecut/screens/client/auth/phone_entry_screen.dart';
+import 'package:thecut/screens/client/client_registration_screen.dart';
 
 class ClientUnAuthedScreen extends StatefulWidget {
   const ClientUnAuthedScreen({Key? key}) : super(key: key);
@@ -32,9 +34,7 @@ class _ClientUnAuthedScreenState extends State<ClientUnAuthedScreen> {
                       horizontal: size.cw(5), vertical: size.cw(2))),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (builder) {
-                  return Container(
-                    color: Colors.blueAccent,
-                  );
+                  return const ClientPhoneEntryScreen(source: 'client',);
                 }));
               },
               child: Text("Log in/ Sign up"))

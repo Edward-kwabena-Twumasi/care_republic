@@ -471,9 +471,22 @@ class _ShopTabsState extends State<ShopTabs>
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Our Services",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Our Services",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18)
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (builder){
+                                return ServiceCatetegoryPage(category: "Haircut");
+                              }));
+                            },
+                            child: Text("See all"))
+                      ],
+                    ),
                   ),
                   Card(
                     child: ListTile(
@@ -485,13 +498,13 @@ class _ShopTabsState extends State<ShopTabs>
                       },
                       enabled: true,
                       title: Text("Hair Cut"),
-                      trailing: TextButton(
+                      trailing: IconButton(
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (builder){
                               return ServiceCatetegoryPage(category: "Haircut");
                             }));
                           },
-                          child: Text("See all")),
+                          icon: Icon(Icons.arrow_forward_ios)),
                     ),
                   ),
                 ],

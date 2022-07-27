@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/screens/client/client_main_screen.dart';
+import 'package:thecut/screens/client/client_service_preferences_screen.dart';
+import 'package:thecut/screens/client/user_filters.dart';
 import 'package:thecut/screens/shop/auth/phone_entry_screen.dart';
+import 'package:thecut/screens/shop/shop_main_screen.dart';
 import 'package:thecut/screens/worker/auth/phone_entry_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,7 +68,8 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return  const ShopPhoneEntryScreen(source: 'saloon',);
+                        return  const ShopMainScreen();
+                        //ShopPhoneEntryScreen(source: 'saloon',);
                       }));
                     },
                     child: const StatusObject(
@@ -102,7 +106,7 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                     },
                     child: const StatusObject(
                       title: "Worker",
-                      subTitle: "Find your customers",
+                      subTitle: "Get job offers",
                       assetUrl: 'assets/worker_state.jpg',
                       backgroundColor: Color(0x26B3FF45),
                     ),
@@ -115,7 +119,7 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return ClientMainScreen();
+                        return UserFiltersScreen();
                       }));
                     },
                     child: const StatusObject(

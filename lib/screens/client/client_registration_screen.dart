@@ -1,26 +1,19 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:thecut/providers/include_provider.dart';
 
-class ClientRegistrationScreen  extends StatelessWidget {
-   const ClientRegistrationScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title:  Text("Client Registration")),
-      body: const MyStatefulWidget(),
-    );
-  }
-}
+class ClientRegistrationScreen extends StatefulWidget {
+  final Map<String,dynamic>? prevDetails;
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+  const ClientRegistrationScreen({Key? key, this.prevDetails}) : super(key: key);
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<ClientRegistrationScreen> createState() => _ClientRegistrationScreenState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _ClientRegistrationScreenState extends State<ClientRegistrationScreen> {
   int _index = 0;
   String sexGroup = '1';
   DateTime? dob = null;
@@ -28,12 +21,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 
   final GlobalKey<FormState> ownerForm = GlobalKey<FormState>();
-  final GlobalKey<FormState> shopDetailForm=GlobalKey<FormState>();
+ // final GlobalKey<FormState> shopDetailForm=GlobalKey<FormState>();
   final GlobalKey<FormState> contactForm=GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Stepper(
+    return
+      Scaffold(
+        appBar: AppBar(title: const Text('Client Registration'),),
+      body:Stepper(
       controlsBuilder: (BuildContext context, ControlsDetails controls) {
         return Row(
           children: <Widget>[
@@ -64,11 +60,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               _index += 1;
             });
           }
-        }else{
-          
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
-            return Container(color: Colors.blue,);
-          }), (route) => false);
+        }else if(_index==1){
+          if(contactForm.currentState!.validate()){
+            provider(context,type:'client').collection().doc().set(
+
+            )
+
+
+
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_){
+              return Container(color: Colors.blue,);
+            }), (route) => false);
+          }
+
         }
 
       },
@@ -92,11 +96,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   },
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                      /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
+                      */
+/* prefixIcon: Icon(Icons.local_convenience_store_rounded),*//*
+
                       contentPadding: const EdgeInsets.only(bottom: 3),
                       labelText: 'First name',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      /* hintText: "Eg.John's shop",*/
+                      */
+/* hintText: "Eg.John's shop",*//*
+
                       hintStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -116,11 +124,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   },
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                      /*  prefixIcon: Icon(Icons.person),*/
+                      */
+/*  prefixIcon: Icon(Icons.person),*//*
+
                       contentPadding: EdgeInsets.only(bottom: 3),
                       labelText: 'Surname',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      /* hintText: 'Eg. John',*/
+                      */
+/* hintText: 'Eg. John',*//*
+
                       hintStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -214,11 +226,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /* prefixIcon: Icon(Icons.local_convenience_store_rounded),*/
+                  */
+/* prefixIcon: Icon(Icons.local_convenience_store_rounded),*//*
+
                     contentPadding: const EdgeInsets.only(bottom: 3),
                     labelText: 'Email',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: "Eg.John's shop",*/
+                    */
+/* hintText: "Eg.John's shop",*//*
+
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -238,11 +254,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /*  prefixIcon: Icon(Icons.person),*/
+                  */
+/*  prefixIcon: Icon(Icons.person),*//*
+
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Primary number',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: 'Eg. John',*/
+                    */
+/* hintText: 'Eg. John',*//*
+
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -261,11 +281,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  /*  prefixIcon: Icon(Icons.person),*/
+                  */
+/*  prefixIcon: Icon(Icons.person),*//*
+
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: 'Instagram handle',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    /* hintText: 'Eg. John',*/
+                    */
+/* hintText: 'Eg. John',*//*
+
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -280,6 +304,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ),
       ],
-    );
+    ));
   }
 }
+*/

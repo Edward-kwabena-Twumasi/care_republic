@@ -5,47 +5,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/shop/shop_information_page.dart';
+import 'package:thecut/screens/shop/salon_shop.dart';
 import 'package:thecut/theme/custom_theme.dart';
 
 //initializations
 List shops= [
-    {
-      "img": "https://picsum.photos/id/3/200/200",
-      "name": "Vivians shop",
-      "id": "shp1",
-      "location": "Location 1",
-      "rating": "3",
-    },
-    {
-      "img": "https://picsum.photos/id/4/200/200",
-      "name": "Vivians shop",
-      "id": "shp1",
-      "location": "Location 1",
-      "rating": "3",
-    },
-    {
-      "img": "https://picsum.photos/id/46/200/200",
-      "name": "Vivians shop",
-      "id": "shp1",
-      "location": "Location 1",
-      "rating": "3",
-    },
-    {
-      "img": "https://picsum.photos/id/20/200/200",
-      "name": "Vivians shop",
-      "id": "shp1",
-      "location": "Location 1",
-      "rating": "3",
-    },
-    {
-      "img": "https://picsum.photos/id/7/200/200",
-      "name": "Vivians shop",
-      "id": "shp1",
-      "location": "Location 1",
-      "rating": "3",
-    },
-  ];
+  {
+    "img": "https://picsum.photos/id/3/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/4/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/46/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/20/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+  {
+    "img": "https://picsum.photos/id/7/200/200",
+    "name": "Vivians shop",
+    "id": "shp1",
+    "location": "Location 1",
+    "rating": "3",
+  },
+];
 
 
 final List<String> imgList = [
@@ -55,53 +55,53 @@ final List<String> imgList = [
 
 final List<Widget> imageSliders = imgList
     .map((item) => Container(
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      width: 1000.0,
-                      imageUrl: item,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(
-                        backgroundColor: Colors.blue,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          'No. ${imgList.indexOf(item)} image',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-        ))
+  child: Container(
+    margin: const EdgeInsets.all(5.0),
+    child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        child: Stack(
+          children: <Widget>[
+            CachedNetworkImage(
+              fit: BoxFit.cover,
+              width: 1000.0,
+              imageUrl: item,
+              placeholder: (context, url) =>
+              const CircularProgressIndicator(
+                backgroundColor: Colors.blue,
+                color: Colors.black,
+              ),
+            ),
+            Positioned(
+              bottom: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(200, 0, 0, 0),
+                      Color.fromARGB(0, 0, 0, 0)
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 20.0),
+                child: Text(
+                  'No. ${imgList.indexOf(item)} image',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )),
+  ),
+))
     .toList();
 
 class ClientHomeScreen extends StatefulWidget {
@@ -116,14 +116,14 @@ class ClientHomeScreen extends StatefulWidget {
 class _ClientHomeScreenState extends State<ClientHomeScreen> {
   late bool isLoading = true;
   late PageController controller;
-    ScrollController scrollController=ScrollController();
+  ScrollController scrollController=ScrollController();
   int _current = 0;
   final CarouselController _controller = CarouselController();
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-        scrollController = ScrollController(initialScrollOffset: 1);
+    scrollController = ScrollController(initialScrollOffset: 1);
 
   }
   @override
@@ -131,30 +131,30 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
     Sizer size = Sizer(context: context, hasBottomNav: true, hasAppBar: true);
     return Scaffold(
       appBar: AppBar(
-                   
-            backgroundColor: Color(0xffff9000),
-            leading: IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: const Icon(Icons.menu)),
-            title: Text(
-              'theCut',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.mail)),
-              IconButton(
-                icon: Icon(Icons.bookmark),
-                onPressed: () {},
-              )
-            ],
-          ),
-      
-        
+
+        backgroundColor: Color(0xffff9000),
+        leading: IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(Icons.menu)),
+        title: Text(
+          'theCut',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.mail)),
+          IconButton(
+            icon: Icon(Icons.bookmark),
+            onPressed: () {},
+          )
+        ],
+      ),
+
+
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          
+
           SizedBox(
             height: size.ch(8),
             child: Padding(
@@ -205,45 +205,45 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               height: size.ch(25),
               width: size.cw(96),
               decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(size.ch(5))),
+              BoxDecoration(borderRadius: BorderRadius.circular(size.ch(5))),
               child: LayoutBuilder(
                   builder: (BuildContext ctx, BoxConstraints constraints) {
-                final double SLIDER_HEIGHT = 0.35 * constraints.maxHeight;
-                final double CATEGORY_HEIGHT = 0.13 * constraints.maxHeight;
-                final double POPULAR_CARD = 0.22 * constraints.maxHeight;
-                final double SUGGESTION_CARDS = 0.22 * constraints.maxHeight;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //First child
-                    Container(
-                      height: size.ch(25),
-                      width: size.cw(96),
-                      /* width: MediaQuery.of(context).size.width,*/
-                      child: Stack(children: [
-                        CarouselSlider(
-                          carouselController: _controller,
-                          options: CarouselOptions(
-                              height: size.ch(25),
-                              viewportFraction: 1.2,
-                              autoPlay: true,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  _current = index;
-                                });
-                              }),
-                          items: imgList
-                              .map((item) => ClipRRect(
+                    final double SLIDER_HEIGHT = 0.35 * constraints.maxHeight;
+                    final double CATEGORY_HEIGHT = 0.13 * constraints.maxHeight;
+                    final double POPULAR_CARD = 0.22 * constraints.maxHeight;
+                    final double SUGGESTION_CARDS = 0.22 * constraints.maxHeight;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //First child
+                        Container(
+                          height: size.ch(25),
+                          width: size.cw(96),
+                          /* width: MediaQuery.of(context).size.width,*/
+                          child: Stack(children: [
+                            CarouselSlider(
+                              carouselController: _controller,
+                              options: CarouselOptions(
+                                  height: size.ch(25),
+                                  viewportFraction: 1.2,
+                                  autoPlay: true,
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _current = index;
+                                    });
+                                  }),
+                              items: imgList
+                                  .map((item) => ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.asset(item,
                                       fit: BoxFit.cover, width: size.cw(96))))
-                              .toList(),
-                        ),
-                      ]),
-                    )
-                  ],
-                );
-              }),
+                                  .toList(),
+                            ),
+                          ]),
+                        )
+                      ],
+                    );
+                  }),
             ),
           ),
           Container(
@@ -261,12 +261,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Makeup',
-                          style: TextStyle(color: Colors.black),
-                        ))
+                              'Makeup',
+                              style: TextStyle(color: Colors.black),
+                            ))
                       ],
                     ),
                   ),
@@ -278,12 +278,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Trim',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Trim',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -295,12 +295,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Retouch',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Retouch',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -312,12 +312,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Wash',
-                          style: TextStyle(color: Colors.black),
-                        ))
+                              'Wash',
+                              style: TextStyle(color: Colors.black),
+                            ))
                       ],
                     ),
                   ),
@@ -329,12 +329,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Extension',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Extension',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -346,12 +346,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Dying',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Dying',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -363,12 +363,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Afro',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Afro',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -380,12 +380,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.science),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Creams',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Creams',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -397,12 +397,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                             radius: size.ch(4),
                             child: Icon(Icons.sailing),
                             backgroundColor:
-                                colorScheme.secondary.withOpacity(0.2)),
+                            colorScheme.secondary.withOpacity(0.2)),
                         const FittedBox(
                             child: Text(
-                          'Perfume',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                              'Perfume',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ],
                     ),
                   ),
@@ -447,10 +447,10 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               padding: EdgeInsets.all(5),
                               primary: colorScheme.secondary,
                               side: BorderSide(color: colorScheme.secondary)),
-                              
+
                           onPressed: () {},
                           child:  Text('All',style: TextStyle(
-                            color:colorScheme.onSecondary
+                              color:colorScheme.onSecondary
                           ))),
                     ),
                     Padding(
@@ -461,10 +461,10 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               padding: EdgeInsets.all(5),
                               primary: colorScheme.onSecondary,
                               side: BorderSide(color: colorScheme.secondary)),
-                              
+
                           onPressed: () {},
                           child:  Text('Haircut',style: TextStyle(
-                            color:colorScheme.secondary
+                              color:colorScheme.secondary
                           ),)),
                     ),
                     Padding(
@@ -475,10 +475,10 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               padding: EdgeInsets.all(5),
                               primary: colorScheme.onSecondary,
                               side: BorderSide(color: colorScheme.secondary)),
-                              
+
                           onPressed: () {},
                           child:  Text('Makeup',style: TextStyle(
-                            color:colorScheme.secondary
+                              color:colorScheme.secondary
                           ))),
                     ),
                     Padding(
@@ -489,10 +489,10 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               padding: EdgeInsets.all(5),
                               primary: colorScheme.onSecondary,
                               side: BorderSide(color: colorScheme.secondary)),
-                              
+
                           onPressed: () {},
                           child:  Text('Manicure',style: TextStyle(
-                            color:colorScheme.secondary
+                              color:colorScheme.secondary
                           ))),
                     ),
                     Padding(
@@ -503,10 +503,10 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               padding: EdgeInsets.all(5),
                               primary: colorScheme.onSecondary,
                               side: BorderSide(color: colorScheme.secondary)),
-                              
+
                           onPressed: () {},
                           child:  Text('Pedicure',style: TextStyle(
-                            color:colorScheme.secondary
+                              color:colorScheme.secondary
                           ))),
                     ),
                     Padding(
@@ -517,17 +517,17 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                               shape: StadiumBorder(),
                               primary: colorScheme.onSecondary,
                               side: BorderSide(color: colorScheme.secondary)),
-                              
+
                           onPressed: () {},
                           child:  Text('Trim',style: TextStyle(
-                            color:colorScheme.secondary
+                              color:colorScheme.secondary
                           ))),
                     ),
                   ]),
             ),
           ),
           ListView.builder(
-            shrinkWrap: true,
+              shrinkWrap: true,
               // scrollDirection:Axis.horizontal,
               itemCount: shops.length,
               itemBuilder: ((context, index) => shopCard(size, context,shops[index])))
@@ -539,18 +539,18 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   Card shopCard(Sizer size, BuildContext context,dynamic shop) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20)
+          borderRadius: BorderRadius.circular(20)
       ),
       child: Container(
           width: size.cw(90),
           height:size.cw(30) ,
           child: Row(children: [
             Container(
-              height: size.cw(30),
-              width: size.cw(30),
-              decoration: BoxDecoration(
-               image:DecorationImage(image: NetworkImage(shop["img"]),fit: BoxFit.cover)
-            )),
+                height: size.cw(30),
+                width: size.cw(30),
+                decoration: BoxDecoration(
+                    image:DecorationImage(image: NetworkImage(shop["img"]),fit: BoxFit.cover)
+                )),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -565,7 +565,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                       subtitle: Text(shop["location"]),
                     ),
                   ),
-                 
+
                   Chip(label: Text(shop["rating"]),avatar: Icon(Icons.star),)
                 ],
               ),

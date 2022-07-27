@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/screens/client/client_home_screen.dart';
 import 'package:thecut/screens/client/client_map_screen.dart';
 import 'package:thecut/screens/client/client_unauthed_screen.dart';
+import 'package:thecut/screens/client/customer_drawer.dart';
 
 class ClientMainScreen extends StatefulWidget {
   const ClientMainScreen({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _ClientMainScreenState extends State<ClientMainScreen> {
         },
         child: SafeArea(
             child: Scaffold(
+              drawer: CustomDrawer(),
           bottomNavigationBar: BottomNavigationBar(
             
              /* type: BottomNavigationBarType.shifting,*/

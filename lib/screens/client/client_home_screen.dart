@@ -1,23 +1,32 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thecut/scaling/scaler.dart';
-import 'package:thecut/screens/client/shop_category_page.dart';
-import 'package:thecut/screens/shop/shop_information_page.dart';
+import 'package:thecut/screens/orientation/shop_category_page.dart';
+import 'package:thecut/screens/shop/makeup_shop.dart';
+import 'package:thecut/screens/shop/salon_shop.dart';
 import 'package:thecut/theme/custom_theme.dart';
+
+import '../shop/merchant_shop.dart';
 
 //initializations
 List shops = [
   {
     "img": "https://picsum.photos/id/3/200/200",
-    "name": "Vivians shop",
+    "name": "Afi Makeups",
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type": 2,
+    "typename": "makeup"
   },
   {
     "img": "https://picsum.photos/id/4/200/200",
@@ -25,6 +34,8 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type": 1,
+    "typename": "salon"
   },
   {
     "img": "https://picsum.photos/id/46/200/200",
@@ -32,6 +43,8 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type": 0,
+    "typename": "Merchant"
   },
   {
     "img": "https://picsum.photos/id/20/200/200",
@@ -39,6 +52,8 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type": 0,
+    "typename": "Merchant"
   },
   {
     "img": "https://picsum.photos/id/7/200/200",
@@ -46,20 +61,26 @@ List shops = [
     "id": "shp1",
     "location": "Location 1",
     "rating": "3",
+    "type": 1,
+    "typename": "salon"
   },
   {
     "img": "https://picsum.photos/id/21/200/200",
     "name": "Vivians shop",
     "id": "shp1",
-    "location": "Location 1",
+    "location": "Kumasi Boho",
     "rating": "4",
+    "type": 1,
+    "typename": "salon"
   },
   {
     "img": "https://picsum.photos/id/70/200/200",
-    "name": "Vivians shop",
+    "name": "J Makeup shop",
     "id": "shp1",
-    "location": "Location 1",
+    "location": "Atonsu",
     "rating": "3",
+    "type": 2,
+    "typename": "makeup"
   },
 ];
 
@@ -118,6 +139,7 @@ final List<Widget> imageSliders = imgList
           ),
         ))
     .toList();
+
 List filterNames = ["All"];
 
 class ClientHomeScreen extends StatefulWidget {
@@ -133,11 +155,34 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   ScrollController scrollController = ScrollController();
   int _current = 0;
   final CarouselController _controller = CarouselController();
+
+  late StreamSubscription shopsSubscription;
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> loadShops() {
+    return FirebaseFirestore.instance.collection("shop").snapshots();
+  }
+
+  List shopTypeScreens = [
+    Scaffold(body: MerchantShopInfo()),
+    SalonInfo(),
+    MakeupShopInfo()
+  ];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     scrollController = ScrollController(initialScrollOffset: 1);
+    scrollController.addListener(() {
+      //print(scrollController.offset.toString()+" is Current offset");
+    });
+    shopsSubscription = loadShops().listen((event) {
+      event.docs.forEach((element) {
+        print(element.data());
+      });
+
+    });
+    //Get a list of shops
   }
 
   @override
@@ -168,104 +213,171 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                     onPressed: () {},
                   )
                 ],
-                expandedHeight: size.ch(35) + 70,
+                expandedHeight: size.ch(49),
                 flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.none,
                   background: Container(
-                    padding: EdgeInsets.only(
-                        bottom: size.ch(0.3), top: size.ch(1) + 40),
-                    height: size.ch(25),
-                    width: size.cw(96),
+                    padding: EdgeInsets.zero,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage("images/client_home_background.jpg"),
+                            fit: BoxFit.cover)),
+                    // padding: EdgeInsets.only(
+                    //     bottom: size.ch(0.3), top:  40),
+                    height: size.ch(49),
+                    width: size.cw(100),
                     /* width: MediaQuery.of(context).size.width,*/
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                             Padding(
-                               padding: const EdgeInsets.only(left:8.0),
-                               child: Text(
-                                    "Welcome to theCut 😍",
-                                    /*${'Aliko'}*/
-                                    style: TextStyle(
-                                        fontSize: 20.sp, fontWeight: FontWeight.bold,color: Colors.white),
-                                  ),
-                             ),
-                        Center(
-                          child: Padding(
-                              padding: EdgeInsets.all(size.ch(1)),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Card(
-                                      //surfaceTintColor: Colors.white,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      elevation: 20,
-                                      semanticContainer: false,
-                                      borderOnForeground: false,
-                                     // shadowColor: Colors.transparent,
-                                      color: Colors.transparent,
-                                      child: Container(
-                                        padding: EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                         color: Colors.white10,
-                                         borderRadius: BorderRadius.circular(10) 
+                    //Create parent backdrop filter
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.black26),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 50, left: 8.0),
+                              child: Text(
+                                "Welcome to theCut 😍",
+                                /*${'Aliko'}*/
+                                style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                            Center(
+                              child: Padding(
+                                  padding: EdgeInsets.all(size.ch(1)),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 4.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      blurRadius: 15,
+                                                      spreadRadius: 15,
+                                                      color: Colors.black12)
+                                                ]),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: BackdropFilter(
+                                                //surfaceTintColor: Colors.white,
+
+                                                filter: ImageFilter.blur(
+                                                    sigmaX: 10, sigmaY: 10),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(
+                                                      size.ch(2)),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white
+                                                          .withOpacity(0.4),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Search",
+                                                        /*${'Aliko'}*/
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      // Text("Search",style: TextStyle(color: Colors.white),),
+                                                      Icon(
+                                                        Icons.search_outlined,
+                                                        color: Colors.white,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                        Text(
-                                        "Search",
-                                        /*${'Aliko'}*/
-                                        style: TextStyle(color: Colors.white),
                                       ),
-                                           // Text("Search",style: TextStyle(color: Colors.white),),
-                                            Icon(Icons.search_outlined,color: Colors.white,)
-                                          ],
+                                      //filter icon
+                                      GestureDetector(
+                                        onTap: () {
+                                          showBottomSheet(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  20),
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  20))),
+                                              context: context,
+                                              builder: (builder) {
+                                                return Wrap();
+                                              });
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: BackdropFilter(
+                                            //surfaceTintColor: Colors.white,
+                                            filter: ImageFilter.blur(
+                                                sigmaX: 10, sigmaY: 10),
+                                            child: Container(
+                                              padding:
+                                                  EdgeInsets.all(size.ch(2)),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white
+                                                      .withOpacity(0.4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Icon(
+                                                Icons.filter_alt_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  //filter icon
-                                  Card(
-                                    //surfaceTintColor: Colors.white,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                    elevation: 20,
-                                    semanticContainer: false,
-                                    borderOnForeground: false,
-                                    // shadowColor: Colors.transparent,
-                                    color: Colors.transparent,
-                                    child: Container(
-                                      padding: EdgeInsets.all(6),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white10,
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: Icon(Icons.filter_alt_outlined,color: Colors.white,),
-                                    ),
-                                  )
-                                ],
-                              )),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                            Center(
+                              child: CarouselSlider(
+                                carouselController: _controller,
+                                options: CarouselOptions(
+                                    height: size.ch(25),
+                                    viewportFraction: 1.2,
+                                    autoPlay: true,
+                                    onPageChanged: (index, reason) {
+                                      setState(() {
+                                        _current = index;
+                                      });
+                                    }),
+                                items: imgList
+                                    .map((item) => ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(item,
+                                            fit: BoxFit.cover,
+                                            width: size.cw(96))))
+                                    .toList(),
+                              ),
+                            ),
+                          ],
                         ),
-                        Center(
-                          child: CarouselSlider(
-                            carouselController: _controller,
-                            options: CarouselOptions(
-                                height: size.ch(25),
-                                viewportFraction: 1.2,
-                                autoPlay: true,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                }),
-                            items: imgList
-                                .map((item) => ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(item,
-                                        fit: BoxFit.cover, width: size.cw(96))))
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -307,12 +419,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   name: 'Extension',
                   icon: Icons.extension,
                 ),
-                MajorCategory(
-                  size: size,
-                  name: 'Dying',
-                  icon: Icons.colorize
-                ),
-                
+                MajorCategory(size: size, name: 'Dying', icon: Icons.colorize),
                 MajorCategory(
                   size: size,
                   name: 'Afro',
@@ -370,8 +477,11 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               shrinkWrap: true,
               // scrollDirection:Axis.horizontal,
               itemCount: shops.length,
-              itemBuilder: ((context, index) =>
-                  ShopCard(size: size, context: context, shop: shops[index]))),
+              itemBuilder: ((context, index) => ShopCard(
+                  size: size,
+                  context: context,
+                  shop: shops[index],
+                  shopTypeList: shopTypeScreens))),
         ),
       ]),
     );
@@ -396,29 +506,43 @@ class FilterCategory extends StatefulWidget {
 class _FilterCategoryState extends State<FilterCategory> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: widget.size.cw(1.2), vertical: widget.size.cw(0.2)),
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        // boxShadow:[
+        //
+        //   // BoxShadow(
+        //   //   blurRadius: 1.0,
+        //   //   spreadRadius: 0.2,
+        //   //   color: Colors.black12.withOpacity(0.1),
+        //   //
+        //   // )
+        // ]
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
               shape: StadiumBorder(),
-              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               primary: filterNames.contains(widget.name)
                   ? colorScheme.secondary
                   : colorScheme.onSecondary,
-              side: BorderSide(color: colorScheme.secondary)),
-          onPressed: () {
-            setState(() {
-              filterNames.contains(widget.name)
-                  ? filterNames.remove(widget.name)
-                  : filterNames.add(widget.name);
-            });
-          },
-          child: Text(widget.name,
-              style: TextStyle(
-                  color: filterNames.contains(widget.name)
-                      ? colorScheme.onSecondary
-                      : colorScheme.secondary))),
+              //side: BorderSide(color: colorScheme.secondary)
+            ),
+            onPressed: () {
+              setState(() {
+                filterNames.contains(widget.name)
+                    ? filterNames.remove(widget.name)
+                    : filterNames.add(widget.name);
+              });
+            },
+            child: Text(widget.name,
+                style: TextStyle(
+                    color: filterNames.contains(widget.name)
+                        ? colorScheme.onSecondary
+                        : colorScheme.secondary))),
+      ),
     );
   }
 }
@@ -430,11 +554,13 @@ class ShopCard extends StatelessWidget {
     required this.size,
     required this.context,
     required this.shop,
+    required this.shopTypeList,
   }) : super(key: key);
 
   final Sizer size;
   final BuildContext context;
   final Map<String, dynamic> shop;
+  final List shopTypeList;
 
   @override
   Widget build(BuildContext context) {
@@ -442,20 +568,18 @@ class ShopCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
           width: size.cw(90),
-          height: size.cw(25),
+          height: size.cw(28),
           child: Row(children: [
             Padding(
-              padding:  EdgeInsets.all(size.cw(2)),
+              padding: EdgeInsets.all(size.cw(2)),
               child: Container(
                   height: size.cw(25),
                   width: size.cw(25),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      15
-                    ),
+                      borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                        
-                          image: NetworkImage(shop["img"]), fit: BoxFit.cover))),
+                          image: NetworkImage(shop["img"]),
+                          fit: BoxFit.cover))),
             ),
             Expanded(
               child: Column(
@@ -467,22 +591,34 @@ class ShopCard extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => SalonInfo())));
+                                builder: ((context) =>
+                                    shopTypeList[shop["type"]])));
                       },
                       title: Text(shop["name"]),
                       subtitle: Text(shop["location"]),
                     ),
                   ),
                   Align(
-                    
                     alignment: Alignment.centerLeft,
-                    child: Chip(
-                      padding: EdgeInsets.only(left: 8),
-                      labelPadding: EdgeInsets.zero,
-                      labelStyle: TextStyle(fontSize: 20.sp,color: colorScheme.primary),
-                      backgroundColor: Colors.transparent,
-                      label: Text(shop["rating"]),
-                      avatar: Icon(Icons.star,color: colorScheme.secondary.withOpacity(0.6),),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Row(
+                        children: [
+                          Text(shop["typename"]),
+                          Chip(
+                            padding: EdgeInsets.only(left: 8),
+                            labelPadding: EdgeInsets.zero,
+                            labelStyle: TextStyle(
+                                fontSize: 20.sp, color: colorScheme.primary),
+                            backgroundColor: Colors.transparent,
+                            label: Text(shop["rating"]),
+                            avatar: Icon(
+                              Icons.star,
+                              color: colorScheme.secondary.withOpacity(0.6),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -498,7 +634,8 @@ class MajorCategory extends StatelessWidget {
   const MajorCategory({
     Key? key,
     required this.size,
-    required this.name, required this.icon,
+    required this.name,
+    required this.icon,
   }) : super(key: key);
 
   final Sizer size;
@@ -508,14 +645,20 @@ class MajorCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: ((context) => CatetegoryPage(category: name)))),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: ((context) => CatetegoryPage(category: name)))),
       child: Padding(
         padding: EdgeInsets.all(size.cw(1)),
         child: Column(
           children: [
             CircleAvatar(
                 radius: size.ch(3.4),
-                child: Icon(icon,color: colorScheme.secondary,),
+                child: Icon(
+                  icon,
+                  color: colorScheme.secondary,
+                ),
                 backgroundColor: colorScheme.secondary.withOpacity(0.2)),
             FittedBox(
                 child: Text(

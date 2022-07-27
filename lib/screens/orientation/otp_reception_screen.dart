@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:thecut/scaling/scaler.dart';
 
 
-import '../../scaling/scaler.dart';
 
 class OTPReceptionScreen extends StatefulWidget {
   const OTPReceptionScreen({Key? key}) : super(key: key);
