@@ -6,7 +6,7 @@
 // //import 'package:thecut/screens/NewClient/client_home_screen.dart';
 // //import 'package:thecut/screens/NewClient/nearby_screen.dart';
 // import 'package:thecut/screens/Shop/shop_home_screen.dart';
-// //import 'package:thecut/screens/newbarber/barber_main_screen.dart';
+// //import 'package:thecut/screens/newbarber/worker_main.dart';
 // import 'package:thecut/screens/newshop/book_appointment_screen.dart';
 // import 'package:thecut/screens/newshop/shop_dashboard_screen.dart';
 // import 'package:thecut/screens/newshop/shop_main_screen.dart';

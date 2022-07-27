@@ -13,8 +13,7 @@ import 'package:thecut/generator/sign_in_profile_generator.dart';
 import 'package:thecut/providers/include_provider.dart';
 import 'package:thecut/scaling/scaler.dart';
 import 'package:thecut/screens/orientation/worker_registration_screen.dart';
-import 'package:thecut/screens/worker/auth/auth_linker_screen.dart';
-import 'package:thecut/screens/worker/worker_main_screen.dart';
+import '../worker_main.dart';
 
 class OTPReceptionScreen extends StatefulWidget {
   final String authType;

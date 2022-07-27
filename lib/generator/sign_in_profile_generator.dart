@@ -30,7 +30,7 @@
 import 'package:flutter/material.dart';
 import 'package:thecut/screens/client/client_main_screen.dart';
 import 'package:thecut/screens/shop/shop_main_screen.dart';
-import 'package:thecut/screens/worker/worker_main_screen.dart';
+import 'package:thecut/screens/worker/worker_main.dart';
 
 List<Widget> profileGenerator(List _ids, BuildContext buildContext) {
   // print(_ids);

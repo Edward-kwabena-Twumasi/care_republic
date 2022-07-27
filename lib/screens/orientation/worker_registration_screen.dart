@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:thecut/generator/id_generator.dart';
 import 'package:thecut/providers/include_provider.dart';
 import 'package:thecut/screens/client/client_main_screen.dart';
-import 'package:thecut/screens/worker/worker_main_screen.dart';
+import 'package:thecut/screens/worker/worker_main.dart';
 
 class WorkerRegistrationScreen extends StatefulWidget {
   final Map<String,dynamic>? prevDetails;

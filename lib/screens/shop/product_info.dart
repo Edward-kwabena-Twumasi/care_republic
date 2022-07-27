@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thecut/screens/shop/shopping_cart.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({Key? key, required this.product}) : super(key: key);
@@ -15,13 +16,21 @@ class _ProductInfoState extends State<ProductInfo> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+     appBar: AppBar(
+       automaticallyImplyLeading: true,
+       backgroundColor: Colors.transparent,
+       elevation: 0.0,
+     ),
       persistentFooterButtons: [
 
        showViewCart?Row(
          mainAxisAlignment: MainAxisAlignment.spaceAround,
          children: [
            ElevatedButton(
-               onPressed:(){},
+               onPressed:(){
+                 Navigator.push(context, MaterialPageRoute(builder: (builder)=>ShoppingCart()));
+               },
                child: Text("View cart",style: TextStyle(fontWeight: FontWeight.bold),),
                style: ElevatedButton.styleFrom(
                    padding: EdgeInsets.symmetric(
@@ -29,17 +38,7 @@ class _ProductInfoState extends State<ProductInfo> {
                    shape: StadiumBorder(),
                    primary: Colors.black,
                    textStyle: TextStyle(color: Colors.white))),
-           ElevatedButton(
-               onPressed:(){
-                 Navigator.pop(context);
-               },
-               child:Icon(Icons.close,color: Colors.white,),
-               style: ElevatedButton.styleFrom(
-                   padding: EdgeInsets.symmetric(
-                       vertical: 10, horizontal: 3),
-                   shape: StadiumBorder(),
-                   primary: Colors.black,
-                   textStyle: TextStyle(color: Colors.white)))
+
          ],
        )
 
@@ -157,19 +156,9 @@ class ActionButtons extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                    vertical: 15, horizontal: 40),
                 shape: StadiumBorder(),
-                primary: Colors.amber,
-                textStyle: TextStyle(color: Colors.white))),
-        ElevatedButton(
-            onPressed: () {
-Navigator.pop(context);
-            },
-            child: Icon(Icons.close),
-            style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 5),
-                shape: StadiumBorder(),
                 primary: Colors.black,
-            )),
+                textStyle: TextStyle(color: Colors.white))),
+
         ElevatedButton(
             onPressed: () {
 
