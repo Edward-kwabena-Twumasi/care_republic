@@ -159,25 +159,31 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
   late StreamSubscription shopsSubscription;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> loadShops() {
-    return FirebaseFirestore.instance.collection("shop").snapshots();
+    return FirebaseFirestore.instance.collection("subshop").snapshots();
   }
 
+  List<Map<String,dynamic>> shopList=[];
+
   List shopTypeScreens = [
+
     Scaffold(body: MerchantShopInfo()),
     SalonInfo(),
     MakeupShopInfo()
+
   ];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("Client home screen");
     scrollController = ScrollController(initialScrollOffset: 1);
     scrollController.addListener(() {
-      //print(scrollController.offset.toString()+" is Current offset");
+      print(scrollController.offset.toString()+" is Current offset");
     });
     shopsSubscription = loadShops().listen((event) {
       event.docs.forEach((element) {
+        shopList.add(element.data());
         print(element.data());
       });
 
@@ -476,11 +482,11 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
           child: ListView.builder(
               shrinkWrap: true,
               // scrollDirection:Axis.horizontal,
-              itemCount: shops.length,
+              itemCount: shopList.length,
               itemBuilder: ((context, index) => ShopCard(
                   size: size,
                   context: context,
-                  shop: shops[index],
+                  shop: shopList[index],
                   shopTypeList: shopTypeScreens))),
         ),
       ]),
@@ -578,8 +584,9 @@ class ShopCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
-                          image: NetworkImage(shop["img"]),
-                          fit: BoxFit.cover))),
+                          image: NetworkImage(shop["shop_url"]??"https://picsum.photos/id/3/200/200"),
+                          fit: BoxFit.cover))
+              ),
             ),
             Expanded(
               child: Column(
@@ -588,14 +595,14 @@ class ShopCard extends StatelessWidget {
                   Expanded(
                     child: ListTile(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    shopTypeList[shop["type"]])));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: ((context) =>
+                        //             shopTypeList[shop["type"]])));
                       },
-                      title: Text(shop["name"]),
-                      subtitle: Text(shop["location"]),
+                      title: Text(shop["shop_name"]),
+                      subtitle: Text(shop["land_mark"]),
                     ),
                   ),
                   Align(
@@ -604,19 +611,19 @@ class ShopCard extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Row(
                         children: [
-                          Text(shop["typename"]),
-                          Chip(
-                            padding: EdgeInsets.only(left: 8),
-                            labelPadding: EdgeInsets.zero,
-                            labelStyle: TextStyle(
-                                fontSize: 20.sp, color: colorScheme.primary),
-                            backgroundColor: Colors.transparent,
-                            label: Text(shop["rating"]),
-                            avatar: Icon(
-                              Icons.star,
-                              color: colorScheme.secondary.withOpacity(0.6),
-                            ),
-                          ),
+                          Text(shop["type"]),
+                          // Chip(
+                          //   padding: EdgeInsets.only(left: 8),
+                          //   labelPadding: EdgeInsets.zero,
+                          //   labelStyle: TextStyle(
+                          //       fontSize: 20.sp, color: colorScheme.primary),
+                          //   backgroundColor: Colors.transparent,
+                          //   label: Text("4.3"),
+                          //   avatar: Icon(
+                          //     Icons.star,
+                          //     color: colorScheme.secondary.withOpacity(0.6),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

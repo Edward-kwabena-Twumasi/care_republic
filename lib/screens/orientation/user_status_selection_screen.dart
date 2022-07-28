@@ -9,6 +9,7 @@ import 'package:thecut/screens/worker/auth/phone_entry_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../scaling/scaler.dart';
+import '../worker/worker_main.dart';
 
 class UserStatusSelectionScreen extends StatefulWidget {
   const UserStatusSelectionScreen({Key? key}) : super(key: key);
@@ -101,7 +102,7 @@ class _UserStatusSelectionScreenState extends State<UserStatusSelectionScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return WorkerPhoneEntryScreen(source: 'worker',);
+                        return WorkerMainScreen();
                       }));
                     },
                     child: const StatusObject(
